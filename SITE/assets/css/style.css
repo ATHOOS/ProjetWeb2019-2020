@@ -1241,6 +1241,7 @@ section {
   color: #eb5d1e;
 }
 
+
 @media (max-width: 575px) {
   #footer .copyright, #footer .credits {
     float: none;
@@ -1248,4 +1249,8 @@ section {
     text-align-last: center;
     padding: 3px 0;
   }
+}
+
+#copyright{
+  margin-top:30px;
 }
