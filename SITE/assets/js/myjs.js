@@ -10,3 +10,7 @@ function creeCompte(){
 function dejaMembre(){
     $('#content').load("assets/inc/login/connexion.html");
 }
+
+function acceuil(){
+    $('#content').load("assets/inc/acceuil.html");
+}
