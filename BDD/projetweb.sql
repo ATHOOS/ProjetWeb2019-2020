@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  mer. 04 mars 2020 à 09:52
+-- Généré le :  mer. 04 mars 2020 à 10:17
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -30,6 +30,15 @@ DROP PROCEDURE IF EXISTS `ajoutAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16))  BEGIN 
 
 INSERT INTO atelier (nom, description, date, nbrPlaces, animateur) VALUES (Nom, Description, Date, Places, Animateur);
+
+END$$
+
+DROP PROCEDURE IF EXISTS `changerAnimateur`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `changerAnimateur` (IN `identifiantAtelier` INT, IN `newAnimateur` VARCHAR(16))  BEGIN 
+
+UPDATE atelier 
+SET animateur = newAnimateur
+WHERE idAtelier = identifiantAtelier;
 
 END$$
 
@@ -73,6 +82,14 @@ WHERE matricule = noma;
 
 END$$
 
+DROP PROCEDURE IF EXISTS `supprimerAtelier`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerAtelier` (IN `Atelier` INT)  BEGIN 
+
+DELETE FROM atelier
+WHERE idAtelier = Atelier;
+
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -92,16 +109,14 @@ CREATE TABLE IF NOT EXISTS `atelier` (
   `termine` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idAtelier`),
   KEY `animateur_fk` (`animateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `atelier`
 --
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`) VALUES
-(1, 'PHP', 'atelier sur les variables', '2020-02-27 12:30:00', 12, 'he201620', 0),
-(2, 'tva', 'atelier sur la tva', '2020-04-15 12:30:00', 15, 'he201621', 0),
-(4, 'MySQL', 'Test', '2020-03-26 00:00:00', 100, NULL, 0);
+(9, 'test3', 'djheshds', '2020-02-27 12:30:00', 34, 'he201620', 0);
 
 -- --------------------------------------------------------
 
@@ -138,13 +153,6 @@ CREATE TABLE IF NOT EXISTS `participant_atelier` (
   PRIMARY KEY (`idparticipant`,`idAtelier`),
   KEY `id_atelier_fk` (`idAtelier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
---
--- Déchargement des données de la table `participant_atelier`
---
-
-INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
-('he201621', 1);
 
 -- --------------------------------------------------------
 
@@ -366,7 +374,7 @@ ALTER TABLE `atelier`
 -- Contraintes pour la table `participant_atelier`
 --
 ALTER TABLE `participant_atelier`
-  ADD CONSTRAINT `id_atelier_fk` FOREIGN KEY (`idAtelier`) REFERENCES `atelier` (`idAtelier`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `id_atelier_fk` FOREIGN KEY (`idAtelier`) REFERENCES `atelier` (`idAtelier`) ON DELETE CASCADE ON UPDATE RESTRICT,
   ADD CONSTRAINT `id_participant_fk` FOREIGN KEY (`idparticipant`) REFERENCES `user` (`matricule`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
