@@ -67,8 +67,9 @@ return false;
 }
 
 function checkInscription(){
+    event.preventDefault();
     if($('#matricule').val() ==''){
-        $('#matricule').val('Requis');
+        $('#matricule').val('Matricule requis');
         $('#matricule').css('color','red');
         return false;
     }
