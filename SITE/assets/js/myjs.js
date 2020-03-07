@@ -5,9 +5,7 @@ function removeClassActive(){
     $('#navWorkshops').removeClass('active');
     $('#navBoiteId').removeClass('active');
     $('#navProfil').removeClass('active');
-    $('#navAbout').removeClass('active');
-    $('#navContact').removeClass('active');
-    
+
 }
 
 function addClassActive(p){
@@ -59,16 +57,4 @@ function profil(){
 
     removeClassActive();
     addClassActive('navProfil');
-}
-
-function about(){
-
-    removeClassActive();
-    addClassActive('navAbout');
-}
-
-function contact(){
-
-    removeClassActive();
-    addClassActive('navContact');
 }
