@@ -1,6 +1,6 @@
 //layout
 
-function removeClassActive(){
+function removeClassActive() {
     $('#navAccueil').removeClass('active');
     $('#navWorkshops').removeClass('active');
     $('#navBoiteId').removeClass('active');
@@ -8,12 +8,12 @@ function removeClassActive(){
 
 }
 
-function addClassActive(p){
-    p+='';
-    $('#'+p).addClass('active');
+function addClassActive(p) {
+    p += '';
+    $('#' + p).addClass('active');
 }
 
-function connexion(){
+function connexion() {
     $('#content').load("assets/inc/login/connexion.html");
 
     removeClassActive();
@@ -21,38 +21,38 @@ function connexion(){
 
 }
 
-function creeCompte(){
+function creeCompte() {
     $('#content').load("assets/inc/login/inscription.html");
 
 }
 
-function dejaMembre(){
+function dejaMembre() {
     $('#content').load("assets/inc/login/connexion.html");
 
 }
 
-function accueil(){
+function accueil() {
     $('#content').load("assets/inc/accueil.html");
 
     removeClassActive();
     addClassActive('navAccueil');
 }
 
-function workshops(){
+function workshops() {
     $('#content').load("assets/inc/workshops.html");
 
     removeClassActive();
     addClassActive('navWorkshops');
 }
 
-function boiteId(){
+function boiteId() {
     $('#content').load("assets/inc/boiteId.html");
 
     removeClassActive();
     addClassActive('navBoiteId');
 }
 
-function profil(){
+function profil() {
     $('#content').load("assets/inc/profil.html");
 
     removeClassActive();
@@ -62,15 +62,67 @@ function profil(){
 
 //form check
 
-function checkConnexion(){
-return false;
+function checkConnexion() {
+    return false;
 }
 
-function checkInscription(){
+function checkInscription() {
+    let a = 1;
     event.preventDefault();
-    if($('#matricule').val() ==''){
-        $('#matricule').val('Matricule requis');
-        $('#matricule').css('color','red');
-        return false;
+    if ($('#matricule').val() == '') {
+        $('#matricule').attr('placeholder', 'Matricule requis');
+        a = 0;
     }
+
+    if ($('#nom').val() == '') {
+        $('#nom').attr('placeholder', 'Nom requis');
+        a = 0;
+    }
+
+    if ($('#prenom').val() == '') {
+        $('#prenom').attr('placeholder', 'Prenom requis');
+        a = 0;
+    }
+
+    if ($('#email').val() == '') {
+        $('#email').attr('placeholder', 'Email requis');
+        a = 0;
+    }
+
+    if ($('#pass').val() == '') {
+        $('#pass').attr('placeholder', 'Mot de passe requis');
+        a = 0;
+    }
+
+
+    if ($('#re_pass').val() == '') {
+        $('#re_pass').attr('placeholder', 'Veuillez entrer une nouvelle fois votre mot de passe');
+        a = 0;
+    }
+
+    if ($('#re_pass').val() !== $('#pass').val()) {
+        $('#re_pass').attr('placeholder', 'Les mots de passe ne sont pas identique');
+        $('#pass').attr('placeholder', 'Les mots de passe ne sont pas identique');
+        a = 0;
+    }
+    console.log(a);
+
+    if(a===1){
+        objectForm = [$('#matricule').val(),$('#nom').val(),$('#prenom').val(),$('#email').val(),$('#pass').val()];
+        $.ajax({
+            url: "../php/inscription.php",
+            type: "POST",
+            data: objectForm,
+            datatype: "json",
+            success: function (response) {
+                if (response === "NomaOuMailDejaUse") {
+                    $("#motDePasseIncorrect").show();
+                }
+                else {
+                    console.log('inscr OK');
+                }
+            }
+        })
+    }
+
 }
