@@ -58,3 +58,14 @@ function profil(){
     removeClassActive();
     addClassActive('navProfil');
 }
+
+
+//form check
+
+function checkConnexion(){
+
+}
+
+function checkInscription(){
+    
+}
