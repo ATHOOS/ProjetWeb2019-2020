@@ -105,18 +105,19 @@ function checkInscription() {
         $('#pass').attr('placeholder', 'Les mots de passe ne sont pas identique');
         a = 0;
     }
-    console.log(a);
+    //console.log(a);
 
     if (a === 1) {
-        let objectForm = { 'matricule': $('#matricule').val(), 'nom': $('#nom').val(), 'prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
+        let objectForm = { 'matricule': $('#matricule').val(), 'Nom': $('#nom').val(), 'Prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
+        console.log(objectForm);
         $.ajax({
             url: "assets/php/inscription.php",
             type: "POST",
             data: objectForm,
             datatype: "json",
             success: function (response) {
-                if (response === "NomaOuMailDejaUse") {
-                    $("#motDePasseIncorrect").show();
+                if (response === '"NomaOuMailDejaUse"') {
+                    console.log("marche pas");
                 }
                 else {
                     console.log('inscr OK');

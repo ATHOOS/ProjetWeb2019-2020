@@ -18,55 +18,25 @@ class dbAccess
     {
         $params = array();
         switch ($nomProcedure) {
-
-            case 'suppresionCompte':
-            case 'supprimerAtelier':
-                array_push($params, '?');
-                try {
-                    $this->connexionDB();
-                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
-                    $requete = $this->pdo->prepare($procedureCall);
-                    $requete->execute($procParams);
-                    return $requete->fetchAll();
-                } catch (Exception $e) {
-                    die("Erreur :" . $e->getMessage());
-                }
-                break;
-        }
-        switch ($nomProcedure) {
             case 'checkInscription':
-            case 'changerAnimateur':
-            case 'checkConnexion':
                 array_push($params, '?', '?');
+
                 try {
                     $this->connexionDB();
                     $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
                     $requete = $this->pdo->prepare($procedureCall);
                     $requete->execute($procParams);
-                    return $requete->fetchAll();
+                    return $requete->fetchAll();  
                 } catch (Exception $e) {
                     die("Erreur :" . $e->getMessage());
                 }
                 break;
         }
+
         switch ($nomProcedure) {
-            case 'changerMDP':
-                array_push($params, '?', '?', '?');
-                try {
-                    $this->connexionDB();
-                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
-                    $requete = $this->pdo->prepare($procedureCall);
-                    $requete->execute($procParams);
-                    return $requete->fetchAll();
-                } catch (Exception $e) {
-                    die("Erreur :" . $e->getMessage());
-                }
-                break;
-        }
-        switch ($nomProcedure) {
-            case 'ajoutAtelier':
             case 'creationCompte':
                 array_push($params, '?', '?', '?', '?', '?');
+
                 try {
                     $this->connexionDB();
                     $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
