@@ -63,9 +63,13 @@ function profil(){
 //form check
 
 function checkConnexion(){
-
+return false;
 }
 
 function checkInscription(){
-    
+    if($('#matricule').val() ==''){
+        $('#matricule').val('Requis');
+        $('#matricule').css('color','red');
+        return false;
+    }
 }
