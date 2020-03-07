@@ -107,10 +107,10 @@ function checkInscription() {
     }
     console.log(a);
 
-    if(a===1){
-        objectForm = [$('#matricule').val(),$('#nom').val(),$('#prenom').val(),$('#email').val(),$('#pass').val()];
+    if (a === 1) {
+        let objectForm = { 'matricule': $('#matricule').val(), 'nom': $('#nom').val(), 'prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
         $.ajax({
-            url: "../php/inscription.php",
+            url: "assets/php/inscription.php",
             type: "POST",
             data: objectForm,
             datatype: "json",
@@ -120,9 +120,10 @@ function checkInscription() {
                 }
                 else {
                     console.log('inscr OK');
+                    console.log(response);
                 }
             }
-        })
+        });
     }
 
 }
