@@ -62,9 +62,7 @@ function profil() {
 
 //form check
 
-function checkConnexion() {
-    return false;
-}
+//inscription
 
 function checkInscription() {
     let a = 1;
@@ -105,7 +103,6 @@ function checkInscription() {
         $('#pass').attr('placeholder', 'Les mots de passe ne sont pas identique');
         a = 0;
     }
-    //console.log(a);
 
     if (a === 1) {
         let objectForm = { 'matricule': $('#matricule').val(), 'Nom': $('#nom').val(), 'Prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
@@ -128,3 +125,37 @@ function checkInscription() {
     }
 
 }
+
+
+//connexion
+
+function checkConnexion() {
+    let a = 1;
+    event.preventDefault();
+    if ($('#your_login').val() == '') {
+        $('#your_login').attr('placeholder', 'Email ou matricule requis');
+        a = 0;
+    }
+
+    if ($('#your_pass').val() == '') {
+        $('#your_pass').attr('placeholder', 'Mot de passe requis');
+        a = 0;
+    }
+
+    if (a === 1) {
+        let objectForm = { 'login': $('#your_login').val(), 'password': $('#your_pass').val() };
+        console.log(objectForm);
+        $.ajax({
+            url: "assets/php/connexion.php",
+            type: "POST",
+            data: objectForm,
+            datatype: "json",
+            success: function (response) {
+                //a déterminer
+            }
+        });
+    }
+
+
+}
+
