@@ -1,3 +1,7 @@
+<?php
+session_start();
+$_SESSION['pageActuel']='login/inscription.php';
+?>
 <div id="content">
     <div class="main">
         <section class="signup">

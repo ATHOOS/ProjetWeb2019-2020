@@ -1,10 +1,11 @@
 <?php
 
 session_start();
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -57,7 +58,7 @@ session_start();
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active" id="navAccueil"><a href="#header" onclick="accueil()">Accueil</a></li>
+          <li id="navAccueil"><a href="#header" onclick="accueil()">Accueil</a></li>
           <li id="navWorkshops" onclick='workshops()'><a href="">Workshops</a></li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
           <li id ="navProfil" onclick='profil()'><a href="">Profil</a></li>
@@ -119,7 +120,14 @@ session_start();
   <script src="assets/inc/login/js/loginmain.js"></script>
   <script src="assets/js/myjs.js"></script>
   <script>
-    $('#content').load("assets/inc/accueil.php");
+    <?php 
+    if($_SESSION['pageActuel']==''){
+      echo("$('#content').load('assets/inc/accueil.php');"); 
+    }
+    else{
+      echo("$('#content').load('assets/inc/$_SESSION[pageActuel]');"); 
+    }
+    ?>
   </script>
 
 </body>

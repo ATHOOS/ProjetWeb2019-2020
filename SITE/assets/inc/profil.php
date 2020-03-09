@@ -1,5 +1,7 @@
 <?php
 session_start();
+$_SESSION['pageActuel']='profil.php';
+
 ?>
 <main id="content">
     <div class="main">
@@ -46,3 +48,7 @@ session_start();
     </div>
 
 </main>
+<script>
+    addClassActive('navProfil');
+</script>
+

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['pageActuel']='accueil.php';
 ?>
 <div id="content">
     <!-- ======= Hero Section ======= -->
@@ -51,3 +52,6 @@ session_start();
           </div>
   
         </div>
+        <script>
+    addClassActive('navAccueil');
+</script>

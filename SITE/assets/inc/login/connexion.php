@@ -1,3 +1,7 @@
+<?php
+session_start();
+$_SESSION['pageActuel']='login/connexion.php';
+?>
 <div id="content">
     <div class="main">
         <section class="sign-in">
