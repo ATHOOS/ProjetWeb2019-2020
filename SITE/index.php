@@ -121,7 +121,7 @@ session_start();
   <script src="assets/js/myjs.js"></script>
   <script>
     <?php 
-    if($_SESSION['pageActuel']==''){
+    if(!isset($_SESSION['pageActuel'])){
       echo("$('#content').load('assets/inc/accueil.php');"); 
     }
     else{
