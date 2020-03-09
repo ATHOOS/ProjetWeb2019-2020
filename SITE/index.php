@@ -119,7 +119,7 @@ session_start();
   <script src="assets/inc/login/js/loginmain.js"></script>
   <script src="assets/js/myjs.js"></script>
   <script>
-    $('#content').load("assets/inc/accueil.html");
+    $('#content').load("assets/inc/accueil.php");
   </script>
 
 </body>
