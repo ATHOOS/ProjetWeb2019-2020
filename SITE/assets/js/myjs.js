@@ -32,21 +32,21 @@ function dejaMembre() {
 }
 
 function accueil() {
-    $('#content').load("assets/inc/accueil.html");
+    $('#content').load("assets/inc/accueil.php");
 
     removeClassActive();
     addClassActive('navAccueil');
 }
 
 function workshops() {
-    $('#content').load("assets/inc/workshops.html");
+    $('#content').load("assets/inc/workshops.php");
 
     removeClassActive();
     addClassActive('navWorkshops');
 }
 
 function boiteId() {
-    $('#content').load("assets/inc/boiteId.html");
+    $('#content').load("assets/inc/boiteId.php");
 
     removeClassActive();
     addClassActive('navBoiteId');

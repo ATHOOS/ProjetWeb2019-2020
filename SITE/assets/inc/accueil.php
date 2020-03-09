@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <div id="content">
     <!-- ======= Hero Section ======= -->
     <section id="hero" class="d-flex align-items-center">
