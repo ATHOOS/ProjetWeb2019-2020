@@ -14,7 +14,7 @@ function addClassActive(p) {
 }
 
 function connexion() {
-    $('#content').load("assets/inc/login/connexion.html");
+    $('#content').load("assets/inc/login/connexion.php");
 
     removeClassActive();
 
@@ -22,12 +22,12 @@ function connexion() {
 }
 
 function creeCompte() {
-    $('#content').load("assets/inc/login/inscription.html");
+    $('#content').load("assets/inc/login/inscription.php");
 
 }
 
 function dejaMembre() {
-    $('#content').load("assets/inc/login/connexion.html");
+    $('#content').load("assets/inc/login/connexion.php");
 
 }
 
@@ -53,7 +53,7 @@ function boiteId() {
 }
 
 function profil() {
-    $('#content').load("assets/inc/profil.html");
+    $('#content').load("assets/inc/profil.php");
 
     removeClassActive();
     addClassActive('navProfil');
@@ -144,14 +144,14 @@ function checkConnexion() {
 
     if (a === 1) {
         let objectForm = { 'login': $('#your_login').val(), 'password': $('#your_pass').val() };
-        console.log(objectForm);
+        //console.log(objectForm);
         $.ajax({
             url: "assets/php/connexion.php",
             type: "POST",
             data: objectForm,
             datatype: "json",
             success: function (response) {
-                //a déterminer
+                console.log(response);
             }
         });
     }

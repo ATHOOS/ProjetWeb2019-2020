@@ -19,6 +19,7 @@ class dbAccess
         $params = array();
         switch ($nomProcedure) {
             case 'checkInscription':
+            case 'checkConnexion':
                 array_push($params, '?', '?');
 
                 try {
@@ -26,7 +27,7 @@ class dbAccess
                     $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
                     $requete = $this->pdo->prepare($procedureCall);
                     $requete->execute($procParams);
-                    return $requete->fetchAll();  
+                    return $requete->fetchAll();
                 } catch (Exception $e) {
                     die("Erreur :" . $e->getMessage());
                 }

@@ -15,5 +15,4 @@ if(!empty($checkInscription)){
     echo json_encode("NomaOuMailDejaUse");
 } else{
     $envoi = $db->callProcedure('creationCompte',[$noma,$Nom,$Prenom,$email,$mdp]);
-    echo json_encode($mdp);
 }
