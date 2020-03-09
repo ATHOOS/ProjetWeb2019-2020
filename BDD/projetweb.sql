@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Mar 07, 2020 at 06:40 PM
+-- Generation Time: Mar 09, 2020 at 07:27 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -40,7 +40,7 @@ WHERE password = oldMDP AND matricule = noma;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `checkConnexion` (IN `identifiant` VARCHAR(32), IN `mdp` VARCHAR(16))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkConnexion` (IN `identifiant` VARCHAR(3200), IN `mdp` VARCHAR(3000))  BEGIN
 
 SELECT matricule, mail, nom, prenom FROM user 
 WHERE password = mdp AND (matricule = identifiant OR mail = identifiant);
@@ -312,6 +312,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administration`) VALUES
 ('ADMIN', 'ADMIN', 'ADMIN', 'ADMIN@ephec.be', 'test', 1),
+('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('he201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', 'test', 0),
 ('he201621', 'toto', 'tata', 'toto.tata@students.ephec.be', 'mdp', 0),
 ('rzetyery', 'eryey', 'eyeyery', 'eryeyezy', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
