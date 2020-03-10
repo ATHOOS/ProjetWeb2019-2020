@@ -62,7 +62,7 @@ session_start();
           <li id="navWorkshops" onclick='workshops()'><a href="">Workshops</a></li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
           <li id ="navProfil" onclick='profil()'><a href="">Profil</a></li>
-          <li class="get-started" onclick="connexion()"><a href="">Connexion</a></li>
+          <li id="navConnexion"class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -127,6 +127,11 @@ session_start();
     else{
       echo("$('#content').load('assets/inc/$_SESSION[pageActuel]');"); 
     }
+
+    if(isset($_SESSION['matricule'])){
+        echo("estCo();");
+    }
+
     ?>
   </script>
 

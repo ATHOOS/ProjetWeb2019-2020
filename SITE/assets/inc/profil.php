@@ -2,6 +2,7 @@
 session_start();
 $_SESSION['pageActuel']='profil.php';
 
+
 ?>
 <main id="content">
     <div class="main">
@@ -51,4 +52,8 @@ $_SESSION['pageActuel']='profil.php';
 <script>
     addClassActive('navProfil');
 </script>
-
+<?php 
+    if(!isset($_SESSION['matricule'])){
+        echo("<script> connexion(); </script>");
+    }
+?>

@@ -59,6 +59,12 @@ function profil() {
     addClassActive('navProfil');
 }
 
+function estCo(){
+    $('#navConnexion').html('<a href="" id="lienConnexion">Déconnexion</a>');
+    $("#navConnexion").prop("onclick", null).off("click");
+
+}
+
 
 //form check
 
@@ -154,6 +160,9 @@ function checkConnexion() {
                 console.log(response);
             }
         });
+
+        profil();
+
     }
 
 
