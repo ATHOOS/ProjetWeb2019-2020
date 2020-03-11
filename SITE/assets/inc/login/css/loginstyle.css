@@ -274,7 +274,7 @@ figure {
 
 .form-submit {
   display: inline-block;
-  background: #6dabe4;
+  background: #eb5d1e;
   color: #fff;
   border-bottom: none;
   width: auto;
@@ -450,6 +450,7 @@ label.valid {
   font-size: 18px; }
 
 .signin-content {
+  padding-bottom: 1em;
  }
 
 .social-login {
