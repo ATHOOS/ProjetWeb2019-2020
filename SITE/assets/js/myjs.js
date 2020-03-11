@@ -60,7 +60,7 @@ function profil() {
 }
 
 function estCo(){
-    $('#navConnexion').html('<a href="" id="lienConnexion">Déconnexion</a>');
+    $('#navConnexion').html('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
     $("#navConnexion").prop("onclick", null).off("click");
 
 }
@@ -160,7 +160,7 @@ function checkConnexion() {
                 console.log(response);
             }
         });
-
+        location.reload();
         profil();
 
     }
