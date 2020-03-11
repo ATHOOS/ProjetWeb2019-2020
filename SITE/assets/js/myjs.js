@@ -38,8 +38,22 @@ function accueil() {
     addClassActive('navAccueil');
 }
 
-function workshops() {
-    $('#content').load("assets/inc/workshops.php");
+function workshopsListe() {
+    $('#content').load("assets/inc/workshopsListe.php");
+
+    removeClassActive("navWorkshopsListe");
+    addClassActive('navWorkshops');
+}
+
+function workshopsCreation() {
+    $('#content').load("assets/inc/workshopsCreation.php");
+
+    removeClassActive();
+    addClassActive('navWorkshops');
+}
+
+function mesWorkshops() {
+    $('#content').load("assets/inc/mesWorkshops.php");
 
     removeClassActive();
     addClassActive('navWorkshops');

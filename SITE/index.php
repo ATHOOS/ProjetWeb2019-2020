@@ -59,7 +59,13 @@ session_start();
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li id="navAccueil"><a href="#header" onclick="accueil()">Accueil</a></li>
-          <li id="navWorkshops" onclick='workshops()'><a href="">Workshops</a></li>
+          <li class="drop-down" id="navWorkshops"><a href="#">Workshops</a>
+                <ul>
+                  <li><a href="#" id="navWorkshopsListe" onclick="workshopsListe()">Liste de workshops</a></li>
+                  <li><a href="#" id="navWorkshopsCreation" onclick="workshopsCreation()">Création de workshops</a></li>
+                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshops()">Mes workshops</a></li>
+                </ul>
+              </li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
           <li id ="navProfil" onclick='profil()'><a href="">Profil</a></li>
           <li id="navConnexion"class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
