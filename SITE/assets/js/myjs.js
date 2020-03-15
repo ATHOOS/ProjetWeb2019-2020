@@ -182,3 +182,55 @@ function checkConnexion() {
 
 }
 
+
+//verification formulaire atelier
+
+function ajoutAtelier() {
+    let a = 1;
+    event.preventDefault();
+    if ($('#workshop_nom').val() == '') {
+        $('#workshop_nom').attr('placeholder', 'Nom requis');
+        a = 0;
+    }
+
+    if ($('#workshop_desc').val() == '') {
+        $('#workshop_desc').attr('placeholder', 'Description requise');
+        a = 0;
+    }
+
+    if ($('#workshop_date').val() == '') {
+        $('#error_date').show();
+        a = 0;
+    }
+
+    if ($('#workshop_nbrPlaces').val() == '') {
+        $('#workshop_nbrPlaces').attr('placeholder', 'Nombre de places requis');
+        a = 0;
+    }
+    if ($('#workshop_animateur').val() == '') {
+        $('#workshop_animateur').attr('placeholder', 'Animateur requis');
+        a = 0;
+    }
+
+    if (a === 1) {
+        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Animateur': $('#workshop_animateur').val()};
+        console.log(objectForm);
+        $.ajax({
+            url: "assets/php/ajoutAtelier.php",
+            type: "POST",
+            data: objectForm,
+            datatype: "json",
+            success: function (response) {
+                if (response === '"NomaOuMailDejaUse"') {
+                    console.log("marche pas");
+                }
+                else {
+                    console.log('inscr OK');
+                    console.log(response);
+                }
+            }
+        });
+    }
+
+}
+
