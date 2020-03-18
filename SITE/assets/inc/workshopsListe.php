@@ -114,4 +114,8 @@ echo $_SESSION['pageActuel'];
     </div>
   </div>
 </div>
+<script>
+    removeClassActive();
+    addClassActive('navWorkshops');
+</script>
 </main>

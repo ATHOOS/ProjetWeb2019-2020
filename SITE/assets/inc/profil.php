@@ -47,12 +47,12 @@ $_SESSION['pageActuel']='profil.php';
             </div>
         </section>
     </div>
-
+    <script>
+        removeClassActive();
+        addClassActive('navProfil');
+    </script>
 </main>
-<script>
-    removeClassActive();
-    addClassActive('navProfil');
-</script>
+
 <?php 
     if(!isset($_SESSION['matricule'])){
         echo("<script> connexion(); </script>");

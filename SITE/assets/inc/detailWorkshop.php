@@ -1,3 +1,4 @@
+<main id="content">
 <!-- Page Content -->
 <div class="container">
 
@@ -26,3 +27,9 @@
     </div>
 
   </div>
+
+  <script>
+    removeClassActive();
+    addClassActive('navWorkshops');
+</script>
+</main>
