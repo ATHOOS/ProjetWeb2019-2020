@@ -20,6 +20,7 @@ class dbAccess
         switch ($nomProcedure) {
             case 'checkInscription':
             case 'checkConnexion':
+            case 'recupAtelier':
                 array_push($params, '?', '?');
 
                 try {
