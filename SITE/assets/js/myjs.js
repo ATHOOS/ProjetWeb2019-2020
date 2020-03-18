@@ -234,3 +234,8 @@ function ajoutAtelier() {
 
 }
 
+
+//affichage de la liste des ateliers
+
+
+
