@@ -73,6 +73,10 @@ function profil() {
     addClassActive('navProfil');
 }
 
+function detailWorkshop(){
+    $('#content').load("assets/inc/detailWorkshop.php");
+}
+
 function estCo(){
     $('#navConnexion').html('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
     $("#navConnexion").prop("onclick", null).off("click");
