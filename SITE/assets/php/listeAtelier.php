@@ -6,4 +6,4 @@ $db = new dbAccess();
 
 $recupAtelier = $db->callProcedure("affichageAteliersAnimateur");
 
-//echo json_encode($recupAtelier);
+json_encode($recupAtelier);
