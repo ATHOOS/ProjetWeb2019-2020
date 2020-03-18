@@ -3,7 +3,6 @@ session_start();
 $_SESSION['pageActuel']='workshopsListe.php';
 echo $_SESSION['pageActuel'];
 include '../php/listeAtelier.php';
-var_dump($nbAtelierPage);
 ?>
 
 
@@ -30,7 +29,7 @@ var_dump($nbAtelierPage);
           <!-- Custom content-->
           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
             <div class="media-body order-2 order-lg-1">
-              <a><h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop()"><?= var_dump($intNbAteliers); ?></h5></a>
+              <a><h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop()"><?= $recupAtelier[0]{'nbrPlaces'}; ?></h5></a>
               <p class="font-italic text-muted mb-0 small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit fuga autem maiores necessitatibus.</p>
               <div class="d-flex align-items-center justify-content-between mt-1">
                 <h6 class="font-weight-bold my-2">$120.00</h6>
