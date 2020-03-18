@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['pageActuel']='workshops.php';
+$_SESSION['pageActuel']='mesWorkshops.php';
 echo $_SESSION['pageActuel'];
 ?>
 <main id="content">
@@ -9,5 +9,6 @@ echo $_SESSION['pageActuel'];
 
 </main>
 <script>
+    removeClassActive();
     addClassActive('navWorkshops');
 </script>

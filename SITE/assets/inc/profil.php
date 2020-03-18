@@ -50,6 +50,7 @@ $_SESSION['pageActuel']='profil.php';
 
 </main>
 <script>
+    removeClassActive();
     addClassActive('navProfil');
 </script>
 <?php 

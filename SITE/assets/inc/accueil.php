@@ -53,5 +53,6 @@ $_SESSION['pageActuel']='accueil.php';
   
         </div>
         <script>
-    addClassActive('navAccueil');
-</script>
+          removeClassActive();
+          addClassActive('navAccueil');
+        </script>

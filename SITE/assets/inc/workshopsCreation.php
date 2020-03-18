@@ -1,12 +1,9 @@
 <?php
 session_start();
-$_SESSION['pageActuel'] = 'workshops.php';
+$_SESSION['pageActuel'] = 'workshopsCreation.php';
 echo $_SESSION['pageActuel'];
 ?>
 <main id="content">
-    <?php
-    $_SESSION['pageActuel'] = 'workshopsCreation.php';
-    ?>
     <div id="content">
         <div class="main">
             <section class="sign-in">
@@ -54,5 +51,6 @@ echo $_SESSION['pageActuel'];
 
 </main>
 <script>
+    removeClassActive();
     addClassActive('navWorkshops');
 </script>

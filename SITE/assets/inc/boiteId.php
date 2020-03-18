@@ -8,6 +8,3 @@ $_SESSION['pageActuel']='boiteId.php';
 
 </main>
 
-<script>
-    addClassActive('navBoiteId');
-</script>
