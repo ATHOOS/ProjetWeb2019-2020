@@ -39,7 +39,7 @@ function accueil() {
 }
 
 function workshopsListe() {
-    $('#content').load("assets/inc/workshopsListe.php");
+    $('#content').load("assets/inc/workshopsListe2.php");
 
     removeClassActive("navWorkshopsListe");
     addClassActive('navWorkshops');

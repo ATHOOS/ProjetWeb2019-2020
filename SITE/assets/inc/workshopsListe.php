@@ -1,12 +1,18 @@
 <?php
 session_start();
-$_SESSION['pageActuel']='workshopsListe.php';
+$_SESSION['pageActuel']='workshopsListe2.php';
 echo $_SESSION['pageActuel'];
 include '../php/listeAtelier.php';
 ?>
 <script>
-nbPages = <?= $nbPages=ceil((sizeof($recupAtelier) + 1) / 4); ?> ;
-console.log(nbPages);
+nbAteliers= <?= $nbAteliers = (sizeof($recupAtelier)); ?>;
+console.log(nbAteliers);
+limitePage = 4;
+<?php $nbPages=ceil($nbAteliers / 4); ?> ;
+nbPages = Math.ceil(nbAteliers/limitePage) ;
+$tabAteliers = <?= json_encode($recupAtelier);?> ;
+
+
 </script>
 
 
@@ -25,8 +31,8 @@ console.log(nbPages);
             <div class="col-lg-8 mx-auto">
 
                 <!-- List group-->
-                <ul class="list-group shadow">
-                    <?php foreach($recupAtelier as $item):?>
+                <ul class="list-group shadow" id="itemAtelier">
+                <?php foreach($recupAtelier as $item):?>
                     <!-- list group item-->
                     <li class="list-group-item">
                         <!-- Custom content-->
@@ -60,17 +66,37 @@ console.log(nbPages);
         </div>
         <div class="row text-center mb-7">
             <div class="col-lg-1 mx-auto">
-                <br>
-            <div class="paginationn">
-        <?php for($i=1; $i<= $nbPages; $i++){ ?>
-                    <li class="page-item"><a href="#" class="page-link"><?= $i ?></a></li>
-                <?php } ?>
-        </div>
+                    <br>
+                <div class="paginationn">
+                        
+                </div>
             </div>
         </div>
     </div>
     <script>
     removeClassActive();
     addClassActive('navWorkshops');
+    $("#itemAtelier .list-group-item:gt("+ (limitePage - 1) +")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>"+ 1 +"</a></li>");
+    for(var i=2; i <= nbPages; i++){
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>"+ i +"</a></li>");
+    }
+    $(".current-page").on("click", function(){
+        if($(this).hasClass("active")){
+            return false;
+        }
+        else{
+            var currentPage = ($(this).index())+1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".list-group-item").hide();
+            var total = limitePage*currentPage;
+            for(var i = total-limitePage; i < total; i++){
+                $("#itemAtelier .list-group-item:eq("+ i +")").show();
+            }
+        }
+        
+
+    })
     </script>
 </main>
