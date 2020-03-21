@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['pageActuel']='workshopsListe2.php';
+$_SESSION['pageActuel']='workshopsListe.php';
 echo $_SESSION['pageActuel'];
 include '../php/listeAtelier.php';
 ?>
@@ -8,7 +8,6 @@ include '../php/listeAtelier.php';
 nbAteliers= <?= $nbAteliers = (sizeof($recupAtelier)); ?>;
 console.log(nbAteliers);
 limitePage = 4;
-<?php $nbPages=ceil($nbAteliers / 4); ?> ;
 nbPages = Math.ceil(nbAteliers/limitePage) ;
 $tabAteliers = <?= json_encode($recupAtelier);?> ;
 
