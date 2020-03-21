@@ -1,22 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 21 mars 2020 à 14:06
--- Version du serveur :  5.7.28
--- Version de PHP :  7.3.12
+-- Hôte : localhost:8889
+-- Généré le :  sam. 21 mars 2020 à 17:57
+-- Version du serveur :  5.7.26
+-- Version de PHP :  7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de données :  `projetweb`
@@ -26,10 +18,9 @@ DELIMITER $$
 --
 -- Procédures
 --
-DROP PROCEDURE IF EXISTS `affichageAteliersAnimateur`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `affichageAteliersAnimateur` ()  BEGIN
 
-SELECT a.nom, a.description, a.date, a.nbrPlaces, u.prenom, u.nom nomAnimateur
+SELECT a.nom, a.description, a.date, a.nbrPlaces, a.idAtelier, u.prenom, u.nom nomAnimateur
 FROM atelier a
 INNER JOIN user u 
 ON a.animateur = u.matricule
@@ -37,7 +28,6 @@ ORDER BY a.date;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `afficherAtelierSansAnimateur`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `afficherAtelierSansAnimateur` ()  BEGIN
 
 SELECT nom, description, nbrPlaces, date FROM atelier
@@ -45,14 +35,12 @@ ORDER BY date;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `ajoutAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16))  BEGIN 
 
 INSERT INTO atelier (nom, description, date, nbrPlaces, animateur) VALUES (Nom, Description, Date, Places, Animateur);
 
 END$$
 
-DROP PROCEDURE IF EXISTS `changerAnimateur`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `changerAnimateur` (IN `identifiantAtelier` INT, IN `newAnimateur` VARCHAR(16))  BEGIN 
 
 UPDATE atelier 
@@ -61,7 +49,6 @@ WHERE idAtelier = identifiantAtelier;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `changerMDP`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `changerMDP` (IN `oldMDP` VARCHAR(16), IN `newMDP` VARCHAR(16), IN `noma` VARCHAR(32))  BEGIN
 
 UPDATE user
@@ -70,7 +57,6 @@ WHERE password = oldMDP AND matricule = noma;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `checkConnexion`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkConnexion` (IN `identifiant` VARCHAR(3200), IN `mdp` VARCHAR(3000))  BEGIN
 
 SELECT matricule, mail, nom, prenom FROM user 
@@ -78,7 +64,6 @@ WHERE password = mdp AND (matricule = identifiant OR mail = identifiant);
 
 END$$
 
-DROP PROCEDURE IF EXISTS `checkInscription`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkInscription` (IN `email` VARCHAR(32), IN `noma` VARCHAR(16))  BEGIN
 
 SELECT matricule FROM user 
@@ -86,7 +71,6 @@ WHERE mail = email OR matricule = noma;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `checkInscriptionAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkInscriptionAtelier` (IN `noma` VARCHAR(16), IN `identifiant` INT)  BEGIN
 
 SELECT idParticipant FROM participant_atelier 
@@ -94,14 +78,12 @@ WHERE noma = idParticipant AND identifiant = idAtelier;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `creationCompte`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `creationCompte` (IN `noma` VARCHAR(16), IN `Nom` VARCHAR(16), IN `Prenom` VARCHAR(16), IN `email` VARCHAR(32), IN `mdp` VARCHAR(3000))  BEGIN
 
 INSERT INTO user(matricule, nom, prenom, mail, password) VALUES(noma, Nom, Prenom, email, mdp);
 
 END$$
 
-DROP PROCEDURE IF EXISTS `desinscriptionAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `desinscriptionAtelier` (IN `noma` VARCHAR(16), IN `id` INT)  BEGIN
 
 DELETE FROM participant_atelier
@@ -109,14 +91,12 @@ WHERE noma = idparticipant AND id = idAtelier;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `inscriptionAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inscriptionAtelier` (IN `noma` VARCHAR(16), IN `identifiant` INT)  BEGIN
 
 INSERT INTO participant_atelier (idparticipant, idAtelier) VALUES (noma, identifiant);
 
 END$$
 
-DROP PROCEDURE IF EXISTS `suppressionCompte`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `suppressionCompte` (IN `noma` VARCHAR(16))  BEGIN
 
 DELETE FROM user 
@@ -124,7 +104,6 @@ WHERE matricule = noma;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `supprimerAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerAtelier` (IN `Atelier` INT)  BEGIN 
 
 DELETE FROM atelier
@@ -140,29 +119,28 @@ DELIMITER ;
 -- Structure de la table `atelier`
 --
 
-DROP TABLE IF EXISTS `atelier`;
-CREATE TABLE IF NOT EXISTS `atelier` (
-  `idAtelier` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `atelier` (
+  `idAtelier` int(11) NOT NULL,
   `nom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
   `description` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `date` datetime NOT NULL,
   `nbrPlaces` int(11) NOT NULL,
   `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
-  `termine` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`idAtelier`),
-  KEY `animateur_fk` (`animateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `termine` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `atelier`
 --
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`) VALUES
-(9, 'test3', 'djheshds', '2020-02-27 12:30:00', 34, 'he201620', 0),
+(9, 'test3', 'djheshds', '2020-02-27 12:30:00', 34, NULL, 0),
 (10, 'PHP', 'test', '2020-02-27 12:30:00', 12, 'HE201587', 0),
-(11, 'ez', 'ez', '2020-03-01 00:00:00', 7, 'HE201587', 0),
-(12, 'ew', 'ew', '2020-03-02 00:00:00', 6, 'he123456', 0),
-(13, 'eo', 'eo', '2020-03-03 00:00:00', 4, 'he123456', 0);
+(11, 'qdsfdqsf', 'sdfsdf', '2020-03-04 00:00:00', 8, 'he123456', 0),
+(12, 'azerfezf', 'qefzefzefzef', '2020-03-19 00:00:00', 3, 'HE201587', 0),
+(13, 'zefezf', 'ezfzefzef', '2020-03-05 00:00:00', 4, 'HE201587', 0),
+(14, 'azerfezf', 'qefzefzefzef', '2020-03-19 00:00:00', 3, 'HE201587', 0),
+(15, 'zefezf', 'ezfzefzef', '2020-03-05 00:00:00', 4, 'HE201587', 0);
 
 -- --------------------------------------------------------
 
@@ -170,14 +148,12 @@ INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `
 -- Structure de la table `forum`
 --
 
-DROP TABLE IF EXISTS `forum`;
-CREATE TABLE IF NOT EXISTS `forum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `forum` (
+  `id` int(11) NOT NULL,
   `sujet` varchar(16) COLLATE utf8mb4_bin NOT NULL,
   `description` varchar(240) COLLATE utf8mb4_bin NOT NULL,
-  `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `forum`
@@ -192,12 +168,9 @@ INSERT INTO `forum` (`id`, `sujet`, `description`, `creation`) VALUES
 -- Structure de la table `participant_atelier`
 --
 
-DROP TABLE IF EXISTS `participant_atelier`;
-CREATE TABLE IF NOT EXISTS `participant_atelier` (
+CREATE TABLE `participant_atelier` (
   `idparticipant` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `idAtelier` int(11) NOT NULL,
-  PRIMARY KEY (`idparticipant`,`idAtelier`),
-  KEY `id_atelier_fk` (`idAtelier`)
+  `idAtelier` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -205,7 +178,10 @@ CREATE TABLE IF NOT EXISTS `participant_atelier` (
 --
 
 INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
-('he201620', 10);
+('HE201587', 10),
+('he201620', 10),
+('HE201587', 11),
+('HE201587', 12);
 
 -- --------------------------------------------------------
 
@@ -213,16 +189,12 @@ INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
 -- Structure de la table `post_user`
 --
 
-DROP TABLE IF EXISTS `post_user`;
-CREATE TABLE IF NOT EXISTS `post_user` (
-  `idPost` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `post_user` (
+  `idPost` int(11) NOT NULL,
   `forum` int(11) NOT NULL,
   `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `auteur` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`idPost`),
-  KEY `post_user_forum_fk` (`forum`),
-  KEY `post_user_user_fk` (`auteur`)
+  `auteur` varchar(16) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -231,12 +203,10 @@ CREATE TABLE IF NOT EXISTS `post_user` (
 -- Structure de la table `question`
 --
 
-DROP TABLE IF EXISTS `question`;
-CREATE TABLE IF NOT EXISTS `question` (
-  `idQuestion` int(11) NOT NULL AUTO_INCREMENT,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`idQuestion`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+CREATE TABLE `question` (
+  `idQuestion` int(11) NOT NULL,
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `question`
@@ -254,15 +224,12 @@ INSERT INTO `question` (`idQuestion`, `texte`) VALUES
 -- Structure de la table `reponse`
 --
 
-DROP TABLE IF EXISTS `reponse`;
-CREATE TABLE IF NOT EXISTS `reponse` (
+CREATE TABLE `reponse` (
   `idSondage` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
   `idReponseProposee` int(11) NOT NULL,
   `idUser` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`idSondage`,`idQuestion`,`idReponseProposee`,`idUser`),
-  KEY `reponse_user_fk` (`idUser`)
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
@@ -271,12 +238,10 @@ CREATE TABLE IF NOT EXISTS `reponse` (
 -- Structure de la table `reponseproposee`
 --
 
-DROP TABLE IF EXISTS `reponseproposee`;
-CREATE TABLE IF NOT EXISTS `reponseproposee` (
-  `idReponseProposee` int(11) NOT NULL AUTO_INCREMENT,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
-  PRIMARY KEY (`idReponseProposee`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+CREATE TABLE `reponseproposee` (
+  `idReponseProposee` int(11) NOT NULL,
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `reponseproposee`
@@ -294,15 +259,13 @@ INSERT INTO `reponseproposee` (`idReponseProposee`, `texte`) VALUES
 -- Structure de la table `sondage`
 --
 
-DROP TABLE IF EXISTS `sondage`;
-CREATE TABLE IF NOT EXISTS `sondage` (
-  `idSondage` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `sondage` (
+  `idSondage` int(11) NOT NULL,
   `description` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   `dateDebut` datetime NOT NULL,
   `dateFin` datetime NOT NULL,
-  `ouvert` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idSondage`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  `ouvert` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `sondage`
@@ -317,12 +280,9 @@ INSERT INTO `sondage` (`idSondage`, `description`, `dateDebut`, `dateFin`, `ouve
 -- Structure de la table `sondage_question`
 --
 
-DROP TABLE IF EXISTS `sondage_question`;
-CREATE TABLE IF NOT EXISTS `sondage_question` (
+CREATE TABLE `sondage_question` (
   `idSondage` int(11) NOT NULL,
-  `idQuestion` int(11) NOT NULL,
-  PRIMARY KEY (`idSondage`,`idQuestion`),
-  KEY `sondage_question_question_fk` (`idQuestion`)
+  `idQuestion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -341,13 +301,10 @@ INSERT INTO `sondage_question` (`idSondage`, `idQuestion`) VALUES
 -- Structure de la table `sondage_question_reponse`
 --
 
-DROP TABLE IF EXISTS `sondage_question_reponse`;
-CREATE TABLE IF NOT EXISTS `sondage_question_reponse` (
+CREATE TABLE `sondage_question_reponse` (
   `idSondage` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
-  `idReponseProposee` int(11) NOT NULL,
-  PRIMARY KEY (`idSondage`,`idQuestion`,`idReponseProposee`),
-  KEY `sondage_question_reponse_reponseProposee` (`idReponseProposee`)
+  `idReponseProposee` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -376,15 +333,13 @@ INSERT INTO `sondage_question_reponse` (`idSondage`, `idQuestion`, `idReponsePro
 -- Structure de la table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `matricule` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `nom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
   `prenom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
   `mail` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `password` varchar(3000) COLLATE utf8mb4_bin NOT NULL,
-  `administration` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`matricule`)
+  `administration` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -395,6 +350,123 @@ INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administr
 ('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('he123456', 'test', 'retest', 'etcatest@test.fr', 'test123', 0),
 ('he201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', 'test', 0);
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `atelier`
+--
+ALTER TABLE `atelier`
+  ADD PRIMARY KEY (`idAtelier`),
+  ADD KEY `animateur_fk` (`animateur`);
+
+--
+-- Index pour la table `forum`
+--
+ALTER TABLE `forum`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `participant_atelier`
+--
+ALTER TABLE `participant_atelier`
+  ADD PRIMARY KEY (`idparticipant`,`idAtelier`),
+  ADD KEY `id_atelier_fk` (`idAtelier`);
+
+--
+-- Index pour la table `post_user`
+--
+ALTER TABLE `post_user`
+  ADD PRIMARY KEY (`idPost`),
+  ADD KEY `post_user_forum_fk` (`forum`),
+  ADD KEY `post_user_user_fk` (`auteur`);
+
+--
+-- Index pour la table `question`
+--
+ALTER TABLE `question`
+  ADD PRIMARY KEY (`idQuestion`);
+
+--
+-- Index pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD PRIMARY KEY (`idSondage`,`idQuestion`,`idReponseProposee`,`idUser`),
+  ADD KEY `reponse_user_fk` (`idUser`);
+
+--
+-- Index pour la table `reponseproposee`
+--
+ALTER TABLE `reponseproposee`
+  ADD PRIMARY KEY (`idReponseProposee`);
+
+--
+-- Index pour la table `sondage`
+--
+ALTER TABLE `sondage`
+  ADD PRIMARY KEY (`idSondage`);
+
+--
+-- Index pour la table `sondage_question`
+--
+ALTER TABLE `sondage_question`
+  ADD PRIMARY KEY (`idSondage`,`idQuestion`),
+  ADD KEY `sondage_question_question_fk` (`idQuestion`);
+
+--
+-- Index pour la table `sondage_question_reponse`
+--
+ALTER TABLE `sondage_question_reponse`
+  ADD PRIMARY KEY (`idSondage`,`idQuestion`,`idReponseProposee`),
+  ADD KEY `sondage_question_reponse_reponseProposee` (`idReponseProposee`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`matricule`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `atelier`
+--
+ALTER TABLE `atelier`
+  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT pour la table `forum`
+--
+ALTER TABLE `forum`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT pour la table `post_user`
+--
+ALTER TABLE `post_user`
+  MODIFY `idPost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `question`
+--
+ALTER TABLE `question`
+  MODIFY `idQuestion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `reponseproposee`
+--
+ALTER TABLE `reponseproposee`
+  MODIFY `idReponseProposee` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `sondage`
+--
+ALTER TABLE `sondage`
+  MODIFY `idSondage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
@@ -440,8 +512,3 @@ ALTER TABLE `sondage_question`
 ALTER TABLE `sondage_question_reponse`
   ADD CONSTRAINT `sondage_question_reponse_reponseProposee` FOREIGN KEY (`idReponseProposee`) REFERENCES `reponseproposee` (`idReponseProposee`) ON DELETE CASCADE,
   ADD CONSTRAINT `sondage_question_reponse_sondage_question_fk` FOREIGN KEY (`idSondage`,`idQuestion`) REFERENCES `sondage_question` (`idSondage`, `idQuestion`) ON DELETE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
