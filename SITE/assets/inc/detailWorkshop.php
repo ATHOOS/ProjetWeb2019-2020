@@ -1,10 +1,49 @@
-<main id="content">
+<?php 
+session_start();
+$_SESSION['pageActuel']='detailWorkshop.php';
+include '../php/listeAtelier.php';
+$fullDate= $recupAtelier[$_GET['i']]{'date'};
+
+
+
+?>
+
+<script>
+var month = new Array();
+month[0] = "janvier";
+month[1] = "février";
+month[2] = "mars";
+month[3] = "avril";
+month[4] = "mai";
+month[5] = "juin";
+month[6] = "juillet";
+month[7] = "aout";
+month[8] = "septembre";
+month[9] = "octobre";
+month[10] = "novembre";
+month[11] = "décembre";
+tabAteliers = <?php echo json_encode($recupAtelier)?> ;
+index= <?php echo $_GET['i'] ?>;
+let datefull = new Date(tabAteliers[index]['date']);
+console.log(index);
+let date = (datefull).getDate() +" "+ (month[(datefull).getMonth()]) +" "+ (datefull).getFullYear();
+let heure = (datefull).getHours() +'h'+(datefull).getMinutes();
+$('#nom').html(tabAteliers[index]['nom']);
+$('#description').html(tabAteliers[index]['description']);
+$('#date').html(date);
+$('#heure').html(heure);
+</script>
+
+
+<main id="content" style="margin-top:6em">
 <!-- Page Content -->
 <div class="container">
 
   <!-- Portfolio Item Heading -->
-  <h1 class="my-4">Page Heading
-    <small>Secondary Text</small>
+
+
+  <h1 class="my-4">
+    <span id="nom"></span>
   </h1>
 
   <!-- Portfolio Item Row -->
@@ -16,13 +55,12 @@
 
     <div class="col-md-4">
       <h3 class="my-3">Description atelier</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-      <h3 class="my-3">Project Details</h3>
+      <p id="description"></p>
+      <h3 class="my-3">Date de l'atelier</h3>
       <ul>
-        <li>Lorem Ipsum</li>
-        <li>Dolor Sit Amet</li>
-        <li>Consectetur</li>
-        <li>Adipiscing Elit</li>
+        <li id="date"></li>
+        <li id="heure"></li>
+        
       </ul>
     </div>
 

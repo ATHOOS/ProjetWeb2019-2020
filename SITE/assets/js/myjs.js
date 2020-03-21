@@ -73,8 +73,11 @@ function profil() {
     addClassActive('navProfil');
 }
 
-function detailWorkshop(){
-    $('#content').load("assets/inc/detailWorkshop.php");
+
+
+function detailWorkshop(p){
+    $('#content').load("assets/inc/detailWorkshop.php?i="+p);
+
 }
 
 function estCo(){

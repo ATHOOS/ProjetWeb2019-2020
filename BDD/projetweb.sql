@@ -2,9 +2,9 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 09 mars 2020 à 20:27
--- Version du serveur :  8.0.18
+-- Hôte : 127.0.0.1:3308
+-- Généré le :  sam. 21 mars 2020 à 14:06
+-- Version du serveur :  5.7.28
 -- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -143,23 +143,26 @@ DELIMITER ;
 DROP TABLE IF EXISTS `atelier`;
 CREATE TABLE IF NOT EXISTS `atelier` (
   `idAtelier` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `description` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `nom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `date` datetime NOT NULL,
   `nbrPlaces` int(11) NOT NULL,
-  `animateur` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
   `termine` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idAtelier`),
   KEY `animateur_fk` (`animateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `atelier`
 --
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`) VALUES
-(9, 'test3', 'djheshds', '2020-02-27 12:30:00', 34, NULL, 0),
-(10, 'PHP', 'test', '2020-02-27 12:30:00', 12, 'HE201587', 0);
+(9, 'test3', 'djheshds', '2020-02-27 12:30:00', 34, 'he201620', 0),
+(10, 'PHP', 'test', '2020-02-27 12:30:00', 12, 'HE201587', 0),
+(11, 'ez', 'ez', '2020-03-01 00:00:00', 7, 'HE201587', 0),
+(12, 'ew', 'ew', '2020-03-02 00:00:00', 6, 'he123456', 0),
+(13, 'eo', 'eo', '2020-03-03 00:00:00', 4, 'he123456', 0);
 
 -- --------------------------------------------------------
 
@@ -170,8 +173,8 @@ INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `
 DROP TABLE IF EXISTS `forum`;
 CREATE TABLE IF NOT EXISTS `forum` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sujet` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `sujet` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(240) COLLATE utf8mb4_bin NOT NULL,
   `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -191,7 +194,7 @@ INSERT INTO `forum` (`id`, `sujet`, `description`, `creation`) VALUES
 
 DROP TABLE IF EXISTS `participant_atelier`;
 CREATE TABLE IF NOT EXISTS `participant_atelier` (
-  `idparticipant` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `idparticipant` varchar(16) COLLATE utf8mb4_bin NOT NULL,
   `idAtelier` int(11) NOT NULL,
   PRIMARY KEY (`idparticipant`,`idAtelier`),
   KEY `id_atelier_fk` (`idAtelier`)
@@ -214,13 +217,13 @@ DROP TABLE IF EXISTS `post_user`;
 CREATE TABLE IF NOT EXISTS `post_user` (
   `idPost` int(11) NOT NULL AUTO_INCREMENT,
   `forum` int(11) NOT NULL,
-  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `auteur` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `auteur` varchar(16) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idPost`),
   KEY `post_user_forum_fk` (`forum`),
   KEY `post_user_user_fk` (`auteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -231,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `post_user` (
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE IF NOT EXISTS `question` (
   `idQuestion` int(11) NOT NULL AUTO_INCREMENT,
-  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idQuestion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -256,8 +259,8 @@ CREATE TABLE IF NOT EXISTS `reponse` (
   `idSondage` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
   `idReponseProposee` int(11) NOT NULL,
-  `idUser` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `idUser` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idSondage`,`idQuestion`,`idReponseProposee`,`idUser`),
   KEY `reponse_user_fk` (`idUser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -271,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `reponse` (
 DROP TABLE IF EXISTS `reponseproposee`;
 CREATE TABLE IF NOT EXISTS `reponseproposee` (
   `idReponseProposee` int(11) NOT NULL AUTO_INCREMENT,
-  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idReponseProposee`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -294,7 +297,7 @@ INSERT INTO `reponseproposee` (`idReponseProposee`, `texte`) VALUES
 DROP TABLE IF EXISTS `sondage`;
 CREATE TABLE IF NOT EXISTS `sondage` (
   `idSondage` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(256) COLLATE utf8mb4_bin NOT NULL,
   `dateDebut` datetime NOT NULL,
   `dateFin` datetime NOT NULL,
   `ouvert` tinyint(1) NOT NULL,
@@ -375,11 +378,11 @@ INSERT INTO `sondage_question_reponse` (`idSondage`, `idQuestion`, `idReponsePro
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `matricule` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `nom` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `prenom` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `mail` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `password` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `matricule` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `nom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `prenom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `mail` varchar(32) COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(3000) COLLATE utf8mb4_bin NOT NULL,
   `administration` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`matricule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

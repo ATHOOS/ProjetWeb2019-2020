@@ -1260,6 +1260,11 @@ section {
   margin-bottom: 2em;
 }
 
+#content{
+  margin-top: 10em;
+  margin-bottom: 5em;
+}
+
 a{
   cursor: pointer;
 }

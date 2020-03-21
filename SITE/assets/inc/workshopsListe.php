@@ -1,15 +1,15 @@
 <?php
 session_start();
 $_SESSION['pageActuel']='workshopsListe.php';
-echo $_SESSION['pageActuel'];
 include '../php/listeAtelier.php';
+$indexAtelier=0;
 ?>
 <script>
 nbAteliers= <?= $nbAteliers = (sizeof($recupAtelier)); ?>;
 console.log(nbAteliers);
 limitePage = 4;
 nbPages = Math.ceil(nbAteliers/limitePage) ;
-$tabAteliers = <?= json_encode($recupAtelier);?> ;
+tabAteliers = <?= json_encode($recupAtelier);?> ;
 
 
 </script>
@@ -38,7 +38,7 @@ $tabAteliers = <?= json_encode($recupAtelier);?> ;
                         <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                             <div class="media-body order-2 order-lg-1">
                                 <a>
-                                    <h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop()">
+                                    <h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(<?= $indexAtelier++ ?>)">
                                         <?= $item{'nom'}; ?></h5>
                                 </a>
                                 <p class="font-italic text-muted mb-0 small"><?= $item{'description'}; ?></p>
