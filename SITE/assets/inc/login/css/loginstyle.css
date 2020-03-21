@@ -520,7 +520,9 @@ label.valid {
     max-width: 100%; } }
 @media screen and (min-width: 1024px) {
   .container {
-    max-width: 1200px; } }
+    max-width: 1200px; 
+    padding:2em;
+  } }
 @media screen and (max-width: 768px) {
   .signup-content, .signin-content {
     flex-direction: column;

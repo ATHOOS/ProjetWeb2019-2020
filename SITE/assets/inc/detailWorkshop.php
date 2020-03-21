@@ -75,3 +75,8 @@ $_SESSION['idAtelier'] = $recupAtelier[$id]{'idAtelier'};
       addClassActive('navWorkshops');
     </script>
 </main>
+<?php 
+    if(!isset($_SESSION['matricule'])){
+        echo("<script> connexion(); </script>");
+    }
+?>

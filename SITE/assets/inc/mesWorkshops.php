@@ -119,5 +119,9 @@ echo $_SESSION['pageActuel'];
 </script>
 
 </main>
-
+<?php 
+    if(!isset($_SESSION['matricule'])){
+        echo("<script> connexion(); </script>");
+    }
+?>
 

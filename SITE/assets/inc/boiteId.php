@@ -11,3 +11,8 @@ $_SESSION['pageActuel']='boiteId.php';
 </script>
 </main>
 
+<?php 
+    if(!isset($_SESSION['matricule'])){
+        echo("<script> connexion(); </script>");
+    }
+?>
