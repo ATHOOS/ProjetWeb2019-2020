@@ -40,6 +40,8 @@ class dbAccess
             case 'checkConnexion':
             case 'recupAtelier':
             case 'inscriptionAtelier':
+            case "checkSiDejaDansAtelier":
+            case 'desinscriptionAtelier':
                 array_push($params, '?', '?');
 
                 try {

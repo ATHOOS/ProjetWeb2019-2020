@@ -2,9 +2,11 @@
 session_start();
 include '../php/listeAtelier.php';
 $id = $_GET['i'];
-$fullDate = $recupAtelier[$id]{'date'};
-$_SESSION['idAtelier'] = $recupAtelier[$id]{'idAtelier'};
-
+$fullDate = $recupAtelier[$id]{
+'date'};
+$_SESSION['idAtelier'] = $recupAtelier[$id]{
+'idAtelier'};
+include "../php/checkSiDejaDansAtelier.php";
 ?>
 
 <script>
@@ -61,11 +63,19 @@ $_SESSION['idAtelier'] = $recupAtelier[$id]{'idAtelier'};
           <li id="heure"></li>
 
         </ul>
-        <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
-          <div class="form-group form-button">
-            <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop" onclick="inscriptionWorkshop();" />
-          </div>
-        </form>
+        <?php if (empty($checkSiDejaDansAtelier)) { ?>
+          <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
+            <div class="form-group form-button">
+              <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop"/>
+            </div>
+          </form>
+        <?php } else { ?>
+          <form id="inscriptionWorkshop" method="post" action="assets/php/desinscriptionWorkshop.php">
+            <div class="form-group form-button">
+              <input type="submit" name="signin" id="signin" class="form-submit" value="Se désinscrire de ce workshop"/>
+            </div>
+          </form>
+        <?php } ?>
       </div>
 
     </div>
@@ -75,8 +85,8 @@ $_SESSION['idAtelier'] = $recupAtelier[$id]{'idAtelier'};
       addClassActive('navWorkshops');
     </script>
 </main>
-<?php 
-    if(!isset($_SESSION['matricule'])){
-        echo("<script> connexion(); </script>");
-    }
+<?php
+if (!isset($_SESSION['matricule'])) {
+  echo ("<script> connexion(); </script>");
+}
 ?>

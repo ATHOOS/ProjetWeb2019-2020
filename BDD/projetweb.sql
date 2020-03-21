@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  sam. 21 mars 2020 à 17:57
+-- Généré le :  sam. 21 mars 2020 à 18:27
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.3.8
 
@@ -76,6 +76,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `checkInscriptionAtelier` (IN `noma`
 SELECT idParticipant FROM participant_atelier 
 WHERE noma = idParticipant AND identifiant = idAtelier;
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiDejaDansAtelier` (IN `noma` VARCHAR(16), IN `id` INT)  BEGIN
+SELECT * FROM participant_atelier
+WHERE idparticipant = noma and idAtelier = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `creationCompte` (IN `noma` VARCHAR(16), IN `Nom` VARCHAR(16), IN `Prenom` VARCHAR(16), IN `email` VARCHAR(32), IN `mdp` VARCHAR(3000))  BEGIN
