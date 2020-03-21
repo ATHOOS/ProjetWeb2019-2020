@@ -3,7 +3,6 @@ session_start();
 $_SESSION['pageActuel']='workshopsListe.php';
 include '../php/listeAtelier.php';
 $indexAtelier=0;
-header("Refresh:0");
 ?>
 
 <script>
@@ -62,6 +61,7 @@ tabAteliers = <?= json_encode($recupAtelier);?> ;
                     <!-- End -->
                     <?php endforeach;?>
                 </ul>
+                
                 <!-- End -->
             </div>
         </div>

@@ -39,6 +39,7 @@ class dbAccess
             case 'checkInscription':
             case 'checkConnexion':
             case 'recupAtelier':
+            case 'inscriptionAtelier':
                 array_push($params, '?', '?');
 
                 try {
