@@ -3,7 +3,9 @@ session_start();
 $_SESSION['pageActuel']='workshopsListe.php';
 include '../php/listeAtelier.php';
 $indexAtelier=0;
+header("Refresh:0");
 ?>
+
 <script>
 nbAteliers= <?= $nbAteliers = (sizeof($recupAtelier)); ?>;
 console.log(nbAteliers);

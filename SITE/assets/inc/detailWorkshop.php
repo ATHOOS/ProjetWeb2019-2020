@@ -1,10 +1,8 @@
 <?php 
 session_start();
-$_SESSION['pageActuel']='detailWorkshop.php';
 include '../php/listeAtelier.php';
-$fullDate= $recupAtelier[$_GET['i']]{'date'};
-
-
+$id = $_GET['i'];
+$fullDate= $recupAtelier[$id]{'date'};
 
 ?>
 
@@ -23,11 +21,11 @@ month[9] = "octobre";
 month[10] = "novembre";
 month[11] = "décembre";
 tabAteliers = <?php echo json_encode($recupAtelier)?> ;
-index= <?php echo $_GET['i'] ?>;
-let datefull = new Date(tabAteliers[index]['date']);
+index= <?php echo $id ?>;
+var datefull = new Date(tabAteliers[index]['date']);
 console.log(index);
-let date = (datefull).getDate() +" "+ (month[(datefull).getMonth()]) +" "+ (datefull).getFullYear();
-let heure = (datefull).getHours() +'h'+(datefull).getMinutes();
+var date = (datefull).getDate() +" "+ (month[(datefull).getMonth()]) +" "+ (datefull).getFullYear();
+var heure = (datefull).getHours() +'h'+(datefull).getMinutes();
 $('#nom').html(tabAteliers[index]['nom']);
 $('#description').html(tabAteliers[index]['description']);
 $('#date').html(date);
