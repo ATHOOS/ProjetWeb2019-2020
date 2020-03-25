@@ -29,9 +29,9 @@ $indexAtelier = 0;
           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
             <div class="media-body order-2 order-lg-1">
               <a><h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(<?= $indexAtelier++ ?>)"><?= $item{'nom'}; ?></h5></a>
-              <p class="font-italic text-muted mb-0 small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit fuga autem maiores necessitatibus.</p>
+              <p class="font-italic text-muted mb-0 small"><?= $item{'description'}; ?></p>
               <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2">$120.00</h6>
+              <h6 class="font-weight-bold my-2"><?= date("d-m-Y", strtotime($item{'date'})); ?></h6>
                 <ul class="list-inline small">
                   <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
                   <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i></li>
