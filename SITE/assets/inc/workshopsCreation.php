@@ -25,7 +25,7 @@ $_SESSION['pageActuel'] = 'workshopsCreation.php';
                                 </div>
                                 <div class="form-group">
                                     <label for="workshop_date"><i class="zmdi zmdi-lock"></i></label>
-                                    <input type="date" name="workshop_date" id="workshop_date" />
+                                    <input type="datetime-local" name="workshop_date" id="workshop_date" />
                                     <span id="error_date" style="display : none; color : red">Date incorrecte</span>
                                 </div>
                                 <div class="form-group">
