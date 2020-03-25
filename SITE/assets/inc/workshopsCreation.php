@@ -1,7 +1,6 @@
 <?php
 session_start();
 $_SESSION['pageActuel'] = 'workshopsCreation.php';
-echo $_SESSION['pageActuel'];
 ?>
 <main id="content">
     <div id="content">

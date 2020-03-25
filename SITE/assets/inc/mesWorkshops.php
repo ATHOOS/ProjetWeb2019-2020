@@ -1,7 +1,6 @@
 <?php
 session_start();
 $_SESSION['pageActuel']='mesWorkshops.php';
-echo $_SESSION['pageActuel'];
 ?>
 <main id="content">
 <div class="container py-5" id="listeAteliers">
