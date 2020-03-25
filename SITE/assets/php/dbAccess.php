@@ -20,8 +20,23 @@ class dbAccess
 
         switch ($nomProcedure) {
             case 'checkNbAteliers':
-            case 'affichageAteliersAnimateur':
+            case 'affichageAteliersAnimateur':            
                 array_push($params);
+
+                try {
+                    $this->connexionDB();
+                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
+                    $requete = $this->pdo->prepare($procedureCall);
+                    $requete->execute($procParams);
+                    return $requete->fetchAll();
+                } catch (Exception $e) {
+                    die("Erreur :" . $e->getMessage());
+                }
+                break;
+        }
+        switch($nomProcedure) {
+            case 'recupAtelierInscrit':
+                array_push($params, '?');
 
                 try {
                     $this->connexionDB();
@@ -38,7 +53,6 @@ class dbAccess
         switch ($nomProcedure) {
             case 'checkInscription':
             case 'checkConnexion':
-            case 'recupAtelier':
             case 'inscriptionAtelier':
             case "checkSiDejaDansAtelier":
             case 'desinscriptionAtelier':
