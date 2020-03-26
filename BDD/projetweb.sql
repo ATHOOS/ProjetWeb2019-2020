@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 26 mars 2020 à 15:09
+-- Généré le :  jeu. 26 mars 2020 à 15:57
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -177,6 +177,20 @@ INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `
 (22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0),
 (23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0),
 (24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `candidat_atelier`
+--
+
+DROP TABLE IF EXISTS `candidat_atelier`;
+CREATE TABLE IF NOT EXISTS `candidat_atelier` (
+  `idCandidat` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `idAtelier` int(11) NOT NULL,
+  PRIMARY KEY (`idCandidat`,`idAtelier`),
+  KEY `candidat_atelier_atelier_fk` (`idAtelier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -422,6 +436,13 @@ INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administr
 --
 ALTER TABLE `atelier`
   ADD CONSTRAINT `animateur_fk` FOREIGN KEY (`animateur`) REFERENCES `user` (`matricule`) ON DELETE SET NULL;
+
+--
+-- Contraintes pour la table `candidat_atelier`
+--
+ALTER TABLE `candidat_atelier`
+  ADD CONSTRAINT `candidat_atelier_atelier_fk` FOREIGN KEY (`idAtelier`) REFERENCES `atelier` (`idAtelier`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `candidat_atelier_user_fk` FOREIGN KEY (`idCandidat`) REFERENCES `user` (`matricule`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `participant_atelier`
