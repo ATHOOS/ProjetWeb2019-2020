@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 25 mars 2020 à 14:23
+-- Généré le :  jeu. 26 mars 2020 à 15:09
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -125,7 +125,7 @@ END$$
 DROP PROCEDURE IF EXISTS `recupAtelierInscrit`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierInscrit` (IN `noma` VARCHAR(16))  BEGIN
 
-SELECT a.nom, a.description, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
+SELECT a.nom, a.description, a.date, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
 WHERE p.idparticipant = noma; 
 
 END$$
@@ -165,22 +165,18 @@ CREATE TABLE IF NOT EXISTS `atelier` (
   `termine` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idAtelier`),
   KEY `animateur_fk` (`animateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `atelier`
 --
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`) VALUES
-(9, 'test3', 'djheshds', '2020-02-27 12:30:00', 34, NULL, 0),
-(10, 'PHP', 'test', '2020-02-27 12:30:00', 12, 'HE201587', 0),
-(11, 'qdsfdqsf', 'sdfsdf', '2020-03-04 00:00:00', 8, 'he123456', 0),
-(12, 'azerfezf', 'qefzefzefzef', '2020-03-19 00:00:00', 3, 'HE201587', 0),
-(13, 'zefezf', 'ezfzefzef', '2020-03-05 00:00:00', 4, 'HE201587', 0),
-(14, 'azerfezf', 'qefzefzefzef', '2020-03-19 00:00:00', 3, 'HE201587', 0),
-(15, 'zefezf', 'ezfzefzef', '2020-03-05 00:00:00', 4, 'HE201587', 0),
-(18, 'test', 'testLive', '2020-03-28 00:00:00', 45, 'HE201587', 0),
-(19, 'test2', 'teteste', '2020-03-28 00:00:00', 45, 'HE201587', 0);
+(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 0),
+(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 0),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0),
+(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0),
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 0);
 
 -- --------------------------------------------------------
 
@@ -223,10 +219,11 @@ CREATE TABLE IF NOT EXISTS `participant_atelier` (
 --
 
 INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
-('HE201587', 10),
-('he201620', 10),
-('HE201587', 11),
-('HE201587', 12);
+('HE201587', 20),
+('HE201587', 21),
+('HE201620', 22),
+('HE201620', 23),
+('HE201587', 24);
 
 -- --------------------------------------------------------
 
@@ -414,9 +411,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administration`) VALUES
 ('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE201621', 'Gassmann', 'Mathias', 'm.gassmann@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('he123456', 'test', 'retest', 'etcatest@test.fr', 'test123', 0),
-('he201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', 'test', 0);
+('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
 
 --
 -- Contraintes pour les tables déchargées
