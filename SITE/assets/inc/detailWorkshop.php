@@ -76,6 +76,11 @@ include "../php/checkSiDejaDansAtelier.php";
             </div>
           </form>
         <?php } ?>
+          <form>
+            <div class="form-group form-button">
+              <input type="submit" name="signin" id="signin" class="form-submit" value="Proposer sa candidature"/>
+            </div>
+          </form>
       </div>
 
     </div>
