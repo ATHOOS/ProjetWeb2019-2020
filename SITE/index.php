@@ -69,6 +69,7 @@ session_start();
               </li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
           <li id ="navProfil" onclick='profil()'><a href="">Profil</a></li>
+          <li id ="navAdmin" onclick='adminPage()'><a href="">Administration</a></li>
           <li id="navConnexion"class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
         </ul>
       </nav><!-- .nav-menu -->
