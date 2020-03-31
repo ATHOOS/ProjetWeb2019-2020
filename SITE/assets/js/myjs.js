@@ -244,5 +244,8 @@ function ajoutAtelier() {
 
 //affichage de la liste des ateliers
 
+function filtrerAtelier(sujet){
+   $('#' + sujet).hide();
+}
 
 

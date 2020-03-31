@@ -25,19 +25,19 @@ $indexAtelier = 0;
         </div>
         <div class="row text-center mb-5">
             <div class="col-lg-7 mx-auto">
-                <label>Filtrer les ateliers</label>
-                <select name="pets" id="pet-select">
-                    <option value="">--Please choose an option--</option>
-                    <option value="dog">Dog</option>
-                    <option value="cat">Cat</option>
-                    <option value="hamster">Hamster</option>
-                    <option value="parrot">Parrot</option>
-                    <option value="spider">Spider</option>
-                    <option value="goldfish">Goldfish</option>
-                </select>
+                <form id="filtreAtelier">
+                    <label>Filtrer les ateliers</label>
+                    <select id="sujet">
+                        <option value="Comptabilité">Comptabilité</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Informatique">Informatique</option>
+                        <option value="Electro-mécanique">Electro-mécanique</option>
+                        <option value="Droit">Droit</option>
+                    </select>
+                    <button type="button" onclick="filtrerAtelier($('#sujet').val())">Filtrer</button>
+                </form>
             </div>
         </div>
-        <!-- End -->
 
         <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -46,7 +46,7 @@ $indexAtelier = 0;
                 <ul class="list-group shadow" id="itemAtelier">
                     <?php foreach ($recupAtelier as $item) : ?>
                         <!-- list group item-->
-                        <li class="list-group-item">
+                        <li class="list-group-item" id="<?= $item{'sujet'} ?>">
                             <!-- Custom content-->
                             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                                 <div class="media-body order-2 order-lg-1">
