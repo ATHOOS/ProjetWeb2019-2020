@@ -23,6 +23,20 @@ $indexAtelier = 0;
                 <h1>Listes des workshops</h1>
             </div>
         </div>
+        <div class="row text-center mb-5">
+            <div class="col-lg-7 mx-auto">
+                <label>Filtrer les ateliers</label>
+                <select name="pets" id="pet-select">
+                    <option value="">--Please choose an option--</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="hamster">Hamster</option>
+                    <option value="parrot">Parrot</option>
+                    <option value="spider">Spider</option>
+                    <option value="goldfish">Goldfish</option>
+                </select>
+            </div>
+        </div>
         <!-- End -->
 
         <div class="row">

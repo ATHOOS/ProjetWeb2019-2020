@@ -72,7 +72,6 @@ class dbAccess
 
         switch ($nomProcedure) {
             case 'creationCompte':
-            case 'ajoutAtelier':
                 array_push($params, '?', '?', '?', '?', '?');
 
                 try {
@@ -86,5 +85,22 @@ class dbAccess
                 }
                 break;
         }
+
+        switch ($nomProcedure) {
+            case 'ajoutAtelier':
+                array_push($params, '?', '?', '?', '?', '?', '?');
+
+                try {
+                    $this->connexionDB();
+                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
+                    $requete = $this->pdo->prepare($procedureCall);
+                    $requete->execute($procParams);
+                    return $requete->fetchAll();
+                } catch (Exception $e) {
+                    die("Erreur :" . $e->getMessage());
+                }
+                break;
+        }
+        
     }
 }
