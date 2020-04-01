@@ -13,31 +13,10 @@ include '../php/checkSiDejaCandidat.php';
 ?>
 
 <script>
-  var month = new Array();
-  month[0] = "janvier";
-  month[1] = "février";
-  month[2] = "mars";
-  month[3] = "avril";
-  month[4] = "mai";
-  month[5] = "juin";
-  month[6] = "juillet";
-  month[7] = "aout";
-  month[8] = "septembre";
-  month[9] = "octobre";
-  month[10] = "novembre";
-  month[11] = "décembre";
-  tabAteliers = <?php echo json_encode($recupAtelier) ?>;
-  index = <?php echo $id ?>;
-  var datefull = new Date(tabAteliers[index]['date']);
-  console.log(index);
-  var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-  var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
-  $('#nom').html(tabAteliers[index]['nom']);
-  $('#description').html(tabAteliers[index]['description']);
-  $('#date').html(date);
-  $('#heure').html(heure);
-</script>
 
+detailsWorkshop();
+
+</script>
 
 <main id="content" style="margin-top:6em">
   <!-- Page Content -->

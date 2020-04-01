@@ -36,6 +36,16 @@ $_SESSION['pageActuel'] = 'workshopsCreation.php';
                                     <label for="workshop_animateur"><i class="zmdi zmdi-lock"></i></label>
                                     <input type="text" name="workshop_animateur" id="workshop_animateur" placeholder="Matricule de l'animateur" />
                                 </div>
+                                <div class="form-group">
+                                    <label for="workshop_animateur">Sélectionnez un sujet :</label></br></br>
+                                    <select name="workshop_animateur" id="workshop_sujet">
+                                        <option value="Comptabilité">Comptabilité</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Informatique">Informatique</option>
+                                        <option value="Electro-mécanique">Electro-mécanique</option>
+                                        <option value="Droit">Droit</option>
+                                    </select>
+                                </div>
                                 <div class="form-group form-button">
                                     <input type="submit" name="signin" id="signin" class="form-submit" value="Création" onclick="ajoutAtelier()" />
                                 </div>
