@@ -2,11 +2,7 @@
 session_start();
 include '../php/listeAtelier.php';
 include "../php/checkSiDejaDansAtelier.php";
-include '../php/checkSiAnimateur.php';
-include '../php/checkSiAnnule.php';
-include '../php/checkSiDejaCandidat.php';
 $_SESSION['idAtelier'] = $_GET['i'];
-
 ?>
 <script>
 
