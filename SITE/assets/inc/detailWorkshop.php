@@ -7,6 +7,9 @@ $fullDate = $recupAtelier[$id]{
 $_SESSION['idAtelier'] = $recupAtelier[$id]{
 'idAtelier'};
 include "../php/checkSiDejaDansAtelier.php";
+include '../php/checkSiAnimateur.php';
+include '../php/checkSiAnnule.php';
+include '../php/checkSiDejaCandidat.php';
 ?>
 
 <script>
@@ -63,6 +66,35 @@ include "../php/checkSiDejaDansAtelier.php";
           <li id="heure"></li>
 
         </ul>
+        <?php if(!empty($checkSiAnimateur)) { ?>
+          <?php if(!empty($checkSiAnnule)) { ?>
+            <form id="annulationWorkshop" method="post" action="assets/php/annulationAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Annuler workshop"/>
+              </div>
+            </form>
+          <?php } else  { ?>
+            <form id="desannulationWorkshop" method="post" action="assets/php/desannulationAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Reprogrammer workshop"/>
+              </div>
+            </form>
+          <?php } ?>
+        <?php } else { ?>
+          <?php if(empty($checkSiDejaCandidat)) { ?>
+            <form id="proposerCandidature" method="post" action="assets/php/candidatureAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Proposer sa candidature"/>
+              </div>
+            </form>
+          <?php } else { ?>
+            <form id="retirerCandidature" method="post" action="assets/php/retirerCandidature.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Retirer sa candidature"/>
+              </div>
+            </form>
+          <?php } ?>
+        <?php } ?>
         <?php if (empty($checkSiDejaDansAtelier)) { ?>
           <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
             <div class="form-group form-button">
