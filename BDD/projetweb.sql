@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 26 mars 2020 à 15:09
+-- Généré le :  mer. 01 avr. 2020 à 13:58
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -45,10 +45,44 @@ ORDER BY date;
 
 END$$
 
+DROP PROCEDURE IF EXISTS `afficherCandidats`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `afficherCandidats` (IN `id` INT)  BEGIN
+
+SELECT c.idCandidat, u.prenom, u.nom, u.mail from candidat_atelier AS c JOIN user u 
+ON c.idCandidat = u.matricule 
+WHERE id = idAtelier;
+
+END$$
+
 DROP PROCEDURE IF EXISTS `ajoutAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16))  BEGIN 
 
 INSERT INTO atelier (nom, description, date, nbrPlaces, animateur) VALUES (Nom, Description, Date, Places, Animateur);
+
+END$$
+
+DROP PROCEDURE IF EXISTS `annulationAtelier`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `annulationAtelier` (IN `id` INT, IN `noma` VARCHAR(32))  BEGIN
+
+UPDATE atelier
+SET termine = 1
+WHERE idAtelier = id AND termine = 0 AND animateur = noma;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `augmenterPrivilege`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `augmenterPrivilege` (IN `noma` VARCHAR(32))  BEGIN
+
+UPDATE user
+SET administration = 1
+WHERE matricule = noma;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `candidatureAtelier`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `candidatureAtelier` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
+
+INSERT INTO candidat_atelier (idCandidat, idAtelier) VALUES (noma, id);
 
 END$$
 
@@ -94,6 +128,36 @@ WHERE noma = idParticipant AND identifiant = idAtelier;
 
 END$$
 
+DROP PROCEDURE IF EXISTS `checkSiAdmin`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAdmin` (IN `noma` VARCHAR(32))  BEGIN
+
+SELECT mail FROM user 
+WHERE matricule = noma AND administration = 1;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `checkSiAnimateur`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAnimateur` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
+
+SELECT * FROM atelier
+WHERE animateur = noma AND idAtelier = id;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `checkSiAnnule`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAnnule` (IN `id` INT)  BEGIN
+
+SELECT * FROM atelier
+WHERE termine = 0 AND idAtelier = id;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `checkSiDejaCandidat`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiDejaCandidat` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
+SELECT * FROM candidat_atelier
+WHERE idCandidat = noma and idAtelier = id;
+END$$
+
 DROP PROCEDURE IF EXISTS `checkSiDejaDansAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiDejaDansAtelier` (IN `noma` VARCHAR(16), IN `id` INT)  BEGIN
 SELECT * FROM participant_atelier
@@ -107,11 +171,29 @@ INSERT INTO user(matricule, nom, prenom, mail, password) VALUES(noma, Nom, Preno
 
 END$$
 
+DROP PROCEDURE IF EXISTS `desannulationAtelier`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `desannulationAtelier` (IN `id` INT, IN `noma` VARCHAR(32))  BEGIN
+
+UPDATE atelier
+SET termine = 0
+WHERE idAtelier = id AND termine = 1 AND animateur = noma;
+
+END$$
+
 DROP PROCEDURE IF EXISTS `desinscriptionAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `desinscriptionAtelier` (IN `noma` VARCHAR(16), IN `id` INT)  BEGIN
 
 DELETE FROM participant_atelier
 WHERE noma = idparticipant AND id = idAtelier;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `diminuerPrivilege`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `diminuerPrivilege` (IN `noma` VARCHAR(32))  BEGIN
+
+UPDATE user
+SET administration = 0
+WHERE matricule = noma;
 
 END$$
 
@@ -122,11 +204,34 @@ INSERT INTO participant_atelier (idparticipant, idAtelier) VALUES (noma, identif
 
 END$$
 
+DROP PROCEDURE IF EXISTS `recupAtelierAnnule`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierAnnule` ()  BEGIN
+
+SELECT * FROM atelier
+WHERE termine = 1;
+
+END$$
+
 DROP PROCEDURE IF EXISTS `recupAtelierInscrit`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierInscrit` (IN `noma` VARCHAR(16))  BEGIN
 
 SELECT a.nom, a.description, a.date, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
 WHERE p.idparticipant = noma; 
+
+END$$
+
+DROP PROCEDURE IF EXISTS `recupUsers`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupUsers` ()  BEGIN
+
+SELECT matricule, prenom, nom, mail, administration FROM user;
+
+END$$
+
+DROP PROCEDURE IF EXISTS `retirerCandidature`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `retirerCandidature` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
+
+DELETE FROM candidat_atelier
+WHERE noma = idCandidat AND id = idAtelier;
 
 END$$
 
@@ -142,7 +247,7 @@ DROP PROCEDURE IF EXISTS `supprimerAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerAtelier` (IN `Atelier` INT)  BEGIN 
 
 DELETE FROM atelier
-WHERE idAtelier = Atelier;
+WHERE idAtelier = Atelier AND termine = 1;
 
 END$$
 
@@ -165,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `atelier` (
   `termine` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idAtelier`),
   KEY `animateur_fk` (`animateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `atelier`
@@ -176,7 +281,28 @@ INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `
 (21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 0),
 (22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0),
 (23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0),
-(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 0);
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `candidat_atelier`
+--
+
+DROP TABLE IF EXISTS `candidat_atelier`;
+CREATE TABLE IF NOT EXISTS `candidat_atelier` (
+  `idCandidat` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `idAtelier` int(11) NOT NULL,
+  PRIMARY KEY (`idCandidat`,`idAtelier`),
+  KEY `candidat_atelier_atelier_fk` (`idAtelier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Déchargement des données de la table `candidat_atelier`
+--
+
+INSERT INTO `candidat_atelier` (`idCandidat`, `idAtelier`) VALUES
+('HE201620', 22);
 
 -- --------------------------------------------------------
 
@@ -410,6 +536,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administration`) VALUES
+('HE000000', 'Admin', 'Admin', 'admin@ephec.be', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
 ('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
 
@@ -422,6 +549,13 @@ INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administr
 --
 ALTER TABLE `atelier`
   ADD CONSTRAINT `animateur_fk` FOREIGN KEY (`animateur`) REFERENCES `user` (`matricule`) ON DELETE SET NULL;
+
+--
+-- Contraintes pour la table `candidat_atelier`
+--
+ALTER TABLE `candidat_atelier`
+  ADD CONSTRAINT `candidat_atelier_atelier_fk` FOREIGN KEY (`idAtelier`) REFERENCES `atelier` (`idAtelier`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `candidat_atelier_user_fk` FOREIGN KEY (`idCandidat`) REFERENCES `user` (`matricule`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `participant_atelier`
