@@ -76,7 +76,8 @@ function profil() {
 
 
 function detailWorkshop(p, tab) {
-    $('#content').load("assets/inc/detailWorkshop.php?i=" + p + "&tab="+ tab);
+    $('#content').load("assets/inc/detailWorkshop.php");
+    detailsWorkshop(tab)
 
 }
 
@@ -243,8 +244,10 @@ function ajoutAtelier() {
 
 
 //affichage de la liste des 
-var nbAteliers ;
+var nbAteliers;
 var nbAteliers2;
+var tabEnvoi = new Array();
+var tabEnvoi2 = new Array();
 
 function filtrerAtelier(sujet, tab) {
     $('#itemAtelier').empty();
@@ -253,8 +256,8 @@ function filtrerAtelier(sujet, tab) {
     nbAteliers2 = 1;
     var ret = "";
     var ret2 = "";
-    var tabEnvoi = new Array();
-    var tabEnvoi2 = new Array();
+    tabEnvoi = new Array();
+    tabEnvoi2 = new Array();
     var indexAtelier = 0;
     var month = new Array();
     month[0] = "janvier";
@@ -273,13 +276,27 @@ function filtrerAtelier(sujet, tab) {
         var datefull = new Date(tab[i]['date']);
         var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
         var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+
         if (tab[i]['sujet'] === sujet) {
-            tabEnvoi[i]=tab[i];
+            tabEnvoi[i] = tab[i];
+
+        } else {
+            tabEnvoi2[i] = tab[i];
+        }
+        var tnom = tab[i]['nom'];
+        if (tab[i]['sujet'] === sujet) {
             ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret += '<div class="media-body order-2 order-lg-1">';
             ret += '<a>';
-            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ +','+ tabEnvoi +')">' + tab[i]['nom'] + '</h5>';
+            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailsWorkshop(' 
+            + indexAtelier + ',' 
+            + '\'' + tab[i]['nom'] + '\',' 
+            + '\'' +tab[i]['description']+ '\',' 
+            + '\'' +tab[i]['date']+ '\',' 
+            + '\'' +tab[i]['nbrPlaces']+ '\',' 
+            + '\'' +tab[i]['sujet'] + '\');">' 
+            + tab[i]['nom'] + '</h5>';
             ret += ' </a>';
             ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
@@ -291,12 +308,18 @@ function filtrerAtelier(sujet, tab) {
             nbAteliers++;
 
         } else {
-            tabEnvoi2[i]=tab[i];
             ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret2 += '<div class="media-body order-2 order-lg-1">';
             ret2 += '<a>';
-            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ +','+ tabEnvoi2 + ')">' + tab[i]['nom'] + '</h5>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailsWorkshop(' 
+            + indexAtelier++ + ',' 
+            + '\'' + tab[i]['nom'] + '\',' 
+            + '\'' +tab[i]['description']+ '\',' 
+            + '\'' +tab[i]['date']+ '\',' 
+            + '\'' +tab[i]['nbrPlaces']+ '\',' 
+            + '\'' +tab[i]['sujet'] + '\');">' 
+            + tab[i]['nom'] + '</h5>';
             ret2 += ' </a>';
             ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
@@ -317,7 +340,7 @@ function filtrerAtelier(sujet, tab) {
         $('#itemAtelier').append(ret2);
         paginationAtelier(nbAteliers2);
     }
-    
+
 }
 
 
@@ -349,4 +372,17 @@ function paginationAtelier(nAt) {
     })
 
 }
-
+function detailsWorkshop(i,nom,desc,date,nb,sujet) {
+    $('#content').load("assets/inc/detailWorkshop.php?i="+ i);
+    tabAteliers = tab;
+    index = i;
+    var datefull = new Date(tabAteliers[index]['date']);
+    console.log(index);
+    var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+    var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+    $('#nom').html(tabAteliers[index]['nom']);
+    $('#description').html(tabAteliers[index]['description']);
+    $('#date').html(date);
+    $('#heure').html(heure);
+    return index;
+}
