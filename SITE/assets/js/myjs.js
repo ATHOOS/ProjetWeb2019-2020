@@ -75,12 +75,13 @@ function profil() {
 
 
 
-function detailWorkshop(p){
-    $('#content').load("assets/inc/detailWorkshop.php?i="+p);
+function detailWorkshop(p, tab) {
+    $('#content').load("assets/inc/detailWorkshop.php");
+    detailsWorkshop(tab)
 
 }
 
-function estCo(){
+function estCo() {
     $('#navConnexion').html('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
     $("#navConnexion").prop("onclick", null).off("click");
 
@@ -220,7 +221,7 @@ function ajoutAtelier() {
     }
 
     if (a === 1) {
-        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Animateur': $('#workshop_animateur').val()};
+        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Animateur': $('#workshop_animateur').val(), 'Sujet': $('#workshop_sujet').val() };
         console.log(objectForm);
         $.ajax({
             url: "assets/php/ajoutAtelier.php",
@@ -242,7 +243,162 @@ function ajoutAtelier() {
 }
 
 
-//affichage de la liste des ateliers
+//affichage de la liste des 
+var nbAteliers;
+var nbAteliers2;
+var tabEnvoi = new Array();
+var tabEnvoi2 = new Array();
+var month = new Array();
+month[0] = "janvier";
+month[1] = "février";
+month[2] = "mars";
+month[3] = "avril";
+month[4] = "mai";
+month[5] = "juin";
+month[6] = "juillet";
+month[7] = "aout";
+month[8] = "septembre";
+month[9] = "octobre";
+month[10] = "novembre";
+month[11] = "décembre";
+
+var tnom;
+var tdesc;
+var tdate2;
+var tnb;
+var tsujet;
+
+function filtrerAtelier(sujet, tab) {
+    $('#itemAtelier').empty();
+    $('.paginationn').empty();
+    nbAteliers = 1;
+    nbAteliers2 = 1;
+    var ret = "";
+    var ret2 = "";
+    tabEnvoi = new Array();
+    tabEnvoi2 = new Array();
+    var indexAtelier = 0;
+
+    for (i = 0; i < tab.length; i++) {
+        var datefull = new Date(tab[i]['date']);
+        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+
+        if (tab[i]['sujet'] === sujet) {
+            tabEnvoi[i] = tab[i];
+
+        } else {
+            tabEnvoi2[i] = tab[i];
+        }
+        var tnom = tab[i]['nom'];
+        if (tab[i]['sujet'] === sujet) {
+            ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+            ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+            ret += '<div class="media-body order-2 order-lg-1">';
+            ret += '<a>';
+            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                + indexAtelier + ','
+                + '\'' + tab[i]['nom'] + '\','
+                + '\'' + tab[i]['description'] + '\','
+                + '\'' + tab[i]['date'] + '\','
+                + '\'' + tab[i]['nbrPlaces'] + '\','
+                + '\'' + tab[i]['sujet'] + '\');">'
+                + tab[i]['nom'] + '</h5>';
+            ret += ' </a>';
+            ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+            ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
+            ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret += '</div>';
+            ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret += '</div>';
+            ret += '</li>';
+            nbAteliers++;
+
+        } else {
+            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+            ret2 += '<div class="media-body order-2 order-lg-1">';
+            ret2 += '<a>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                + indexAtelier++ + ','
+                + '\'' + tab[i]['nom'] + '\','
+                + '\'' + tab[i]['description'] + '\','
+                + '\'' + tab[i]['date'] + '\','
+                + '\'' + tab[i]['nbrPlaces'] + '\','
+                + '\'' + tab[i]['sujet'] + '\');">'
+                + tab[i]['nom'] + '</h5>';
+            ret2 += ' </a>';
+            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret2 += '</div>';
+            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret2 += '</div>';
+            ret2 += '</li>';
+            nbAteliers2++;
+        }
+    }
+
+    if ($('#sujet').val() != "") {
+        $('#itemAtelier').append(ret);
+        paginationAtelier(nbAteliers);
+    }
+    else {
+        $('#itemAtelier').append(ret2);
+        paginationAtelier(nbAteliers2);
+    }
+
+}
+
+
+function paginationAtelier(nAt) {
+    var limitePage = 4;
+    var nbPages = Math.ceil(nAt / limitePage);
+    removeClassActive();
+    addClassActive('navWorkshops');
+    $("#itemAtelier .list-group-item:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".list-group-item").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#itemAtelier .list-group-item:eq(" + i + ")").show();
+            }
+        }
+
+
+    })
+
+}
+function loadWorkshop(i, nom, desc, date2, nb, sujet) {
+    $('#content').load("assets/inc/detailWorkshop.php?i=" + i);
+    tnom = nom;
+    tdesc = desc;
+    tdate2 = date2;
+    tnb = nb;
+    tsujet = sujet;
+
+}
+
+function detailsWorkshop() {
+    var datefull = new Date(tdate2);
+    var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+    var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+    $('#nom').text(tnom);
+    $('#description').html(tdesc);
+    $('#date').html(date);
+    $('#heure').html(heure);
 
 
 
+
+}
