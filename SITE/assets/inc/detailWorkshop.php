@@ -7,6 +7,7 @@ $fullDate = $recupAtelier[$id]{
 $_SESSION['idAtelier'] = $recupAtelier[$id]{
 'idAtelier'};
 include "../php/checkSiDejaDansAtelier.php";
+var_dump($_GET['tab']);
 ?>
 
 <script>

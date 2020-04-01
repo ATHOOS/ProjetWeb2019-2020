@@ -2,7 +2,6 @@
 session_start();
 $_SESSION['pageActuel'] = 'workshopsListe.php';
 include '../php/listeAtelier.php';
-var_dump($recupAtelier);
 ?>
 <main id="content">
     <div class="container py-5" id="listeAteliers">

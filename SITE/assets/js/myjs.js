@@ -75,8 +75,8 @@ function profil() {
 
 
 
-function detailWorkshop(p) {
-    $('#content').load("assets/inc/detailWorkshop.php?i=" + p);
+function detailWorkshop(p, tab) {
+    $('#content').load("assets/inc/detailWorkshop.php?i=" + p + "&tab="+ tab);
 
 }
 
@@ -244,13 +244,17 @@ function ajoutAtelier() {
 
 //affichage de la liste des 
 var nbAteliers ;
+var nbAteliers2;
 
 function filtrerAtelier(sujet, tab) {
     $('#itemAtelier').empty();
     $('.paginationn').empty();
     nbAteliers = 1;
+    nbAteliers2 = 1;
     var ret = "";
     var ret2 = "";
+    var tabEnvoi = new Array();
+    var tabEnvoi2 = new Array();
     var indexAtelier = 0;
     var month = new Array();
     month[0] = "janvier";
@@ -270,11 +274,12 @@ function filtrerAtelier(sujet, tab) {
         var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
         var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
         if (tab[i]['sujet'] === sujet) {
+            tabEnvoi[i]=tab[i];
             ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret += '<div class="media-body order-2 order-lg-1">';
             ret += '<a>';
-            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ + ')">' + tab[i]['nom'] + '</h5>';
+            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ +','+ tabEnvoi +')">' + tab[i]['nom'] + '</h5>';
             ret += ' </a>';
             ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
@@ -286,11 +291,12 @@ function filtrerAtelier(sujet, tab) {
             nbAteliers++;
 
         } else {
+            tabEnvoi2[i]=tab[i];
             ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret2 += '<div class="media-body order-2 order-lg-1">';
             ret2 += '<a>';
-            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ + ')">' + tab[i]['nom'] + '</h5>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ +','+ tabEnvoi2 + ')">' + tab[i]['nom'] + '</h5>';
             ret2 += ' </a>';
             ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
@@ -299,25 +305,25 @@ function filtrerAtelier(sujet, tab) {
             ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
             ret2 += '</div>';
             ret2 += '</li>';
-            nbAteliers++;
+            nbAteliers2++;
         }
     }
+
     if ($('#sujet').val() != "") {
-
         $('#itemAtelier').append(ret);
-        paginationAtelier();
-
+        paginationAtelier(nbAteliers);
     }
     else {
         $('#itemAtelier').append(ret2);
-        paginationAtelier();
+        paginationAtelier(nbAteliers2);
     }
+    
 }
 
 
-function paginationAtelier() {
+function paginationAtelier(nAt) {
     var limitePage = 4;
-    var nbPages = Math.ceil(nbAteliers / limitePage);
+    var nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
     $("#itemAtelier .list-group-item:gt(" + (limitePage - 1) + ")").hide();
