@@ -8,6 +8,7 @@ $_SESSION['idAtelier'] = $recupAtelier[$id]{
 'idAtelier'};
 include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
+include '../php/checkSiAnnule.php'
 ?>
 
 <script>
@@ -65,17 +66,25 @@ include '../php/checkSiAnimateur.php';
 
         </ul>
         <?php if(!empty($checkSiAnimateur)) { ?>
-          <form id="annulationWorkshop" method="post" action="assets/php/annulationAtelier.php">
-            <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="Annuler workshop"/>
-            </div>
-          </form>
+          <?php if(!empty($checkSiAnnule)) { ?>
+            <form id="annulationWorkshop" method="post" action="assets/php/annulationAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Annuler workshop"/>
+              </div>
+            </form>
+          <?php } else  { ?>
+            <form id="desannulationWorkshop" method="post" action="assets/php/desannulationAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Reprogrammer workshop"/>
+              </div>
+            </form>
+          <?php } ?>
         <?php } else { ?>
-          <form id="annulationWorkshop" method="post" action="assets/php/desannulationAtelier.php">
-            <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="Reprogrammer l'atelier"/>
-            </div>
-          </form>
+          <form id="proposerCandidature">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Proposer sa candidature"/>
+              </div>
+            </form>
         <?php } ?>
         <?php if (empty($checkSiDejaDansAtelier)) { ?>
           <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
