@@ -3,7 +3,11 @@ session_start();
 include '../php/listeAtelier.php';
 include "../php/checkSiDejaDansAtelier.php";
 ?>
+<script>
 
+detailsWorkshop();
+
+</script>
 
 <main id="content" style="margin-top:6em">
   <!-- Page Content -->

@@ -248,6 +248,25 @@ var nbAteliers;
 var nbAteliers2;
 var tabEnvoi = new Array();
 var tabEnvoi2 = new Array();
+var month = new Array();
+month[0] = "janvier";
+month[1] = "février";
+month[2] = "mars";
+month[3] = "avril";
+month[4] = "mai";
+month[5] = "juin";
+month[6] = "juillet";
+month[7] = "aout";
+month[8] = "septembre";
+month[9] = "octobre";
+month[10] = "novembre";
+month[11] = "décembre";
+
+var tnom;
+var tdesc;
+var tdate2;
+var tnb;
+var tsujet;
 
 function filtrerAtelier(sujet, tab) {
     $('#itemAtelier').empty();
@@ -259,19 +278,7 @@ function filtrerAtelier(sujet, tab) {
     tabEnvoi = new Array();
     tabEnvoi2 = new Array();
     var indexAtelier = 0;
-    var month = new Array();
-    month[0] = "janvier";
-    month[1] = "février";
-    month[2] = "mars";
-    month[3] = "avril";
-    month[4] = "mai";
-    month[5] = "juin";
-    month[6] = "juillet";
-    month[7] = "aout";
-    month[8] = "septembre";
-    month[9] = "octobre";
-    month[10] = "novembre";
-    month[11] = "décembre";
+
     for (i = 0; i < tab.length; i++) {
         var datefull = new Date(tab[i]['date']);
         var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
@@ -289,14 +296,14 @@ function filtrerAtelier(sujet, tab) {
             ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret += '<div class="media-body order-2 order-lg-1">';
             ret += '<a>';
-            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailsWorkshop(' 
-            + indexAtelier + ',' 
-            + '\'' + tab[i]['nom'] + '\',' 
-            + '\'' +tab[i]['description']+ '\',' 
-            + '\'' +tab[i]['date']+ '\',' 
-            + '\'' +tab[i]['nbrPlaces']+ '\',' 
-            + '\'' +tab[i]['sujet'] + '\');">' 
-            + tab[i]['nom'] + '</h5>';
+            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                + indexAtelier + ','
+                + '\'' + tab[i]['nom'] + '\','
+                + '\'' + tab[i]['description'] + '\','
+                + '\'' + tab[i]['date'] + '\','
+                + '\'' + tab[i]['nbrPlaces'] + '\','
+                + '\'' + tab[i]['sujet'] + '\');">'
+                + tab[i]['nom'] + '</h5>';
             ret += ' </a>';
             ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
@@ -312,14 +319,14 @@ function filtrerAtelier(sujet, tab) {
             ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret2 += '<div class="media-body order-2 order-lg-1">';
             ret2 += '<a>';
-            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailsWorkshop(' 
-            + indexAtelier++ + ',' 
-            + '\'' + tab[i]['nom'] + '\',' 
-            + '\'' +tab[i]['description']+ '\',' 
-            + '\'' +tab[i]['date']+ '\',' 
-            + '\'' +tab[i]['nbrPlaces']+ '\',' 
-            + '\'' +tab[i]['sujet'] + '\');">' 
-            + tab[i]['nom'] + '</h5>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                + indexAtelier++ + ','
+                + '\'' + tab[i]['nom'] + '\','
+                + '\'' + tab[i]['description'] + '\','
+                + '\'' + tab[i]['date'] + '\','
+                + '\'' + tab[i]['nbrPlaces'] + '\','
+                + '\'' + tab[i]['sujet'] + '\');">'
+                + tab[i]['nom'] + '</h5>';
             ret2 += ' </a>';
             ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
@@ -372,17 +379,26 @@ function paginationAtelier(nAt) {
     })
 
 }
-function detailsWorkshop(i,nom,desc,date,nb,sujet) {
-    $('#content').load("assets/inc/detailWorkshop.php?i="+ i);
-    tabAteliers = tab;
-    index = i;
-    var datefull = new Date(tabAteliers[index]['date']);
-    console.log(index);
+function loadWorkshop(i, nom, desc, date2, nb, sujet) {
+    $('#content').load("assets/inc/detailWorkshop.php?i=" + i);
+    tnom = nom;
+    tdesc = desc;
+    tdate2 = date2;
+    tnb = nb;
+    tsujet = sujet;
+
+}
+
+function detailsWorkshop() {
+    var datefull = new Date(tdate2);
     var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
     var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
-    $('#nom').html(tabAteliers[index]['nom']);
-    $('#description').html(tabAteliers[index]['description']);
+    $('#nom').text(tnom);
+    $('#description').html(tdesc);
     $('#date').html(date);
     $('#heure').html(heure);
-    return index;
+
+
+
+
 }
