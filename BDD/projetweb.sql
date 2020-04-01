@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 01 avr. 2020 à 11:59
+-- Généré le :  mer. 01 avr. 2020 à 12:25
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -64,7 +64,7 @@ END$$
 DROP PROCEDURE IF EXISTS `candidatureAtelier`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `candidatureAtelier` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
 
-INSERT INTO candidat_atelier (idCandidat, idAtelier) VALUES (noma, identifiant);
+INSERT INTO candidat_atelier (idCandidat, idAtelier) VALUES (noma, id);
 
 END$$
 
@@ -246,6 +246,13 @@ CREATE TABLE IF NOT EXISTS `candidat_atelier` (
   PRIMARY KEY (`idCandidat`,`idAtelier`),
   KEY `candidat_atelier_atelier_fk` (`idAtelier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Déchargement des données de la table `candidat_atelier`
+--
+
+INSERT INTO `candidat_atelier` (`idCandidat`, `idAtelier`) VALUES
+('HE201620', 22);
 
 -- --------------------------------------------------------
 
