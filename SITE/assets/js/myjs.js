@@ -75,12 +75,12 @@ function profil() {
 
 
 
-function detailWorkshop(p){
-    $('#content').load("assets/inc/detailWorkshop.php?i="+p);
+function detailWorkshop(p) {
+    $('#content').load("assets/inc/detailWorkshop.php?i=" + p);
 
 }
 
-function estCo(){
+function estCo() {
     $('#navConnexion').html('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
     $("#navConnexion").prop("onclick", null).off("click");
 
@@ -220,7 +220,7 @@ function ajoutAtelier() {
     }
 
     if (a === 1) {
-        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Animateur': $('#workshop_animateur').val(), 'Sujet': $('#workshop_sujet').val()};
+        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Animateur': $('#workshop_animateur').val(), 'Sujet': $('#workshop_sujet').val() };
         console.log(objectForm);
         $.ajax({
             url: "assets/php/ajoutAtelier.php",
@@ -242,10 +242,105 @@ function ajoutAtelier() {
 }
 
 
-//affichage de la liste des ateliers
+//affichage de la liste des 
+var nbAteliers ;
 
-function filtrerAtelier(sujet){
-   $('#' + sujet).hide();
+function filtrerAtelier(sujet, tab) {
+    $('#itemAtelier').empty();
+    $('.paginationn').empty();
+    nbAteliers = 1;
+    var ret = "";
+    var ret2 = "";
+    var indexAtelier = 0;
+    var month = new Array();
+    month[0] = "janvier";
+    month[1] = "février";
+    month[2] = "mars";
+    month[3] = "avril";
+    month[4] = "mai";
+    month[5] = "juin";
+    month[6] = "juillet";
+    month[7] = "aout";
+    month[8] = "septembre";
+    month[9] = "octobre";
+    month[10] = "novembre";
+    month[11] = "décembre";
+    for (i = 0; i < tab.length; i++) {
+        var datefull = new Date(tab[i]['date']);
+        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+        if (tab[i]['sujet'] === sujet) {
+            ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+            ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+            ret += '<div class="media-body order-2 order-lg-1">';
+            ret += '<a>';
+            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ + ')">' + tab[i]['nom'] + '</h5>';
+            ret += ' </a>';
+            ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+            ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
+            ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret += '</div>';
+            ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret += '</div>';
+            ret += '</li>';
+            nbAteliers++;
+
+        } else {
+            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+            ret2 += '<div class="media-body order-2 order-lg-1">';
+            ret2 += '<a>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="detailWorkshop(' + indexAtelier++ + ')">' + tab[i]['nom'] + '</h5>';
+            ret2 += ' </a>';
+            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret2 += '</div>';
+            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret2 += '</div>';
+            ret2 += '</li>';
+            nbAteliers++;
+        }
+    }
+    if ($('#sujet').val() != "") {
+
+        $('#itemAtelier').append(ret);
+        paginationAtelier();
+
+    }
+    else {
+        $('#itemAtelier').append(ret2);
+        paginationAtelier();
+    }
 }
 
+
+function paginationAtelier() {
+    var limitePage = 4;
+    var nbPages = Math.ceil(nbAteliers / limitePage);
+    removeClassActive();
+    addClassActive('navWorkshops');
+    $("#itemAtelier .list-group-item:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".list-group-item").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#itemAtelier .list-group-item:eq(" + i + ")").show();
+            }
+        }
+
+
+    })
+
+}
 

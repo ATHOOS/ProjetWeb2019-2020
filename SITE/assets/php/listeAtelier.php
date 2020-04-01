@@ -4,4 +4,4 @@ include 'dbAccess.php';
 
 $db = new dbAccess();
 
-$recupAtelier = $db->callProcedure("affichageAteliersAnimateur");
+$recupAtelier = json_encode($db->callProcedure("affichageAteliersAnimateur"));
