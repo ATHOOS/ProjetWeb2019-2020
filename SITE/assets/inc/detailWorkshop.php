@@ -8,7 +8,8 @@ $_SESSION['idAtelier'] = $recupAtelier[$id]{
 'idAtelier'};
 include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
-include '../php/checkSiAnnule.php'
+include '../php/checkSiAnnule.php';
+include '../php/checkSiDejaCandidat.php';
 ?>
 
 <script>
@@ -80,11 +81,19 @@ include '../php/checkSiAnnule.php'
             </form>
           <?php } ?>
         <?php } else { ?>
-          <form id="proposerCandidature">
+          <?php if(empty($checkSiDejaCandidat)) { ?>
+            <form id="proposerCandidature" method="post" action="assets/php/candidatureAtelier.php">
               <div class="form-group form-button">
                 <input type="submit" name="signin" id="signin" class="form-submit" value="Proposer sa candidature"/>
               </div>
             </form>
+          <?php } else { ?>
+            <form id="retirerCandidature" method="post" action="assets/php/retirerCandidature.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Retirer sa candidature"/>
+              </div>
+            </form>
+          <?php } ?>
         <?php } ?>
         <?php if (empty($checkSiDejaDansAtelier)) { ?>
           <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">

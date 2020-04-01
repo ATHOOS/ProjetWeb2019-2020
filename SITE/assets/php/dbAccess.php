@@ -60,6 +60,9 @@ class dbAccess
             case 'desinscriptionAtelier':
             case 'annulationAtelier':
             case 'desannulationAtelier':
+            case 'retirerCandidature':
+            case 'candidatureAtelier':
+            case 'checkSiDejaCandidat':
                 array_push($params, '?', '?');
 
                 try {
