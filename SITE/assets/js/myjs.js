@@ -302,7 +302,8 @@ function filtrerAtelier(sujet, tab) {
                 + '\'' + tab[i]['description'] + '\','
                 + '\'' + tab[i]['date'] + '\','
                 + '\'' + tab[i]['nbrPlaces'] + '\','
-                + '\'' + tab[i]['sujet'] + '\');">'
+                + '\'' + tab[i]['sujet'] + '\','
+                + '\'' + tab[i]['idAtelier'] + '\');">'
                 + tab[i]['nom'] + '</h5>';
             ret += ' </a>';
             ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
@@ -325,7 +326,8 @@ function filtrerAtelier(sujet, tab) {
                 + '\'' + tab[i]['description'] + '\','
                 + '\'' + tab[i]['date'] + '\','
                 + '\'' + tab[i]['nbrPlaces'] + '\','
-                + '\'' + tab[i]['sujet'] + '\');">'
+                + '\'' + tab[i]['sujet'] + '\','
+                + '\'' + tab[i]['idAtelier'] + '\');">'
                 + tab[i]['nom'] + '</h5>';
             ret2 += ' </a>';
             ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
@@ -379,8 +381,8 @@ function paginationAtelier(nAt) {
     })
 
 }
-function loadWorkshop(i, nom, desc, date2, nb, sujet) {
-    $('#content').load("assets/inc/detailWorkshop.php?i=" + i);
+function loadWorkshop(i, nom, desc, date2, nb, sujet,idAtelier) {
+    $('#content').load("assets/inc/detailWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
     tdate2 = date2;

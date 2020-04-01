@@ -1,11 +1,7 @@
 <?php
 session_start();
 include '../php/listeAtelier.php';
-$id = $_GET['i'];
-$fullDate = $recupAtelier[$id]{
-'date'};
-$_SESSION['idAtelier'] = $recupAtelier[$id]{
-'idAtelier'};
+$_SESSION['idAtelier'] = $_GET['i'];
 include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
 include '../php/checkSiAnnule.php';
