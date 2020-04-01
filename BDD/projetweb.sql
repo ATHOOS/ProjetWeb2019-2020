@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 01, 2020 at 02:23 PM
+-- Generation Time: Apr 01, 2020 at 03:01 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -187,7 +187,7 @@ CREATE TABLE `atelier` (
   `nbrPlaces` int(11) NOT NULL,
   `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
   `termine` tinyint(1) NOT NULL DEFAULT '0',
-  `sujet` int(11) NOT NULL
+  `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -195,11 +195,11 @@ CREATE TABLE `atelier` (
 --
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`, `sujet`) VALUES
-(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 0, 0),
-(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 0, 0),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0, 0),
-(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0, 0),
-(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 0, 0);
+(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 0, 'Comptabilité'),
+(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 0, 'Informatique'),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0, 'Informatique'),
+(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0, 'Marketing'),
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 0, 'Comptabilité');
 
 -- --------------------------------------------------------
 
@@ -257,6 +257,7 @@ CREATE TABLE `participant_atelier` (
 INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
 ('HE201587', 20),
 ('HE201587', 21),
+('HE201587', 22),
 ('HE201620', 22),
 ('HE201620', 23),
 ('HE201587', 24);
