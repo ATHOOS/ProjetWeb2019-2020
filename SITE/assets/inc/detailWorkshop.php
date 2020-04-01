@@ -2,6 +2,7 @@
 session_start();
 include '../php/listeAtelier.php';
 include "../php/checkSiDejaDansAtelier.php";
+$_SESSION['idAtelier'] = $_GET['i'];
 ?>
 <script>
 
