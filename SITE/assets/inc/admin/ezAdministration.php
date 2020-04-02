@@ -238,10 +238,7 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
             <ul class="collapse list-unstyled" id="homeSubmenu">
 
               <li>
-                <a href="#" id="annulation" onclick="annulationAtelier()">Annulation atelier</a>
-              </li>
-              <li>
-                <a href="#" id="validation" onclick="validationAtelier()">Validation atelier</a>
+                <a href="#" id="annulation" onclick="annulationAtelier()">Gestion atelier</a>
               </li>
               <li>
                 <a href="#" id="droit" onclick="gestionDroits()">Gestion des droits</a>

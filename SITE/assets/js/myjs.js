@@ -109,12 +109,6 @@ function annulationAtelier() {
     $('#contentAdminPage').load('assets/inc/admin/annulationAtelier.php');
 }
 
-function validationAtelier() {
-    removeClassActiveAdmin();
-    addClassActive('validation');
-    $('#contentAdminPage').load('assets/inc/admin/validationAtelier.php');
-}
-
 function gestionDroits() {
     removeClassActiveAdmin();
     addClassActive('droit');
@@ -595,9 +589,9 @@ function afficheAllAteliers(tab) {
         }
         retAtelier += '</td><td>';
         if (tab[i]['annulation'] === '0') {
-            retAtelier += '<button onclick="popup(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annuler</button>'
+            retAtelier += '<button onclick="popupAnnulationAtelier(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annuler</button>'
         } else if (tab[i]['annulation'] === '1') {
-            retAtelier += '<button onclick="popup(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annulation demandée</button>'
+            retAtelier += '<button onclick="popupAnnulationAtelier(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annulation demandée</button>'
         }
         retAtelier += '</td>';
         retAtelier += '</tr>';
@@ -633,31 +627,31 @@ function paginationAteliersAdmin(nAt) {
     })
 }
 
-var retPopup = "";
+var retPopupAtelier = "";
 
-function popup(idAtelier) {
-    retPopup = "";
-    retPopup += '<!--Modal: modalConfirmDelete-->'
-    retPopup += '<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
-    retPopup += '<div class="modal-dialog modal-sm modal-notify modal-danger" role="document">'
-    retPopup += '<!--Content-->'
-    retPopup += '<div class="modal-content text-center">'
-    retPopup += '<!--Header-->'
-    retPopup += '<div class="modal-header d-flex justify-content-center">'
-    retPopup += '<p class="heading">Etes vous sur de vouloir supprimer ce compte ?</p>'
-    retPopup += '</div>'
+function popupAnnulationAtelier(idAtelier) {
+    retPopupAtelier = "";
+    retPopupAtelier += '<!--Modal: modalConfirmDelete-->'
+    retPopupAtelier += '<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+    retPopupAtelier += '<div class="modal-dialog modal-sm modal-notify modal-danger" role="document">'
+    retPopupAtelier += '<!--Content-->'
+    retPopupAtelier += '<div class="modal-content text-center">'
+    retPopupAtelier += '<!--Header-->'
+    retPopupAtelier += '<div class="modal-header d-flex justify-content-center">'
+    retPopupAtelier += '<p class="heading">Etes vous sur de vouloir supprimer cet atelier ?</p>'
+    retPopupAtelier += '</div>'
 
-    retPopup += '<!--Footer-->'
-    retPopup += '<div class="modal-footer flex-center">'
-    retPopup += '<button onclick="annulerAtelierAdmin(' + '\'' + idAtelier + '\'' + ')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
-    retPopup += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
-    retPopup += '</div>'
-    retPopup += '</div>'
-    retPopup += '<!--/.Content-->'
-    retPopup += '</div>'
-    retPopup += '</div>'
+    retPopupAtelier += '<!--Footer-->'
+    retPopupAtelier += '<div class="modal-footer flex-center">'
+    retPopupAtelier += '<button onclick="annulerAtelierAdmin(' + '\'' + idAtelier + '\'' + ')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
+    retPopupAtelier += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
+    retPopupAtelier += '</div>'
+    retPopupAtelier += '</div>'
+    retPopupAtelier += '<!--/.Content-->'
+    retPopupAtelier += '</div>'
+    retPopupAtelier += '</div>'
 
-    $('#popup').append(retPopup);
+    $('#popupAtelier').append(retPopupAtelier);
 }
 
 function validerAtelierAdmin(id) {
@@ -683,6 +677,21 @@ function devaliderAtelierAdmin(id) {
         },
         datatype: "json",
         success: function (response) {
+            annulationAtelier()
+        }
+    });
+}
+
+function annulerAtelierAdmin(id){
+    $.ajax({
+        url: "assets/php/annulerAtelierAdmin.php",
+        type: "POST",
+        data: {
+            "id": id
+        },
+        datatype: "json",
+        success: function (response) {
+            $('.modal-backdrop').remove();
             annulationAtelier()
         }
     });

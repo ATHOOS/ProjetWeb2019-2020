@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 02, 2020 at 04:57 PM
+-- Generation Time: Apr 02, 2020 at 05:49 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -37,8 +37,8 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `afficherCandidats` (IN `id` INT)  BEGIN
 
-SELECT c.idCandidat, u.prenom, u.nom, u.mail from candidat_atelier AS c JOIN user u 
-ON c.idCandidat = u.matricule 
+SELECT c.idCandidat, u.prenom, u.nom, u.mail, a.nom nomAtelier from candidat_atelier AS c JOIN user u ON c.idCandidat = u.matricule 
+JOIN atelier a ON c.idAtelier = a.idAtelier
 WHERE id = idAtelier;
 
 END$$
@@ -52,9 +52,14 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `annulationAtelier` (IN `id` INT, IN `noma` VARCHAR(32))  BEGIN
 
 UPDATE atelier
-SET termine = 1
-WHERE idAtelier = id AND termine = 0 AND animateur = noma;
+SET annulation = 1
+WHERE idAtelier = id AND annulation = 0 AND animateur = noma;
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `annulationAtelierAdmin` (IN `id` INT)  BEGIN
+DELETE FROM atelier
+WHERE idAtelier = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `candidatureAtelier` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
@@ -117,7 +122,7 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAnnule` (IN `id` INT)  BEGIN
 
 SELECT * FROM atelier
-WHERE termine = 0 AND idAtelier = id;
+WHERE annulation = 0 AND idAtelier = id;
 
 END$$
 
@@ -140,8 +145,8 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `desannulationAtelier` (IN `id` INT, IN `noma` VARCHAR(32))  BEGIN
 
 UPDATE atelier
-SET termine = 0
-WHERE idAtelier = id AND termine = 1 AND animateur = noma;
+SET annulation = 0
+WHERE idAtelier = id AND annulation = 1 AND animateur = noma;
 
 END$$
 
@@ -263,7 +268,9 @@ CREATE TABLE `candidat_atelier` (
 --
 
 INSERT INTO `candidat_atelier` (`idCandidat`, `idAtelier`) VALUES
-('HE201620', 22);
+('HE000000', 22),
+('HE201620', 22),
+('HE201587', 24);
 
 -- --------------------------------------------------------
 
@@ -303,6 +310,7 @@ CREATE TABLE `participant_atelier` (
 INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
 ('HE201587', 20),
 ('HE201587', 21),
+('HE000000', 22),
 ('HE201620', 22),
 ('HE201620', 23),
 ('HE201587', 24);
@@ -476,7 +484,6 @@ INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administr
 ('HE200101', 'Jean', 'DelaFOntaine', 'remy.vase3@hotmail.fr', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
 ('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE256789', 'Marc', 'Lavoine', 'Marc@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE256895', 'Faulkner', 'Stéphane', 'stephane.faulkner@unamur.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE259374', 'Delvignes', 'Yves', 'Yves@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE267755', 'Dubruille', 'Xavier', 'xavier@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
@@ -577,7 +584,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `atelier`
 --
 ALTER TABLE `atelier`
-  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `forum`

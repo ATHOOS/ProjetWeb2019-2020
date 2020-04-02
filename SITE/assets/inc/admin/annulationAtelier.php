@@ -34,7 +34,7 @@ include '../../php/listeAtelier.php';
         </div>
     </div>
 </div>
-<div id="popup">
+<div id="popupAtelier">
     
 </div>
 

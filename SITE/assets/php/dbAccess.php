@@ -41,6 +41,7 @@ class dbAccess
             case 'suppressionCompte':
             case 'validerAtelierAdmin':
             case 'devaliderAtelierAdmin':
+            case 'annulationAtelierAdmin':
                 array_push($params, '?');
 
                 try {
