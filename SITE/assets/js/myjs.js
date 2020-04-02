@@ -476,8 +476,7 @@ function afficheAllUser(tab) {
         retUsers += '<td>';
         retUsers += '<button onclick="modifRole(' + '\'' + tab[i]['matricule'] + '\'' + ', $(\'#role_user' + index + '\').val())" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button>';
         retUsers += '</td><td>';
-        retUsers += '<button onclick="popup('+ '\''+tab[i]['matricule']+'\')" class="btn btn-primary" data-toggle="modal" data-target="#modalConfirmDelete">Launch modal</button>'
-        //retUsers += '<button onclick="deleteUserAdmin('+ '\''+tab[i]['matricule']+'\')" class="btn btn-link" title="Delete" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>';
+        retUsers += '<button onclick="popup('+ '\''+tab[i]['matricule']+'\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>'
         retUsers += '</td>';
         retUsers += '</tr>';
         index++;
@@ -554,18 +553,13 @@ function popup(matricule) {
     retPopup += '<div class="modal-content text-center">'
     retPopup += '<!--Header-->'
     retPopup += '<div class="modal-header d-flex justify-content-center">'
-    retPopup += '<p class="heading">Etes vous sur ?</p>'
-    retPopup += '</div>'
-
-    retPopup += '<!--Body-->'
-    retPopup += '<div class="modal-body">'
-    retPopup += '<i class="fas fa-times fa-4x animated rotateIn"></i>'
+    retPopup += '<p class="heading">Etes vous sur de vouloir supprimer ce compte ?</p>'
     retPopup += '</div>'
 
     retPopup += '<!--Footer-->'
     retPopup += '<div class="modal-footer flex-center">'
-    retPopup += '<button onclick="deleteUserAdmin(' + '\'' + matricule +'\'' +')" class="btn  btn-outline-danger" data-dismiss="modal">Oui</button>'
-    retPopup += '<button class="btn  btn-danger waves-effect" data-dismiss="modal">Non</button>'
+    retPopup += '<button onclick="deleteUserAdmin(' + '\'' + matricule +'\'' +')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
+    retPopup += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
     retPopup += '</div>'
     retPopup += '</div>'
     retPopup += '<!--/.Content-->'
