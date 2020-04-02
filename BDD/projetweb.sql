@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 02 avr. 2020 à 09:04
+-- Généré le :  jeu. 02 avr. 2020 à 09:36
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -29,7 +29,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS `affichageAteliersAnimateur`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `affichageAteliersAnimateur` ()  BEGIN
 
-SELECT a.nom, a.description, a.date, a.nbrPlaces, a.idAtelier, u.prenom, u.nom nomAnimateur
+SELECT a.nom, a.description, a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, u.nom nomAnimateur
 FROM atelier a
 INNER JOIN user u 
 ON a.animateur = u.matricule
@@ -55,9 +55,9 @@ WHERE id = idAtelier;
 END$$
 
 DROP PROCEDURE IF EXISTS `ajoutAtelier`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16), IN `Sujet` VARCHAR(255))  BEGIN 
 
-INSERT INTO atelier (nom, description, date, nbrPlaces, animateur) VALUES (Nom, Description, Date, Places, Animateur);
+INSERT INTO atelier (nom, description, date, nbrPlaces, animateur, sujet) VALUES (Nom, Description, Date, Places, Animateur, Sujet);
 
 END$$
 
@@ -267,7 +267,8 @@ CREATE TABLE IF NOT EXISTS `atelier` (
   `date` datetime NOT NULL,
   `nbrPlaces` int(11) NOT NULL,
   `animateur` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `termine` tinyint(1) NOT NULL DEFAULT '0',
+  `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `termine` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idAtelier`),
   KEY `animateur_fk` (`animateur`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -276,12 +277,12 @@ CREATE TABLE IF NOT EXISTS `atelier` (
 -- Déchargement des données de la table `atelier`
 --
 
-INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`) VALUES
-(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 0),
-(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 0),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0),
-(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0),
-(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 1);
+INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `termine`) VALUES
+(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0),
+(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 'Informatique', 0),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 0),
+(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0),
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1);
 
 -- --------------------------------------------------------
 
