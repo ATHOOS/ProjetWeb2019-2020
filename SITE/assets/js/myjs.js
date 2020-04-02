@@ -326,64 +326,66 @@ function filtrerAtelier(sujet, tab) {
     var indexAtelier = 0;
 
     for (i = 0; i < tab.length; i++) {
-        var datefull = new Date(tab[i]['date']);
-        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+        if (tab[i]['validation'] === '1') {
+            var datefull = new Date(tab[i]['date']);
+            var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+            var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
 
-        if (tab[i]['sujet'] === sujet) {
-            tabEnvoi[i] = tab[i];
+            if (tab[i]['sujet'] === sujet) {
+                tabEnvoi[i] = tab[i];
 
-        } else {
-            tabEnvoi2[i] = tab[i];
-        }
-        var tnom = tab[i]['nom'];
-        if (tab[i]['sujet'] === sujet) {
-            ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
-            ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
-            ret += '<div class="media-body order-2 order-lg-1">';
-            ret += '<a>';
-            ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
-                + indexAtelier + ','
-                + '\'' + tab[i]['nom'] + '\','
-                + '\'' + tab[i]['description'] + '\','
-                + '\'' + tab[i]['date'] + '\','
-                + '\'' + tab[i]['nbrPlaces'] + '\','
-                + '\'' + tab[i]['sujet'] + '\','
-                + '\'' + tab[i]['idAtelier'] + '\');">'
-                + tab[i]['nom'] + '</h5>';
-            ret += ' </a>';
-            ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
-            ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
-            ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-            ret += '</div>';
-            ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
-            ret += '</div>';
-            ret += '</li>';
-            nbAteliers++;
+            } else {
+                tabEnvoi2[i] = tab[i];
+            }
+            var tnom = tab[i]['nom'];
+            if (tab[i]['sujet'] === sujet) {
+                ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+                ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+                ret += '<div class="media-body order-2 order-lg-1">';
+                ret += '<a>';
+                ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                    + indexAtelier + ','
+                    + '\'' + tab[i]['nom'] + '\','
+                    + '\'' + tab[i]['description'] + '\','
+                    + '\'' + tab[i]['date'] + '\','
+                    + '\'' + tab[i]['nbrPlaces'] + '\','
+                    + '\'' + tab[i]['sujet'] + '\','
+                    + '\'' + tab[i]['idAtelier'] + '\');">'
+                    + tab[i]['nom'] + '</h5>';
+                ret += ' </a>';
+                ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+                ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
+                ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+                ret += '</div>';
+                ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+                ret += '</div>';
+                ret += '</li>';
+                nbAteliers++;
 
-        } else {
-            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
-            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
-            ret2 += '<div class="media-body order-2 order-lg-1">';
-            ret2 += '<a>';
-            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
-                + indexAtelier++ + ','
-                + '\'' + tab[i]['nom'] + '\','
-                + '\'' + tab[i]['description'] + '\','
-                + '\'' + tab[i]['date'] + '\','
-                + '\'' + tab[i]['nbrPlaces'] + '\','
-                + '\'' + tab[i]['sujet'] + '\','
-                + '\'' + tab[i]['idAtelier'] + '\');">'
-                + tab[i]['nom'] + '</h5>';
-            ret2 += ' </a>';
-            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
-            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
-            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-            ret2 += '</div>';
-            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
-            ret2 += '</div>';
-            ret2 += '</li>';
-            nbAteliers2++;
+            } else {
+                ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+                ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+                ret2 += '<div class="media-body order-2 order-lg-1">';
+                ret2 += '<a>';
+                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                    + indexAtelier++ + ','
+                    + '\'' + tab[i]['nom'] + '\','
+                    + '\'' + tab[i]['description'] + '\','
+                    + '\'' + tab[i]['date'] + '\','
+                    + '\'' + tab[i]['nbrPlaces'] + '\','
+                    + '\'' + tab[i]['sujet'] + '\','
+                    + '\'' + tab[i]['idAtelier'] + '\');">'
+                    + tab[i]['nom'] + '</h5>';
+                ret2 += ' </a>';
+                ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+                ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+                ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+                ret2 += '</div>';
+                ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+                ret2 += '</div>';
+                ret2 += '</li>';
+                nbAteliers2++;
+            }
         }
     }
 
@@ -478,7 +480,7 @@ function afficheAllUser(tab) {
         retUsers += '<td>';
         retUsers += '<button onclick="modifRole(' + '\'' + tab[i]['matricule'] + '\'' + ', $(\'#role_user' + index + '\').val())" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button>';
         retUsers += '</td><td>';
-        retUsers += '<button onclick="popup('+ '\''+tab[i]['matricule']+'\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>'
+        retUsers += '<button onclick="popup(' + '\'' + tab[i]['matricule'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>'
         retUsers += '</td>';
         retUsers += '</tr>';
         index++;
@@ -560,7 +562,7 @@ function popup(matricule) {
 
     retPopup += '<!--Footer-->'
     retPopup += '<div class="modal-footer flex-center">'
-    retPopup += '<button onclick="deleteUserAdmin(' + '\'' + matricule +'\'' +')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
+    retPopup += '<button onclick="deleteUserAdmin(' + '\'' + matricule + '\'' + ')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
     retPopup += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
     retPopup += '</div>'
     retPopup += '</div>'
@@ -586,13 +588,17 @@ function afficheAllAteliers(tab) {
         retAtelier += '<td>' + tab[i]['nomAnimateur'] + '</td>';
         retAtelier += '<td>' + tab[i]['date'] + '</td>';
         retAtelier += '<td>';
-        if(tab[i]['termine'] = 0){
-            retAtelier += '<button onclick="validerAtelierAdmin(' + '\'' + tab[i]['idAtelier'] + '\'' + ').val())" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Valider l\'atelier</button>';
-        }else if(tab[i]['termine'] = 2){
-            retAtelier += '<button onclick="validerAtelierAdmin(' + '\'' + tab[i]['idAtelier'] + '\'' + ').val())" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Dévalider l\'atelier</button>';
+        if (tab[i]['validation'] === '0') {
+            retAtelier += '<button onclick="validerAtelierAdmin(' + '\'' + tab[i]['idAtelier'] + '\'' + ')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Valider l\'atelier</button>';
+        } else if (tab[i]['validation'] === '1') {
+            retAtelier += '<button onclick="devaliderAtelierAdmin(' + '\'' + tab[i]['idAtelier'] + '\'' + ')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Dévalider l\'atelier</button>';
         }
         retAtelier += '</td><td>';
-        retAtelier += '<button onclick="popup('+ '\''+tab[i]['idAtelier']+'\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annuler</button>'
+        if (tab[i]['annulation'] === '0') {
+            retAtelier += '<button onclick="popup(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annuler</button>'
+        } else if (tab[i]['annulation'] === '1') {
+            retAtelier += '<button onclick="popup(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annulation demandée</button>'
+        }
         retAtelier += '</td>';
         retAtelier += '</tr>';
         index++;
@@ -643,7 +649,7 @@ function popup(idAtelier) {
 
     retPopup += '<!--Footer-->'
     retPopup += '<div class="modal-footer flex-center">'
-    retPopup += '<button onclick="annulerAtelierAdmin(' + '\'' + idAtelier +'\'' +')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
+    retPopup += '<button onclick="annulerAtelierAdmin(' + '\'' + idAtelier + '\'' + ')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
     retPopup += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
     retPopup += '</div>'
     retPopup += '</div>'
@@ -652,6 +658,34 @@ function popup(idAtelier) {
     retPopup += '</div>'
 
     $('#popup').append(retPopup);
+}
+
+function validerAtelierAdmin(id) {
+    $.ajax({
+        url: "assets/php/validerAtelierAdmin.php",
+        type: "POST",
+        data: {
+            "id": id
+        },
+        datatype: "json",
+        success: function (response) {
+            annulationAtelier()
+        }
+    });
+}
+
+function devaliderAtelierAdmin(id) {
+    $.ajax({
+        url: "assets/php/devaliderAtelierAdmin.php",
+        type: "POST",
+        data: {
+            "id": id
+        },
+        datatype: "json",
+        success: function (response) {
+            annulationAtelier()
+        }
+    });
 }
 
 

@@ -39,6 +39,8 @@ class dbAccess
             case 'recupAtelierInscrit':
             case 'checkSiAnnule':
             case 'suppressionCompte':
+            case 'validerAtelierAdmin':
+            case 'devaliderAtelierAdmin':
                 array_push($params, '?');
 
                 try {
