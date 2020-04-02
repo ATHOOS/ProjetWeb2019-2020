@@ -3,7 +3,7 @@
 include "dbAccess.php";
 
 $db = new dbAccess();
-$noma = htmlspecialchars($_POST['matricule']);
+$noma = htmlspecialchars(strtoupper($_POST['matricule']));
 $Nom = htmlspecialchars($_POST['Nom']);
 $Prenom = htmlspecialchars($_POST['Prenom']);
 $email = htmlspecialchars($_POST['email']);

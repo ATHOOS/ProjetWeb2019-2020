@@ -268,7 +268,7 @@ function ajoutAtelier() {
     }
 
     if (a === 1) {
-        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Animateur': $('#workshop_animateur').val(), 'Sujet': $('#workshop_sujet').val() };
+        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val() };
         console.log(objectForm);
         $.ajax({
             url: "assets/php/ajoutAtelier.php",

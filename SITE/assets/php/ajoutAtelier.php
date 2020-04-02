@@ -7,7 +7,7 @@ $Nom = htmlspecialchars($_POST['Nom']);
 $Description = htmlspecialchars($_POST['Description']);
 $Date = htmlspecialchars($_POST['Date']);
 $Nombre_de_places = htmlspecialchars($_POST['Nombre_de_places']);
-$Animateur = htmlspecialchars($_POST['Animateur']);
+$Animateur = htmlspecialchars($_SESSION['matricule']);
 $Sujet = htmlspecialchars($_POST['Sujet']);
 
 echo json_encode($Animateur);

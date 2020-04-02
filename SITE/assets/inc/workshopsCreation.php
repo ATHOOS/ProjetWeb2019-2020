@@ -33,10 +33,6 @@ $_SESSION['pageActuel'] = 'workshopsCreation.php';
                                     <input type="text" name="workshop_nbrPlaces" id="workshop_nbrPlaces" placeholder="Nombre de place" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="workshop_animateur"><i class="zmdi zmdi-lock"></i></label>
-                                    <input type="text" name="workshop_animateur" id="workshop_animateur" placeholder="Matricule de l'animateur" />
-                                </div>
-                                <div class="form-group">
                                     <label for="workshop_animateur">Sélectionnez un sujet :</label></br></br>
                                     <select name="workshop_animateur" id="workshop_sujet">
                                         <option value="Comptabilité">Comptabilité</option>
