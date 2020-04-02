@@ -478,7 +478,7 @@ function afficheAllUser(tab) {
 }
 
 function paginationUsers(nAt) {
-    var limitePage = 2;
+    var limitePage = 10;
     var nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
