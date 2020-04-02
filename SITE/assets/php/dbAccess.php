@@ -20,7 +20,8 @@ class dbAccess
 
         switch ($nomProcedure) {
             case 'checkNbAteliers':
-            case 'affichageAteliersAnimateur':            
+            case 'affichageAteliersAnimateur':
+            case 'recupUsers':
                 array_push($params);
 
                 try {
@@ -34,7 +35,7 @@ class dbAccess
                 }
                 break;
         }
-        switch($nomProcedure) {
+        switch ($nomProcedure) {
             case 'recupAtelierInscrit':
             case 'checkSiAnnule':
                 array_push($params, '?');
@@ -108,6 +109,5 @@ class dbAccess
                 }
                 break;
         }
-        
     }
 }

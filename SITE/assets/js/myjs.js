@@ -86,11 +86,11 @@ function profil() {
 
 function detailWorkshop(p, tab) {
     $('#content').load("assets/inc/detailWorkshop.php");
-    detailsWorkshop(tab)
+    detailsWorkshop(tab);
 
 }
 
-function adminPage(){
+function adminPage() {
     $('#content').load("assets/inc/admin/ezAdministration.php");
     removeClassActive();
     addClassActive('adminPage');
@@ -103,31 +103,31 @@ function estCo() {
 
 }
 
-function annulationAtelier(){
+function annulationAtelier() {
     removeClassActiveAdmin();
     addClassActive('annulation');
     $('#contentAdminPage').load('assets/inc/admin/annulationAtelier.php');
 }
 
-function validationAtelier(){
+function validationAtelier() {
     removeClassActiveAdmin();
     addClassActive('validation');
     $('#contentAdminPage').load('assets/inc/admin/validationAtelier.php');
 }
 
-function gestionDroits(){
+function gestionDroits() {
     removeClassActiveAdmin();
     addClassActive('droit');
     $('#contentAdminPage').load('assets/inc/admin/droitUtilisateur.php');
 }
 
-function generationContrats(){
+function generationContrats() {
     removeClassActiveAdmin();
     addClassActive('contrat');
     $('#contentAdminPage').load('assets/inc/admin/generationContrat.php');
 }
 
-function sondage(){
+function sondage() {
     removeClassActiveAdmin();
     addClassActive('sondage');
     $('#contentAdminPage').load('assets/inc/admin/sondage.php');
@@ -427,7 +427,7 @@ function paginationAtelier(nAt) {
     })
 
 }
-function loadWorkshop(i, nom, desc, date2, nb, sujet,idAtelier) {
+function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
     $('#content').load("assets/inc/detailWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
@@ -446,7 +446,32 @@ function detailsWorkshop() {
     $('#date').html(date);
     $('#heure').html(heure);
 
+}
 
-
-
+retUsers = "";
+function afficheAllUser(tab) {
+    retUsers = "";
+    var index = 1;
+    for (i = 0; i < tab.length; i++) {
+        let role = "";
+        if(tab[i]['administration'] == 0){
+            role = "Utilisateur";
+        }
+        else {
+            role = "Administrateur";
+        }
+        retUsers += '<tr>';
+        retUsers += '<td>'+ index +'</td>';
+        retUsers += '<td>' + tab[i]['prenom'] + ' ' + tab[i]['nom'] +'</td>';
+        retUsers += '<td>'+ tab[i]['matricule'] +'</td>';
+        retUsers += '<td>'+ role +'</td>';
+        retUsers += '<td>';
+        retUsers += '<a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>';
+        retUsers += '<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>';
+        retUsers += '</td>';
+        retUsers += '</tr>';
+        index++;
+    }
+    console.log(retUsers);
+    $('.listeUser').append(retUsers);
 }

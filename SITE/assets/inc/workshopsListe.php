@@ -51,7 +51,6 @@ include '../php/listeAtelier.php';
     </div>
     <script>
         var tabAteliers =  <?= $recupAtelier ?>;
-        tabAteliers = tabAteliers;
         $(document).ready(filtrerAtelier($('#sujet').val(), tabAteliers));
 
     </script>
