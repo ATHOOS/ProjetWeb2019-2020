@@ -33,6 +33,10 @@ include '../../php/listeUsers.php';
         </div>
     </div>
 </div>
+<div id="popup">
+    
+</div>
+
 <script>
         var allUsers =  <?= $recupAllUsers ?>;
         afficheAllUser(allUsers);
