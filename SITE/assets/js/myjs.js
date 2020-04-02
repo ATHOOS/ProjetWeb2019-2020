@@ -81,10 +81,47 @@ function detailWorkshop(p, tab) {
 
 }
 
+function adminPage(){
+    $('#content').load("assets/inc/admin/ezAdministration.php");
+    removeClassActive();
+    addClassActive('adminPage');
+
+}
+
 function estCo() {
     $('#navConnexion').html('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
     $("#navConnexion").prop("onclick", null).off("click");
 
+}
+
+function annulationAtelier(){
+    removeClassActiveAdmin();
+    addClassActive('annulation');
+    $('#contentAdminPage').load('assets/inc/admin/annulationAtelier.php');
+}
+
+function validationAtelier(){
+    removeClassActiveAdmin();
+    addClassActive('validation');
+    $('#contentAdminPage').load('assets/inc/admin/validationAtelier.php');
+}
+
+function gestionDroits(){
+    removeClassActiveAdmin();
+    addClassActive('droit');
+    $('#contentAdminPage').load('assets/inc/admin/droitUtilisateur.php');
+}
+
+function generationContrats(){
+    removeClassActiveAdmin();
+    addClassActive('contrat');
+    $('#contentAdminPage').load('assets/inc/admin/generationContrat.php');
+}
+
+function sondage(){
+    removeClassActiveAdmin();
+    addClassActive('sondage');
+    $('#contentAdminPage').load('assets/inc/admin/sondage.php');
 }
 
 
