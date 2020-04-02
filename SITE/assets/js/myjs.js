@@ -147,10 +147,16 @@ function checkInscription() {
         a = 0;
     }
 
+    if (validateMatricule($('#matricule').val()) === false) {
+        $('#matricule').attr('placeholder', 'Matricule non conforme');
+        a = 0;
+    }
+    
     if ($('#nom').val() == '') {
         $('#nom').attr('placeholder', 'Nom requis');
         a = 0;
     }
+
 
     if ($('#prenom').val() == '') {
         $('#prenom').attr('placeholder', 'Prenom requis');
@@ -179,6 +185,7 @@ function checkInscription() {
         a = 0;
     }
 
+
     if (a === 1) {
         let objectForm = { 'matricule': $('#matricule').val(), 'Nom': $('#nom').val(), 'Prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
         console.log(objectForm);
@@ -199,6 +206,11 @@ function checkInscription() {
         });
     }
 
+}
+
+function validateMatricule(matricule){
+    var re = /HE\d\d\d\d\d\d/;
+    return re.test(matricule);
 }
 
 
