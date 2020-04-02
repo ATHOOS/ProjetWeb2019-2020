@@ -15,5 +15,6 @@ if(empty($checkConnexion)){
     $_SESSION['mail'] = $checkConnexion[0]{'mail'};
     $_SESSION['nom'] = $checkConnexion[0]{'nom'};
     $_SESSION['prenom'] = $checkConnexion[0]{'prenom'};
+    $_SESSION['admin'] = $checkConnexion[0]{'administration'};
     echo json_encode($_SESSION['prenom']);
 }
