@@ -71,7 +71,6 @@ session_start();
           <li id ="navProfil" onclick='profil()'><a href="">Profil</a></li>
           <?php if($_SESSION['admin'] == 1) : ?>
             <li id ="navAdmin" onclick='adminPage()'><a href="">Administration</a></li>
-          <?php else : ?>
           <?php endif ?>
           <li id="navConnexion"class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
         </ul>

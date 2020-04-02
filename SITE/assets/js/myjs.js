@@ -8,6 +8,15 @@ function removeClassActive() {
 
 }
 
+function removeClassActiveAdmin() {
+    $('#annulation').removeClass('active');
+    $('#validation').removeClass('active');
+    $('#droit').removeClass('active');
+    $('#contrat').removeClass('active');
+    $('#sondage').removeClass('active');
+
+}
+
 function addClassActive(p) {
     p += '';
     $('#' + p).addClass('active');
