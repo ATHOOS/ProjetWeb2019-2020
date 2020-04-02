@@ -1,6 +1,6 @@
 <?php
 
-$noma = $_SESSION['matricule'];
+$noma = htmlspecialchars($_SESSION['matricule']);
 include 'dbAccess.php';
 
 $db = new dbAccess();

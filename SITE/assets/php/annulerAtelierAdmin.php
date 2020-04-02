@@ -4,6 +4,6 @@ include 'dbAccess.php';
 
 $db = new dbAccess();
 
-$id = $_POST['id'];
+$id = htmlspecialchars($_POST['id']);
 
 $annulerAtelier = $db->callProcedure("annulationAtelierAdmin", [$id]);

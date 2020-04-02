@@ -1,5 +1,5 @@
 <?php
 
-$idAtelier = intval($_SESSION['idAtelier']);
+$idAtelier = htmlspecialchars(intval($_SESSION['idAtelier']));
 
 $checkSiAnnule = $db->callProcedure('checkSiAnnule',[$idAtelier]);
