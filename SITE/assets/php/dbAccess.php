@@ -38,6 +38,7 @@ class dbAccess
         switch ($nomProcedure) {
             case 'recupAtelierInscrit':
             case 'checkSiAnnule':
+            case 'suppressionCompte':
                 array_push($params, '?');
 
                 try {

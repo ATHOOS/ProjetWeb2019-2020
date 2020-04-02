@@ -476,7 +476,7 @@ function afficheAllUser(tab) {
         retUsers += '<td>';
         retUsers += '<button onclick="modifRole('+ '\''+tab[i]['matricule']+'\''+ ', $(\'#role_user'+ index +'\').val())" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button>';
         retUsers += '</td><td>';
-        retUsers += '<button class="btn btn-link" title="Delete" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>';
+        retUsers += '<button onclick="deleteUserAdmin('+ '\''+tab[i]['matricule']+'\')" class="btn btn-link" title="Delete" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>';
         retUsers += '</td>';
         retUsers += '</tr>';
         index++;
@@ -522,6 +522,20 @@ function modifRole(noma, admin) {
         datatype: "json",
         success: function (response) {
             console.log(response);
+        }
+    });
+}
+
+function deleteUserAdmin(noma) {
+    $.ajax({
+        url: "assets/php/deleteUserAdmin.php",
+        type: "POST",
+        data: {
+            "noma": noma
+        },
+        datatype: "json",
+        success: function (response) {
+            gestionDroits(); 
         }
     });
 }
