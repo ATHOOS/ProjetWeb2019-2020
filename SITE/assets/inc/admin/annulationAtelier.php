@@ -7,7 +7,7 @@ include '../../php/listeAtelier.php';
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-5">
-                    <h2>Gestion <b>Utilisateurs</b></h2>
+                    <h2>Gestion <b>Ateliers</b></h2>
                 </div>
             </div>
         </div>
