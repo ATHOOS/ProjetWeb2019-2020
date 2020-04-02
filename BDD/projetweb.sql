@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 02, 2020 at 11:55 AM
+-- Generation Time: Apr 02, 2020 at 02:28 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -54,14 +54,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `annulationAtelier` (IN `id` INT, IN
 UPDATE atelier
 SET termine = 1
 WHERE idAtelier = id AND termine = 0 AND animateur = noma;
-
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `augmenterPrivilege` (IN `noma` VARCHAR(32))  BEGIN
-
-UPDATE user
-SET administration = 1
-WHERE matricule = noma;
 
 END$$
 
@@ -160,18 +152,15 @@ WHERE noma = idparticipant AND id = idAtelier;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `diminuerPrivilege` (IN `noma` VARCHAR(32))  BEGIN
-
-UPDATE user
-SET administration = 0
-WHERE matricule = noma;
-
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inscriptionAtelier` (IN `noma` VARCHAR(16), IN `identifiant` INT)  BEGIN
 
 INSERT INTO participant_atelier (idparticipant, idAtelier) VALUES (noma, identifiant);
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifRole` (IN `noma` VARCHAR(30), IN `admin` TINYINT(4))  BEGIN
+UPDATE user SET administration = admin 
+WHERE matricule = noma;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierAnnule` ()  BEGIN
@@ -470,9 +459,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administration`) VALUES
 ('HE000000', 'Admin', 'Admin', 'admin@ephec.be', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
-('HE111111', 'Masson', 'Claude', 'Claude@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE111111', 'Masson', 'Claude', 'Claude@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
 ('HE200101', 'Jean', 'DelaFOntaine', 'remy.vase3@hotmail.fr', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
 ('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE256789', 'Marc', 'Lavoine', 'Marc@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE256895', 'Faulkner', 'Stéphane', 'stephane.faulkner@unamur.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),

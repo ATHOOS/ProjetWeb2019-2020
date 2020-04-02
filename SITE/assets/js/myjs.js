@@ -464,17 +464,17 @@ function afficheAllUser(tab) {
         let role = "";
         if (tab[i]['administration'] == 0) {
             role = "Utilisateur";
-            retUsers += '<option value="Utilisateur" selected>Utilisateur</option>';
-            retUsers += '<option value="Administrateur">Administrateur</option>';
+            retUsers += '<option value="0" selected>Utilisateur</option>';
+            retUsers += '<option value="1">Administrateur</option>';
         }
         else {
             role = "Administrateur";
-            retUsers += '<option value="Administrateur" selected>Administrateur</option>';
-            retUsers += '<option value="Utilisateur">Utilisateur</option>';
+            retUsers += '<option value="1" selected>Administrateur</option>';
+            retUsers += '<option value="0">Utilisateur</option>';
         }
         retUsers += '</td>';
         retUsers += '<td>';
-        retUsers += '<button onclick="modifRole('+ '\''+tab[i]['matricule']+'\''+ ', $("#role_user'+index +'").val())" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button>';
+        retUsers += '<button onclick="modifRole('+ '\''+tab[i]['matricule']+'\''+ ', $(\'#role_user'+ index +'\').val())" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button>';
         retUsers += '</td><td>';
         retUsers += '<button class="btn btn-link" title="Delete" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>';
         retUsers += '</td>';
@@ -508,12 +508,20 @@ function paginationUsers(nAt) {
                 $("#listeUser .lignes:eq(" + i + ")").show();
             }
         }
-
-
     })
-
 }
 
 function modifRole(noma, admin) {
-    console.log(admin);
+    $.ajax({
+        url: "assets/php/modifRole.php",
+        type: "POST",
+        data: {
+            "noma": noma,
+            "admin": admin
+        },
+        datatype: "json",
+        success: function (response) {
+            console.log(response);
+        }
+    });
 }
