@@ -64,7 +64,8 @@ session_start();
                 <ul>
                   <li><a href="#" id="navWorkshopsListe" onclick="workshopsListe()">Liste de workshops</a></li>
                   <li><a href="#" id="navWorkshopsCreation" onclick="workshopsCreation()">Création de workshops</a></li>
-                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshops()">Mes workshops</a></li>
+                  <li><a href="#" id="navWorkshopsParticipeListe" onclick="workshopParticipeListe()">Workshops auxquels je participe</a></li>
+                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshopsListe()">Mes Workshops</a></li>
                 </ul>
               </li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
@@ -83,7 +84,8 @@ session_start();
                 <ul>
                   <li><a href="#" id="navWorkshopsListe" onclick="workshopsListe()">Liste de workshops</a></li>
                   <li><a href="#" id="navWorkshopsCreation" onclick="workshopsCreation()">Création de workshops</a></li>
-                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshops()">Mes workshops</a></li>
+                  <li><a href="#" id="navWorkshopsParticipeListe" onclick="workshopParticipeListe()">Workshops auxquels je participe</a></li>
+                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshopsListe()">Mes Workshops</a></li>
                 </ul>
               </li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>

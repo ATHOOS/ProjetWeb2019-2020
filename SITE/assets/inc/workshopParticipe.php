@@ -1,7 +1,7 @@
 <?php
 session_start();
-$_SESSION['pageActuel'] = 'mesWorkshops.php';
-include '../php/mesWorkshops.php';
+$_SESSION['pageActuel'] = 'workshopParticipe.php';
+include '../php/mesAteliers.php';
 ?>
 
 
@@ -20,7 +20,7 @@ include '../php/mesWorkshops.php';
       <div class="col-lg-8 mx-auto">
 
         <!-- List group-->
-        <ul class="list-group shadow" id="itemMesAteliers">
+        <ul class="list-group shadow" id="itemAtelierParticipe">
 
         </ul>
 
@@ -38,8 +38,8 @@ include '../php/mesWorkshops.php';
   </div>
   </div>
   <script>
-        var maListe =  <?= $liste ?>;
-        $(document).ready(mesWorkshops(maListe));
+        var tabAteliersParticipe =  <?= $mesAteliers ?>;
+        $(document).ready(workshopParticipe(tabAteliersParticipe));
 
   </script>
 

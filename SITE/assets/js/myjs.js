@@ -61,7 +61,14 @@ function workshopsCreation() {
     addClassActive('navWorkshops');
 }
 
-function mesWorkshops() {
+function workshopParticipeListe() {
+    $('#content').load("assets/inc/workshopParticipe.php");
+
+    removeClassActive();
+    addClassActive('navWorkshops');
+}
+
+function mesWorkshopsListe() {
     $('#content').load("assets/inc/mesWorkshops.php");
 
     removeClassActive();
@@ -337,7 +344,7 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret += '<div class="media-body order-2 order-lg-1">';
                 ret += '<a>';
-                ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
                     + indexAtelier + ','
                     + '\'' + tab[i]['nom'] + '\','
                     + '\'' + tab[i]['description'] + '\','
@@ -361,7 +368,7 @@ function filtrerAtelier(sujet, tab) {
                 ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret2 += '<div class="media-body order-2 order-lg-1">';
                 ret2 += '<a>';
-                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
                     + indexAtelier++ + ','
                     + '\'' + tab[i]['nom'] + '\','
                     + '\'' + tab[i]['description'] + '\','
@@ -718,7 +725,7 @@ function workshopParticipe(tab) {
             tabEnvoiAtelierParticipe[i] = tab[i];
 
             var tnom = tab[i]['nom'];
-            ret2 += '<li class="list-group-item-participe" id="' + tab[i]['sujet'] + '">';
+            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret2 += '<div class="media-body order-2 order-lg-1">';
             ret2 += '<a>';
@@ -755,7 +762,7 @@ function paginationAtelierParticipe(nAt) {
     var nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
-    $("#itemAtelierParticipe .list-group-item-participe:gt(" + (limitePage - 1) + ")").hide();
+    $("#itemAtelierParticipe .list-group-item:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
     for (var i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
@@ -767,10 +774,10 @@ function paginationAtelierParticipe(nAt) {
             var currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
-            $(".list-group-item-participe").hide();
+            $(".list-group-item").hide();
             var total = limitePage * currentPage;
             for (var i = total - limitePage; i < total; i++) {
-                $("#itemAtelierParticipe .list-group-item-participe:eq(" + i + ")").show();
+                $("#itemAtelierParticipe .list-group-item:eq(" + i + ")").show();
             }
         }
 
@@ -799,3 +806,101 @@ function detailsWorkshop() {
 }
 
 
+
+/////////////////////////////////////////////////////MESWORKSHOPS//////////////////////////////////////////////////
+var nbMesAteliers = 1;
+var tabEnvoiMesAteliers = new Array();
+function mesWorkshops(tab) {
+    $('#itemMesAteliers').empty();
+    $('.paginationn').empty();
+    nbMesAteliers = 1;
+    var ret2 = "";
+    tabEnvoiMesAteliers = new Array();
+    var indexAtelier = 0;
+
+    for (i = 0; i < tab.length; i++) {
+            var datefull = new Date(tab[i]['date']);
+            var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+            var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+
+            tabEnvoiMesAteliers[i] = tab[i];
+
+            var tnom = tab[i]['nom'];
+            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+            ret2 += '<div class="media-body order-2 order-lg-1">';
+            ret2 += '<a>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
+                + indexAtelier++ + ','
+                + '\'' + tab[i]['nom'] + '\','
+                + '\'' + tab[i]['description'] + '\','
+                + '\'' + tab[i]['date'] + '\','
+                + '\'' + tab[i]['nbrPlaces'] + '\','
+                + '\'' + tab[i]['sujet'] + '\','
+                + '\'' + tab[i]['idAtelier'] + '\');">'
+                + tab[i]['nom'] + '</h5>';
+            ret2 += ' </a>';
+            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret2 += '</div>';
+            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret2 += '</div>';
+            ret2 += '</li>';
+            nbMesAteliers++;
+
+    }
+    $('#itemMesAteliers').append(ret2);
+    paginationMesAteliers(nbMesAteliers);
+
+
+}
+
+
+function paginationMesAteliers(nAt) {
+    var limitePage = 4;
+    var nbPages = Math.ceil(nAt / limitePage);
+    removeClassActive();
+    addClassActive('navWorkshops');
+    $("#itemMesAteliers .list-group-item:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".list-group-item").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#itemMesAteliers .list-group-item:eq(" + i + ")").show();
+            }
+        }
+
+
+    })
+
+}
+function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
+    $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
+    tnom = nom;
+    tdesc = desc;
+    tdate2 = date2;
+    tnb = nb;
+    tsujet = sujet;
+
+}
+
+function detailsWorkshop() {
+    var datefull = new Date(tdate2);
+    var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+    var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+    $('#nom').text(tnom);
+    $('#description').html(tdesc);
+    $('#date').html(date);
+    $('#heure').html(heure);
+}

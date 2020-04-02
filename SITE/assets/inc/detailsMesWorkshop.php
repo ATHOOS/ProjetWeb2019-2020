@@ -40,19 +40,19 @@ detailsWorkshop();
           <li id="heure"></li>
 
         </ul>
-        <?php if (empty($checkSiDejaDansAtelier)) { ?>
-          <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
-            <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop"/>
-            </div>
-          </form>
-        <?php } else { ?>
-          <form id="inscriptionWorkshop" method="post" action="assets/php/desinscriptionWorkshop.php">
-            <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="Se désinscrire de ce workshop"/>
-            </div>
-          </form>
-        <?php } ?>
+          <?php if(!empty($checkSiAnnule)) { ?>
+            <form id="annulationWorkshop" method="post" action="assets/php/annulationAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Annuler workshop"/>
+              </div>
+            </form>
+          <?php } else  { ?>
+            <form id="desannulationWorkshop" method="post" action="assets/php/desannulationAtelier.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Reprogrammer workshop"/>
+              </div>
+            </form>
+          <?php } ?>
       </div>
 
     </div>
