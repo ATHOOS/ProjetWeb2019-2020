@@ -15,10 +15,11 @@ include '../../php/listeUsers.php';
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Date Created</th>
-                    <th>Role</th>
-                    <th>Action</th>
+                    <th>Prénom - Nom</th>
+                    <th>Matricule</th>
+                    <th>Rôle</th>
+                    <th>Valider changement</th>
+                    <th>Supprimer utilisateur</th>
                 </tr>
             </thead>
             <tbody id="listeUser">

@@ -453,26 +453,34 @@ function afficheAllUser(tab) {
     retUsers = "";
     var index = 1;
     for (i = 0; i < tab.length; i++) {
+        
+        retUsers += '<tr class="lignes">';
+        retUsers += '<td>' + index + '</td>';
+        retUsers += '<td>' + tab[i]['prenom'] + ' ' + tab[i]['nom'] + '</td>';
+        retUsers += '<td>' + tab[i]['matricule'] + '</td>';
+        retUsers += '<td>';
+        retUsers += '<select name="role_user" id="role_user' + index + '">';
+        
         let role = "";
-        if(tab[i]['administration'] == 0){
+        if (tab[i]['administration'] == 0) {
             role = "Utilisateur";
+            retUsers += '<option value="Utilisateur" selected>Utilisateur</option>';
+            retUsers += '<option value="Administrateur">Administrateur</option>';
         }
         else {
             role = "Administrateur";
+            retUsers += '<option value="Administrateur" selected>Administrateur</option>';
+            retUsers += '<option value="Utilisateur">Utilisateur</option>';
         }
-        retUsers += '<tr class="lignes">';
-        retUsers += '<td>'+ index +'</td>';
-        retUsers += '<td>' + tab[i]['prenom'] + ' ' + tab[i]['nom'] +'</td>';
-        retUsers += '<td>'+ tab[i]['matricule'] +'</td>';
-        retUsers += '<td>'+ role +'</td>';
+        retUsers += '</td>';
         retUsers += '<td>';
-        retUsers += '<a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>';
-        retUsers += '<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>';
+        retUsers += '<button onclick="modifRole('+ '\''+tab[i]['matricule']+'\''+ ', $("#role_user'+index +'").val())" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button>';
+        retUsers += '</td><td>';
+        retUsers += '<button class="btn btn-link" title="Delete" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button>';
         retUsers += '</td>';
         retUsers += '</tr>';
         index++;
     }
-    console.log(retUsers);
     $('#listeUser').append(retUsers);
     paginationUsers(index);
 }
@@ -504,4 +512,8 @@ function paginationUsers(nAt) {
 
     })
 
+}
+
+function modifRole(noma, admin) {
+    console.log(admin);
 }
