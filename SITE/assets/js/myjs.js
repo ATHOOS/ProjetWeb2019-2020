@@ -460,7 +460,7 @@ function afficheAllUser(tab) {
         else {
             role = "Administrateur";
         }
-        retUsers += '<tr>';
+        retUsers += '<tr class="lignes">';
         retUsers += '<td>'+ index +'</td>';
         retUsers += '<td>' + tab[i]['prenom'] + ' ' + tab[i]['nom'] +'</td>';
         retUsers += '<td>'+ tab[i]['matricule'] +'</td>';
@@ -473,5 +473,35 @@ function afficheAllUser(tab) {
         index++;
     }
     console.log(retUsers);
-    $('.listeUser').append(retUsers);
+    $('#listeUser').append(retUsers);
+    paginationUsers(index);
+}
+
+function paginationUsers(nAt) {
+    var limitePage = 2;
+    var nbPages = Math.ceil(nAt / limitePage);
+    removeClassActive();
+    addClassActive('navWorkshops');
+    $("#listeUser .lignes:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".lignes").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#listeUser .lignes:eq(" + i + ")").show();
+            }
+        }
+
+
+    })
+
 }
