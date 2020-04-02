@@ -289,7 +289,7 @@ function ajoutAtelier() {
 }
 
 
-//affichage de la liste des 
+////////////////////////////////////////////////////////GESTION DE L'AFFICHAGE DES WORKSHOPS/////////////////////////////////////////////////////////
 var nbAteliers;
 var nbAteliers2;
 var tabEnvoi = new Array();
@@ -448,6 +448,8 @@ function detailsWorkshop() {
 
 }
 
+
+/////////////////////////////////////////////////////////////GESTION DES USERS DANS L'ADMIN ///////////////////////////////////////////////////////////////////
 retUsers = "";
 function afficheAllUser(tab) {
     retUsers = "";
@@ -559,6 +561,89 @@ function popup(matricule) {
     retPopup += '<!--Footer-->'
     retPopup += '<div class="modal-footer flex-center">'
     retPopup += '<button onclick="deleteUserAdmin(' + '\'' + matricule +'\'' +')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
+    retPopup += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
+    retPopup += '</div>'
+    retPopup += '</div>'
+    retPopup += '<!--/.Content-->'
+    retPopup += '</div>'
+    retPopup += '</div>'
+
+    $('#popup').append(retPopup);
+}
+
+/////////////////////////////////////////////////////GESTION ATELIERS ADMIN///////////////////////////////////////////////////////////////
+
+retAtelier = "";
+function afficheAllAteliers(tab) {
+    retAtelier = "";
+    var index = 1;
+    for (i = 0; i < tab.length; i++) {
+
+        retAtelier += '<tr class="lignes">';
+        retAtelier += '<td>' + index + '</td>';
+        retAtelier += '<td>' + tab[i]['nom'] + '</td>';
+        retAtelier += '<td>' + tab[i]['sujet'] + '</td>';
+        retAtelier += '<td>' + tab[i]['nomAnimateur'] + '</td>';
+        retAtelier += '<td>' + tab[i]['date'] + '</td>';
+        retAtelier += '<td>';
+        if(tab[i]['termine'] = 0){
+            retAtelier += '<button onclick="validerAtelierAdmin(' + '\'' + tab[i]['idAtelier'] + '\'' + ').val())" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Valider l\'atelier</button>';
+        }else if(tab[i]['termine'] = 2){
+            retAtelier += '<button onclick="validerAtelierAdmin(' + '\'' + tab[i]['idAtelier'] + '\'' + ').val())" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Dévalider l\'atelier</button>';
+        }
+        retAtelier += '</td><td>';
+        retAtelier += '<button onclick="popup('+ '\''+tab[i]['idAtelier']+'\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annuler</button>'
+        retAtelier += '</td>';
+        retAtelier += '</tr>';
+        index++;
+    }
+    $('#listeAtelier').append(retAtelier);
+    paginationAteliersAdmin(index);
+}
+
+function paginationAteliersAdmin(nAt) {
+    var limitePage = 10;
+    var nbPages = Math.ceil(nAt / limitePage);
+    removeClassActive();
+    addClassActive('navWorkshops');
+    $("#listeAtelier .lignes:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".lignes").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#listeAtelier .lignes:eq(" + i + ")").show();
+            }
+        }
+    })
+}
+
+var retPopup = "";
+
+function popup(idAtelier) {
+    retPopup = "";
+    retPopup += '<!--Modal: modalConfirmDelete-->'
+    retPopup += '<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+    retPopup += '<div class="modal-dialog modal-sm modal-notify modal-danger" role="document">'
+    retPopup += '<!--Content-->'
+    retPopup += '<div class="modal-content text-center">'
+    retPopup += '<!--Header-->'
+    retPopup += '<div class="modal-header d-flex justify-content-center">'
+    retPopup += '<p class="heading">Etes vous sur de vouloir supprimer ce compte ?</p>'
+    retPopup += '</div>'
+
+    retPopup += '<!--Footer-->'
+    retPopup += '<div class="modal-footer flex-center">'
+    retPopup += '<button onclick="annulerAtelierAdmin(' + '\'' + idAtelier +'\'' +')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
     retPopup += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
     retPopup += '</div>'
     retPopup += '</div>'
