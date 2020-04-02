@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 02, 2020 at 02:28 PM
+-- Generation Time: Apr 02, 2020 at 04:57 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -20,7 +20,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `affichageAteliersAnimateur` ()  BEGIN
 
-SELECT a.nom, a.description, a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, u.nom nomAnimateur
+SELECT a.nom, a.description, a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, a.validation, a.annulation, u.nom nomAnimateur
 FROM atelier a
 INNER JOIN user u 
 ON a.animateur = u.matricule
@@ -152,6 +152,12 @@ WHERE noma = idparticipant AND id = idAtelier;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `devaliderAtelierAdmin` (IN `id` INT)  BEGIN
+UPDATE atelier
+SET atelier.validation = 0
+WHERE idAtelier = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inscriptionAtelier` (IN `noma` VARCHAR(16), IN `identifiant` INT)  BEGIN
 
 INSERT INTO participant_atelier (idparticipant, idAtelier) VALUES (noma, identifiant);
@@ -204,6 +210,12 @@ WHERE idAtelier = Atelier AND termine = 1;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validerAtelierAdmin` (IN `id` INT)  BEGIN
+UPDATE atelier
+SET atelier.validation = 1
+WHERE idAtelier = id;
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -220,19 +232,20 @@ CREATE TABLE `atelier` (
   `nbrPlaces` int(11) NOT NULL,
   `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
   `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `termine` int(1) NOT NULL DEFAULT '0'
+  `validation` int(1) NOT NULL DEFAULT '0',
+  `annulation` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `atelier`
 --
 
-INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `termine`) VALUES
-(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0),
-(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 'Informatique', 0),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 0),
-(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0),
-(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1);
+INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`) VALUES
+(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1),
+(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 'Informatique', 0, 0),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 1, 0),
+(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0, 0),
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0);
 
 -- --------------------------------------------------------
 
