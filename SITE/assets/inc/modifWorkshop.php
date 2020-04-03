@@ -9,7 +9,7 @@ include '../php/checkSiDejaCandidat.php';
 ?>
 
 <script>
-    detailsWorkshop();
+    afficheInput();
 </script>
 
 <main id="content" style="margin-top:6em">
@@ -19,7 +19,7 @@ include '../php/checkSiDejaCandidat.php';
         <!-- Portfolio Item Heading -->
 
         <h1 class="my-4">
-            <span id="nom"></span>
+            <div id="nom"></div>
         </h1>
 
         <div class="row">
@@ -30,32 +30,28 @@ include '../php/checkSiDejaCandidat.php';
 
             <div class="col-md-4">
                 <h3 class="my-3">Description atelier</h3>
-                <p id="description"></p>
+                <div id="description"></div>
                 <h3 class="my-3">Date de l'atelier</h3>
-                <p id="date"></p>
+                <div id="date"></div>
                 <h3 class="my-3">Sujet de l'atelier</h3>
-                <p id="sujet"></p>
+                <div id="sujet"></div>
                 <h3 class="my-3">Nombre de place atelier</h3>
-                <p id="nbPlace"></p>
+                <div id="nbPlace"></div>
 
 
-                <?php if (empty($checkSiDejaDansAtelier)) { ?>
-                    <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
-                        <div class="form-group form-button">
-                            <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop" />
-                        </div>
-                    </form>
-                <?php } else { ?>
-                    <form id="inscriptionWorkshop" method="post" action="assets/php/desinscriptionWorkshop.php">
-                        <div class="form-group form-button">
-                            <input type="submit" name="signin" id="signin" class="form-submit" value="Se désinscrire de ce workshop" />
-                        </div>
-                    </form>
-                <?php } ?>
+
+
+                <div class="form-group form-button">
+                    <input onclick="validerModif()" type="submit" name="signin" id="signin" class="form-submit" value="Valider modifications" />
+                </div>
+                <div class="form-group form-button">
+                    <input onclick="annulerModif(<?= $_SESSION['idAtelier']?>)"type="submit" name="signin" id="signin" class="form-submit" value="Annuler modifications" />
+                </div>
+
             </div>
 
         </div>
-        
+
         <script>
             removeClassActive();
             addClassActive('navWorkshops');

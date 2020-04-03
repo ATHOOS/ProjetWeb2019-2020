@@ -902,20 +902,34 @@ function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
 
 
 /////////////////////////////////////////MODIF MES WORKSHOPS/////////////////////////////////////////
+var tnomModif;
+var tdescModif;
+var tdateModif;
+var tnbModif;
+var tsujetModif;
 
-function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier){
+function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier) {
     $('#content').load("assets/inc/modifWorkshop.php?i=" + idAtelier);
-        tnom = '<input id="nomModifWork" type="text" value="'+nom+'"></input>';
-        tdesc = '<input id="descModifWork" type="text" value="'+desc+'"></input>';
-        tdate2 = '<input id="dateModifWork" type="text" value="'+date2+'"></input>';;
-        tnb = '<input id="nbPlaceModifWork "type="text" value="'+nb+'"></input>';;
-        tsujet = '<input id="sujetModifWork" type="text" value="'+sujet+'"></input>';;
-        var datefull = new Date(tdate2);
-        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
-        $('#nom').text(tnom);
-        $('#description').html(tdesc);
-        $('#date').html(tdate2);
-        $('#sujet').html(tsujet);
-        $('#nbPlace').html(tnb);
+    tnomModif = nom;
+    tdescModif = desc;
+    tdateModif = date2;
+    tnbModif = nb;
+    tsujetModif = sujet;
+}
+
+function afficheInput(){
+        nomModif = '<input id="nomModifWork" type="text" value="'+tnomModif+'"/>';
+        descModif = '<input id="descModifWork" type="text" value="'+tdescModif+'"/>';
+        dateModif = '<input id="dateModifWork" type="text" value="'+String(tdateModif)+'"/>';
+        nbModif = '<input id="nbPlaceModifWork "type="text" value="'+tnbModif+'"/>';
+        sujetModif = '<input id="sujetModifWork" type="text" value="'+tsujetModif+'"/>';
+        $('#nom').html(nomModif);
+        $('#description').html(descModif);
+        $('#date').html(dateModif);
+        $('#sujet').html(sujetModif);
+        $('#nbPlace').html(nbModif);
+}
+
+function annulerModif(idAtelier){
+    $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
 }

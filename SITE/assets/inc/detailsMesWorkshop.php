@@ -13,7 +13,6 @@ $date ="'" . $recupUnAtelier[0]{'date'} . "'";
 $nb="'" . $recupUnAtelier[0]{'nbrPlaces'} . "'";
 $sujet="'" . $recupUnAtelier[0]{'sujet'} . "'";
 $id ="'" . $recupUnAtelier[0]{'idAtelier'} . "'";
-echo $nom
 ?>
 
 <script>
