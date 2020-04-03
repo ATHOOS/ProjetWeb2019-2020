@@ -21,6 +21,7 @@ include '../php/checkSiDejaCandidat.php';
         <h1 class="my-4">
             <div id="nom"></div>
         </h1>
+        <p id="workshopModifNomError" style="color:red; display:none">Nom de l'atelier requis</p>
 
         <div class="row">
 
@@ -31,12 +32,18 @@ include '../php/checkSiDejaCandidat.php';
             <div class="col-md-4">
                 <h3 class="my-3">Description atelier</h3>
                 <div id="description"></div>
+                <p id="workshopModifDescError" style="color:red; display:none">Description de l'atelier requise</p>
                 <h3 class="my-3">Date de l'atelier</h3>
                 <div id="date"></div>
+                <p id="workshopModifDateError" style="color:red; display:none">Date de l'atelier requise</p>
+                <p id="workshopModifDatePassee" style="color:red; display:none">Il est impossible de faire un bon dans le temps MARTY !!!</p>
                 <h3 class="my-3">Sujet de l'atelier</h3>
                 <div id="sujet"></div>
                 <h3 class="my-3">Nombre de place atelier</h3>
                 <div id="nbPlace"></div>
+                <p id="WorkshopModifPlaceNegatif" style="color:red; display:none">Le nombre doit être supérieur ou égale à 1</p>
+                <p id="WorkshopModifPlaceError" style="color:red; display:none">Places de l'atelier requises</p>
+
 
 
 

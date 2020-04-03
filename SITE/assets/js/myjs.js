@@ -1076,11 +1076,43 @@ function afficheInput() {
         minutes2 = (dateRecup).getMinutes();
     }
     var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
-    nomModif = '<input id="nomModifWork" type="text" value="' + tnomModif + '"/><p id="workshopNomError" style="color:red; display:none">Nom de l\'atelier requis</p>';
-    descModif = '<input id="descModifWork" type="text" value="' + tdescModif + '"/><p id="workshopDescError" style="color:red; display:none">Description de l\'atelier requise</p>';
-    dateModif = '<input id="dateModifWork" type="datetime-local" value="' + date + '"/><p id="workshopDateError" style="color:red; display:none">Date de l\'atelier requise</p><p id="workshopDatePassee" style="color:red; display:none">Il est impossible de faire un bon dans le temps MARTY !!!</p>';
-    nbModif = '<input id="nbPlaceModifWork" "type="text" value="' + tnbModif + '"/> <p id="WorkshopPlaceNegatif" style="color:red; display:none">Le nombre doit être supérieur ou égale à 1</p>';
-    sujetModif = '<input id="sujetModifWork" type="text" value="' + tsujetModif + '"/>';
+    nomModif = '<input id="nomModifWork" type="text" value="' + tnomModif + '"/>';
+    descModif = '<input id="descModifWork" type="text" value="' + tdescModif + '"/>';
+    dateModif = '<input id="dateModifWork" type="datetime-local" value="' + date + '"/>';
+    nbModif = '<input id="nbPlaceModifWork" "type="text" value="' + tnbModif + '"/>';
+    sujetModif = '<select name="workshop_animateur" id="sujetModifWork">';
+    if(tsujetModif === "Comptabilité"){
+        sujetModif += '<option value="Comptabilité" selected>Comptabilité</option>';
+        sujetModif += '<option value="Marketing">Marketing</option>';
+        sujetModif += '<option value="Informatique">Informatique</option>';
+        sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
+        sujetModif += '<option value="Droit">Droit</option>';
+    }else if(tsujetModif === "Marketing"){
+        sujetModif += '<option value="Comptabilité">Comptabilité</option>';
+        sujetModif += '<option value="Marketing" selected>Marketing</option>';
+        sujetModif += '<option value="Informatique">Informatique</option>';
+        sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
+        sujetModif += '<option value="Droit">Droit</option>';
+    }else if(tsujetModif === "Informatique"){
+        sujetModif += '<option value="Comptabilité">Comptabilité</option>';
+        sujetModif += '<option value="Marketing">Marketing</option>';
+        sujetModif += '<option value="Informatique" selected>Informatique</option>';
+        sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
+        sujetModif += '<option value="Droit">Droit</option>';
+    }else if(tsujetModif === "Electro-mécanique"){
+        sujetModif += '<option value="Comptabilité">Comptabilité</option>';
+        sujetModif += '<option value="Marketing">Marketing</option>';
+        sujetModif += '<option value="Informatique">Informatique</option>';
+        sujetModif += '<option value="Electro-mécanique" selected>Electro-mécanique</option>';
+        sujetModif += '<option value="Droit">Droit</option>';
+    }else{
+        sujetModif += '<option value="Comptabilité">Comptabilité</option>';
+        sujetModif += '<option value="Marketing">Marketing</option>';
+        sujetModif += '<option value="Informatique">Informatique</option>';
+        sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
+        sujetModif += '<option value="Droit" selected>Droit</option>';
+    }
+    sujetModif += '</select>';
     $('#nom').html(nomModif);
     $('#description').html(descModif);
     $('#date').html(dateModif);
@@ -1098,17 +1130,17 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier) {
     let currentDate = new Date();
     event.preventDefault();
     if ($('#nomModifWork').val() == '') {
-        $('#workshopNomError').show();
+        $('#workshopModifNomError').show();
         a = 0;
     } else {
-        $('#workshopNomError').hide();
+        $('#workshopModifNomError').hide();
     }
 
     if ($('#descModifWork').val() == '') {
-        $('#workshopDescError').show();
+        $('#workshopModifDescError').show();
         a = 0;
     } else {
-        $('#workshopDescError').hide();
+        $('#workshopModifDescError').hide();
     }
 
     var datefull = new Date();
@@ -1163,31 +1195,31 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier) {
 
     if ($('#dateModifWork').val() == '') {
 
-        $('#workshopDateError').show();
+        $('#workshopModifDateError').show();
         a = 0;
     } else {
         if (date2 > date) {
-            $('#workshopDateError').hide();
-            $('#workshopDatePassee').show();
+            $('#workshopModifDateError').hide();
+            $('#workshopModifDatePassee').show();
             a = 0;
         } else {
-            $('#workshopDateError').hide();
-            $('#workshopDatePassee').hide();
+            $('#workshopModifDateError').hide();
+            $('#workshopModifDatePassee').hide();
         }
     }
 
     if ($('#nbPlaceModifWork').val() == '') {
-        $('#WorkshopPlaceError').show();
+        $('#WorkshopModifPlaceError').show();
         a = 0;
     } else {
-        if ($('#workshop_nbrPlaces').val() <= 1) {
-            $('#WorkshopPlaceError').hide();
-            $('#WorkshopPlaceNegatif').show();
+        if ($('#nbPlaceModifWork').val() <= 1) {
+            $('#WorkshopModifPlaceError').hide();
+            $('#WorkshopModifPlaceNegatif').show();
             a = 0;
         }
         else {
-            $('#WorkshopPlaceError').hide();
-            $('#WorkshopPlaceNegatif').hide();
+            $('#WorkshopModifPlaceError').hide();
+            $('#WorkshopModifPlaceNegatif').hide();
         }
     }
 
