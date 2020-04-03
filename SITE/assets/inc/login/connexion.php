@@ -18,10 +18,12 @@ $_SESSION['pageActuel']='login/connexion.php';
                             <div class="form-group">
                                 <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="your_login" id="your_login" placeholder="Adresse mail ou matricule"/>
+                                <p id="pseudoError" style="color:red; display:none">Email ou matricule requis</p>
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
                                 <input type="password" name="your_pass" id="your_pass" placeholder="Mot de passe"/>
+                                <p id="mdpError" style="color:red; display:none">Mot de passe requis</p>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Connexion" onclick="checkConnexion()"/>

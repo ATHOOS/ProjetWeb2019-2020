@@ -142,46 +142,66 @@ function checkInscription() {
     let a = 1;
     event.preventDefault();
     if ($('#matricule').val() == '') {
-        $('#matricule').attr('placeholder', 'Matricule requis');
+        $('#nonMatricule').show();
         a = 0;
+    } else {
+        let matricule = ($('#matricule').val()).toUpperCase();
+        if (validateMatricule(matricule) === false) {
+            $('#badMatricule').show();
+            a = 0;
+        } else {
+            $('#badMatricule').hide();
+        }
+        $('#nonMatricule').hide();
     }
 
-    if (validateMatricule($('#matricule').val()) === false) {
-        $('#matricule').attr('placeholder', 'Matricule non conforme');
-        a = 0;
-    }
-    
+
+
     if ($('#nom').val() == '') {
-        $('#nom').attr('placeholder', 'Nom requis');
+        $('#nonNom').show();
+
         a = 0;
+    } else {
+        $('#nonNom').hide();
+
     }
 
 
     if ($('#prenom').val() == '') {
-        $('#prenom').attr('placeholder', 'Prenom requis');
+        $('#nonPrenom').show();
+
         a = 0;
+    } else {
+        $('#nonPrenom').hide();
+
     }
 
     if ($('#email').val() == '') {
-        $('#email').attr('placeholder', 'Email requis');
+        $('#nonEmail').show();
         a = 0;
+    } else {
+        $('#nonEmail').hide();
     }
 
     if ($('#pass').val() == '') {
-        $('#pass').attr('placeholder', 'Mot de passe requis');
+        $('#nonPassword').show();
         a = 0;
+    } else {
+        $('#nonPassword').hide();
     }
 
-
     if ($('#re_pass').val() == '') {
-        $('#re_pass').attr('placeholder', 'Veuillez entrer une nouvelle fois votre mot de passe');
+        $('#nonRePassword').show();
         a = 0;
+    } else {
+        $('#nonRePassword').hide();
     }
 
     if ($('#re_pass').val() !== $('#pass').val()) {
-        $('#re_pass').attr('placeholder', 'Les mots de passe ne sont pas identique');
-        $('#pass').attr('placeholder', 'Les mots de passe ne sont pas identique');
+        $('#mdpNotSame').show();
         a = 0;
+    } else {
+        $('#mdpNotSame').hide();
     }
 
 
@@ -207,7 +227,7 @@ function checkInscription() {
 
 }
 
-function validateMatricule(matricule){
+function validateMatricule(matricule) {
     var re = /HE\d\d\d\d\d\d/;
     return re.test(matricule);
 }
@@ -219,13 +239,17 @@ function checkConnexion() {
     let a = 1;
     event.preventDefault();
     if ($('#your_login').val() == '') {
-        $('#your_login').attr('placeholder', 'Email ou matricule requis');
+        $('#pseudoError').show();
         a = 0;
+    } else {
+        $('#pseudoError').hide();
     }
 
     if ($('#your_pass').val() == '') {
-        $('#your_pass').attr('placeholder', 'Mot de passe requis');
+        $('#mdpError').show();
         a = 0;
+    } else {
+        $('#mdpError').hide();
     }
 
     if (a === 1) {
@@ -821,35 +845,35 @@ function mesWorkshops(tab) {
     var indexAtelier = 0;
 
     for (i = 0; i < tab.length; i++) {
-            var datefull = new Date(tab[i]['date']);
-            var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-            var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+        var datefull = new Date(tab[i]['date']);
+        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
 
-            tabEnvoiMesAteliers[i] = tab[i];
+        tabEnvoiMesAteliers[i] = tab[i];
 
-            var tnom = tab[i]['nom'];
-            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
-            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
-            ret2 += '<div class="media-body order-2 order-lg-1">';
-            ret2 += '<a>';
-            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
-                + indexAtelier++ + ','
-                + '\'' + tab[i]['nom'] + '\','
-                + '\'' + tab[i]['description'] + '\','
-                + '\'' + tab[i]['date'] + '\','
-                + '\'' + tab[i]['nbrPlaces'] + '\','
-                + '\'' + tab[i]['sujet'] + '\','
-                + '\'' + tab[i]['idAtelier'] + '\');">'
-                + tab[i]['nom'] + '</h5>';
-            ret2 += ' </a>';
-            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
-            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
-            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-            ret2 += '</div>';
-            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
-            ret2 += '</div>';
-            ret2 += '</li>';
-            nbMesAteliers++;
+        var tnom = tab[i]['nom'];
+        ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+        ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+        ret2 += '<div class="media-body order-2 order-lg-1">';
+        ret2 += '<a>';
+        ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
+            + indexAtelier++ + ','
+            + '\'' + tab[i]['nom'] + '\','
+            + '\'' + tab[i]['description'] + '\','
+            + '\'' + tab[i]['date'] + '\','
+            + '\'' + tab[i]['nbrPlaces'] + '\','
+            + '\'' + tab[i]['sujet'] + '\','
+            + '\'' + tab[i]['idAtelier'] + '\');">'
+            + tab[i]['nom'] + '</h5>';
+        ret2 += ' </a>';
+        ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+        ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+        ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+        ret2 += '</div>';
+        ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+        ret2 += '</div>';
+        ret2 += '</li>';
+        nbMesAteliers++;
 
     }
     $('#itemMesAteliers').append(ret2);
@@ -916,24 +940,24 @@ function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier) {
     tsujetModif = sujet;
 }
 
-function afficheInput(){
-        nomModif = '<input id="nomModifWork" type="text" value="'+tnomModif+'"/>';
-        descModif = '<input id="descModifWork" type="text" value="'+tdescModif+'"/>';
-        dateModif = '<input id="dateModifWork" type="text" value="'+String(tdateModif)+'"/>';
-        nbModif = '<input id="nbPlaceModifWork" "type="text" value="'+tnbModif+'"/>';
-        sujetModif = '<input id="sujetModifWork" type="text" value="'+tsujetModif+'"/>';
-        $('#nom').html(nomModif);
-        $('#description').html(descModif);
-        $('#date').html(dateModif);
-        $('#sujet').html(sujetModif);
-        $('#nbPlace').html(nbModif);
+function afficheInput() {
+    nomModif = '<input id="nomModifWork" type="text" value="' + tnomModif + '"/>';
+    descModif = '<input id="descModifWork" type="text" value="' + tdescModif + '"/>';
+    dateModif = '<input id="dateModifWork" type="text" value="' + String(tdateModif) + '"/>';
+    nbModif = '<input id="nbPlaceModifWork" "type="text" value="' + tnbModif + '"/>';
+    sujetModif = '<input id="sujetModifWork" type="text" value="' + tsujetModif + '"/>';
+    $('#nom').html(nomModif);
+    $('#description').html(descModif);
+    $('#date').html(dateModif);
+    $('#sujet').html(sujetModif);
+    $('#nbPlace').html(nbModif);
 }
 
-function annulerModif(idAtelier){
+function annulerModif(idAtelier) {
     $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
 }
 
-function validerModif(nom,desc,date,nb,sujet,idAtelier){
+function validerModif(nom, desc, date, nb, sujet, idAtelier) {
     $.ajax({
         url: "assets/php/modifAtelier.php",
         type: "POST",
@@ -947,9 +971,9 @@ function validerModif(nom,desc,date,nb,sujet,idAtelier){
         },
         datatype: "json",
         success: function (response) {
-            if(response === '"pasBon"'){
+            if (response === '"pasBon"') {
                 alert("Ce n'est pas votre atelier !!!!");
-            } else{
+            } else {
                 mesWorkshopsListe();
             }
         }
