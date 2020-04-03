@@ -288,50 +288,93 @@ function ajoutAtelier() {
     if ($('#workshop_nom').val() == '') {
         $('#workshopNomError').show();
         a = 0;
-    }else{
+    } else {
         $('#workshopNomError').hide();
     }
 
     if ($('#workshop_desc').val() == '') {
         $('#workshopDescError').show();
         a = 0;
-    }else{
+    } else {
         $('#workshopDescError').hide();
     }
 
+
     var datefull = new Date();
-    var date = (datefull).getFullYear() + "-" + (datefull).getMonth() + "-" + (datefull).getDate() + "T" + (datefull).getHours() + ':' + (datefull).getMinutes();
+
+    if ((datefull).getDate() < 10) {
+        jours = '0' + (datefull).getDate();
+    } else {
+        jours = (datefull).getDate();
+    }
+    if (((datefull).getMonth() + 1) < 10) {
+        mois = '0' + ((datefull).getMonth() + 1);
+    } else {
+        mois = (datefull).getMonth() + 1;
+    }
+    if ((datefull).getHours() < 10) {
+        heure = '0' + (datefull).getHours();
+    } else {
+        heure = (datefull).getHours();
+    }
+    if ((datefull).getMinutes() < 10) {
+        minutes = '0' + (datefull).getMinutes();
+    } else {
+        minutes = (datefull).getMinutes();
+    }
+
+    var date2 = (datefull).getFullYear() + "-" + mois + "-" + jours + "T" + heure + ':' + minutes;
     var dateRecup = new Date($('#workshop_date').val());
-    var date2 = (dateRecup).getFullYear() + "-" + (dateRecup).getMonth() + "-" + (dateRecup).getDate() + "T" + (dateRecup).getHours() + ':' + (dateRecup).getMinutes();
-    console.log(date2);
-    console.log(date);
+
+    if ((dateRecup).getDate() < 10) {
+        jours2 = '0' + (dateRecup).getDate();
+    } else {
+        jours2 = (dateRecup).getDate();
+    }
+    if (((dateRecup).getMonth() + 1) < 10) {
+        mois2 = '0' + ((dateRecup).getMonth() + 1);
+    } else {
+        mois2 = (dateRecup).getMonth() + 1;
+    }
+    if ((dateRecup).getHours() < 10) {
+        heure2 = '0' + (dateRecup).getHours();
+    } else {
+        heure2 = (dateRecup).getHours();
+    }
+    if ((dateRecup).getMinutes() < 10) {
+        minutes2 = '0' + (dateRecup).getMinutes();
+    } else {
+        minutes2 = (dateRecup).getMinutes();
+    }
+    var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
+    
 
     if ($('#workshop_date').val() == '') {
-        
+
         $('#workshopDateError').show();
         a = 0;
-    }else{
-        if(date > date2){
+    } else {
+        if (date2 > date) {
             $('#workshopDateError').hide();
             $('#workshopDatePassee').show();
-            a=0;
-        }else{
+            a = 0;
+        } else {
             $('#workshopDateError').hide();
             $('#workshopDatePassee').hide();
         }
-        
+
     }
 
     if ($('#workshop_nbrPlaces').val() == '') {
         $('#WorkshopPlaceError').show();
         a = 0;
-    }else{
-        if($('#workshop_nbrPlaces').val() <= 1){
+    } else {
+        if ($('#workshop_nbrPlaces').val() <= 1) {
             $('#WorkshopPlaceError').hide();
             $('#WorkshopPlaceNegatif').show();
             a = 0;
         }
-        else{
+        else {
             $('#WorkshopPlaceError').hide();
             $('#WorkshopPlaceNegatif').hide();
         }
@@ -422,7 +465,7 @@ function filtrerAtelier(sujet, tab) {
                     datatype: "json",
                     success: function (response) {
                         nbPlace = JSON.parse(response);
-                        test = nbPlace[0][0] -1;
+                        test = nbPlace[0][0] - 1;
                     }
                 });
                 var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
@@ -443,7 +486,7 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';                ret += '</div>';
+                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>'; ret += '</div>';
                 ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
                 ret += '</div>';
                 ret += '</li>';
@@ -462,45 +505,45 @@ function filtrerAtelier(sujet, tab) {
                     success: function (response) {
                         console.log(response);
                         nbPlace = JSON.parse(response);
-                        test = nbPlace[0][0] -1;
+                        test = nbPlace[0][0] - 1;
                     }
                 });
                 var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
-            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
-            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
-            ret2 += '<div class="media-body order-2 order-lg-1">';
-            ret2 += '<a>';
-            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
-                + indexAtelier++ + ','
-                + '\'' + tab[i]['nom'] + '\','
-                + '\'' + tab[i]['description'] + '\','
-                + '\'' + tab[i]['date'] + '\','
-                + '\'' + tab[i]['nbrPlaces'] + '\','
-                + '\'' + tab[i]['sujet'] + '\','
-                + '\'' + tab[i]['idAtelier'] + '\');">'
-                + tab[i]['nom'] + '</h5>';
-            ret2 += ' </a>';
-            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
-            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
-            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-            ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
-            ret2 += '</div>';
-            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
-            ret2 += '</div>';
-            ret2 += '</li>';
-            nbAteliers2++;
+                ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+                ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+                ret2 += '<div class="media-body order-2 order-lg-1">';
+                ret2 += '<a>';
+                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                    + indexAtelier++ + ','
+                    + '\'' + tab[i]['nom'] + '\','
+                    + '\'' + tab[i]['description'] + '\','
+                    + '\'' + tab[i]['date'] + '\','
+                    + '\'' + tab[i]['nbrPlaces'] + '\','
+                    + '\'' + tab[i]['sujet'] + '\','
+                    + '\'' + tab[i]['idAtelier'] + '\');">'
+                    + tab[i]['nom'] + '</h5>';
+                ret2 += ' </a>';
+                ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+                ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+                ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+                ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
+                ret2 += '</div>';
+                ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+                ret2 += '</div>';
+                ret2 += '</li>';
+                nbAteliers2++;
+            }
         }
     }
-}
 
-if ($('#sujet').val() != "") {
-    $('#itemAtelier').append(ret);
-    paginationAtelier(nbAteliers);
-}
-else {
-    $('#itemAtelier').append(ret2);
-    paginationAtelier(nbAteliers2);
-}
+    if ($('#sujet').val() != "") {
+        $('#itemAtelier').append(ret);
+        paginationAtelier(nbAteliers);
+    }
+    else {
+        $('#itemAtelier').append(ret2);
+        paginationAtelier(nbAteliers2);
+    }
 
 }
 
@@ -1010,10 +1053,33 @@ function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier) {
 }
 
 function afficheInput() {
-    nomModif = '<input id="nomModifWork" type="text" value="' + tnomModif + '"/>';
-    descModif = '<input id="descModifWork" type="text" value="' + tdescModif + '"/>';
-    dateModif = '<input id="dateModifWork" type="text" value="' + String(tdateModif) + '"/>';
-    nbModif = '<input id="nbPlaceModifWork" "type="text" value="' + tnbModif + '"/>';
+    var dateRecup = new Date(tdateModif);
+
+    if ((dateRecup).getDate() < 10) {
+        jours2 = '0' + (dateRecup).getDate();
+    } else {
+        jours2 = (dateRecup).getDate();
+    }
+    if (((dateRecup).getMonth() + 1) < 10) {
+        mois2 = '0' + ((dateRecup).getMonth() + 1);
+    } else {
+        mois2 = (dateRecup).getMonth() + 1;
+    }
+    if ((dateRecup).getHours() < 10) {
+        heure2 = '0' + (dateRecup).getHours();
+    } else {
+        heure2 = (dateRecup).getHours();
+    }
+    if ((dateRecup).getMinutes() < 10) {
+        minutes2 = '0' + (dateRecup).getMinutes();
+    } else {
+        minutes2 = (dateRecup).getMinutes();
+    }
+    var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
+    nomModif = '<input id="nomModifWork" type="text" value="' + tnomModif + '"/><p id="workshopNomError" style="color:red; display:none">Nom de l\'atelier requis</p>';
+    descModif = '<input id="descModifWork" type="text" value="' + tdescModif + '"/><p id="workshopDescError" style="color:red; display:none">Description de l\'atelier requise</p>';
+    dateModif = '<input id="dateModifWork" type="datetime-local" value="' + date + '"/><p id="workshopDateError" style="color:red; display:none">Date de l\'atelier requise</p><p id="workshopDatePassee" style="color:red; display:none">Il est impossible de faire un bon dans le temps MARTY !!!</p>';
+    nbModif = '<input id="nbPlaceModifWork" "type="text" value="' + tnbModif + '"/> <p id="WorkshopPlaceNegatif" style="color:red; display:none">Le nombre doit être supérieur ou égale à 1</p>';
     sujetModif = '<input id="sujetModifWork" type="text" value="' + tsujetModif + '"/>';
     $('#nom').html(nomModif);
     $('#description').html(descModif);
@@ -1027,24 +1093,125 @@ function annulerModif(idAtelier) {
 }
 
 function validerModif(nom, desc, date, nb, sujet, idAtelier) {
-    $.ajax({
-        url: "assets/php/modifAtelier.php",
-        type: "POST",
-        data: {
-            "nom": nom,
-            "desc": desc,
-            "date": date,
-            "nomb": nb,
-            "sujet": sujet,
-            "idAtelier": idAtelier,
-        },
-        datatype: "json",
-        success: function (response) {
-            if (response === '"pasBon"') {
-                alert("Ce n'est pas votre atelier !!!!");
-            } else {
-                mesWorkshopsListe();
-            }
+
+    let a = 1;
+    let currentDate = new Date();
+    event.preventDefault();
+    if ($('#nomModifWork').val() == '') {
+        $('#workshopNomError').show();
+        a = 0;
+    } else {
+        $('#workshopNomError').hide();
+    }
+
+    if ($('#descModifWork').val() == '') {
+        $('#workshopDescError').show();
+        a = 0;
+    } else {
+        $('#workshopDescError').hide();
+    }
+
+    var datefull = new Date();
+
+    if ((datefull).getDate() < 10) {
+        jours = '0' + (datefull).getDate();
+    } else {
+        jours = (datefull).getDate();
+    }
+    if (((datefull).getMonth() + 1) < 10) {
+        mois = '0' + ((datefull).getMonth() + 1);
+    } else {
+        mois = (datefull).getMonth() + 1;
+    }
+    if ((datefull).getHours() < 10) {
+        heure = '0' + (datefull).getHours();
+    } else {
+        heure = (datefull).getHours();
+    }
+    if ((datefull).getMinutes() < 10) {
+        minutes = '0' + (datefull).getMinutes();
+    } else {
+        minutes = (datefull).getMinutes();
+    }
+
+    var date2 = (datefull).getFullYear() + "-" + mois + "-" + jours + "T" + heure + ':' + minutes;
+    var dateRecup = new Date($('#dateModifWork').val());
+
+    if ((dateRecup).getDate() < 10) {
+        jours2 = '0' + (dateRecup).getDate();
+    } else {
+        jours2 = (dateRecup).getDate();
+    }
+    if (((dateRecup).getMonth() + 1) < 10) {
+        mois2 = '0' + ((dateRecup).getMonth() + 1);
+    } else {
+        mois2 = (dateRecup).getMonth() + 1;
+    }
+    if ((dateRecup).getHours() < 10) {
+        heure2 = '0' + (dateRecup).getHours();
+    } else {
+        heure2 = (dateRecup).getHours();
+    }
+    if ((dateRecup).getMinutes() < 10) {
+        minutes2 = '0' + (dateRecup).getMinutes();
+    } else {
+        minutes2 = (dateRecup).getMinutes();
+    }
+    var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
+    console.log(date2 + " Date Actu");
+    console.log(date + " Date rentrée");
+
+    if ($('#dateModifWork').val() == '') {
+
+        $('#workshopDateError').show();
+        a = 0;
+    } else {
+        if (date2 > date) {
+            $('#workshopDateError').hide();
+            $('#workshopDatePassee').show();
+            a = 0;
+        } else {
+            $('#workshopDateError').hide();
+            $('#workshopDatePassee').hide();
         }
-    });
+    }
+
+    if ($('#nbPlaceModifWork').val() == '') {
+        $('#WorkshopPlaceError').show();
+        a = 0;
+    } else {
+        if ($('#workshop_nbrPlaces').val() <= 1) {
+            $('#WorkshopPlaceError').hide();
+            $('#WorkshopPlaceNegatif').show();
+            a = 0;
+        }
+        else {
+            $('#WorkshopPlaceError').hide();
+            $('#WorkshopPlaceNegatif').hide();
+        }
+    }
+
+    if (a === 1) {
+
+        $.ajax({
+            url: "assets/php/modifAtelier.php",
+            type: "POST",
+            data: {
+                "nom": nom,
+                "desc": desc,
+                "date": date,
+                "nomb": nb,
+                "sujet": sujet,
+                "idAtelier": idAtelier,
+            },
+            datatype: "json",
+            success: function (response) {
+                if (response === '"pasBon"') {
+                    alert("Ce n'est pas votre atelier !!!!");
+                } else {
+                    mesWorkshopsListe();
+                }
+            }
+        });
+    }
 }
