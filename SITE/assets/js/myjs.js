@@ -380,8 +380,13 @@ function ajoutAtelier() {
         }
     }
 
+    if ($('#workshop_duree').val() == '') {
+        $('#workshopDureeError').show();
+        a = 0;
+    }
+
     if (a === 1) {
-        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val() };
+        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val(),'Duree': $('#workshop_duree').val()};
         console.log(objectForm);
         $.ajax({
             url: "assets/php/ajoutAtelier.php",
@@ -483,13 +488,15 @@ function filtrerAtelier(sujet, tab) {
                     + '\'' + tab[i]['date'] + '\','
                     + '\'' + tab[i]['nbrPlaces'] + '\','
                     + '\'' + tab[i]['sujet'] + '\','
-                    + '\'' + tab[i]['idAtelier'] + '\');">'
+                    + '\'' + tab[i]['idAtelier'] + '\','
+                    + '\'' + tab[i]['duree'] +'\');">'
                     + tab[i]['nom'] + '</h5>';
                 ret += ' </a>';
                 ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
                 ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>'; ret += '</div>';
+                ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; ret += '</div>';
                 ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
                 ret += '</div>';
                 ret += '</li>';
@@ -528,13 +535,15 @@ function filtrerAtelier(sujet, tab) {
                     + '\'' + tab[i]['date'] + '\','
                     + '\'' + tab[i]['nbrPlaces'] + '\','
                     + '\'' + tab[i]['sujet'] + '\','
-                    + '\'' + tab[i]['idAtelier'] + '\');">'
+                    + '\'' + tab[i]['idAtelier'] + '\','
+                    + '\'' + tab[i]['duree'] +'\');">'
                     + tab[i]['nom'] + '</h5>';
                 ret2 += ' </a>';
                 ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
                 ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
+                ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; ret += '</div>';
                 ret2 += '</div>';
                 ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
                 ret2 += '</div>';
@@ -584,13 +593,14 @@ function paginationAtelier(nAt) {
     })
 
 }
-function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
+function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier,duree) {
     $('#content').load("assets/inc/detailWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
     tdate2 = date2;
     tnb = nb;
     tsujet = sujet;
+    tduree = duree;
 
 }
 
@@ -603,6 +613,7 @@ function detailsWorkshop() {
     $('#date').html(date);
     $('#heure').html(heure);
     $('#places').html(tnb);
+    $('#duree').html(tduree);
 }
 
 
@@ -879,6 +890,24 @@ function workshopParticipe(tab) {
             tabEnvoiAtelierParticipe[i] = tab[i];
 
             var tnom = tab[i]['nom'];
+            $.ajax({
+                async: false,
+                url: "assets/php/recupPlacesDispo.php",
+                type: "POST",
+                data: {
+                    "id": tab[i]['idAtelier']
+                },
+                datatype: "json",
+                success: function (response) {
+                    nbPlace = JSON.parse(response);
+                    if(nbPlace[0] === undefined){
+                        test = 0;
+                    }else{
+                        test = nbPlace[0][0];
+                    }
+                }
+            });
+            var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
             ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret2 += '<div class="media-body order-2 order-lg-1">';
@@ -890,12 +919,15 @@ function workshopParticipe(tab) {
                 + '\'' + tab[i]['date'] + '\','
                 + '\'' + tab[i]['nbrPlaces'] + '\','
                 + '\'' + tab[i]['sujet'] + '\','
-                + '\'' + tab[i]['idAtelier'] + '\');">'
+                + '\'' + tab[i]['idAtelier'] + '\','
+                + '\'' + tab[i]['duree'] +'\');">'
                 + tab[i]['nom'] + '</h5>';
             ret2 += ' </a>';
             ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
             ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
             ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
+            ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
             ret2 += '</div>';
             ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
             ret2 += '</div>';
@@ -939,14 +971,14 @@ function paginationAtelierParticipe(nAt) {
     })
 
 }
-function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
+function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier,duree) {
     $('#content').load("assets/inc/detailWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
     tdate2 = date2;
     tnb = nb;
     tsujet = sujet;
-
+    tduree = duree;
 }
 
 
@@ -969,7 +1001,24 @@ function mesWorkshops(tab) {
         var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
 
         tabEnvoiMesAteliers[i] = tab[i];
-
+        $.ajax({
+            async: false,
+            url: "assets/php/recupPlacesDispo.php",
+            type: "POST",
+            data: {
+                "id": tab[i]['idAtelier']
+            },
+            datatype: "json",
+            success: function (response) {
+                nbPlace = JSON.parse(response);
+                if(nbPlace[0] === undefined){
+                    test = 0;
+                }else{
+                    test = nbPlace[0][0];
+                }
+            }
+        });
+        var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
         var tnom = tab[i]['nom'];
         ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
         ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
@@ -982,12 +1031,15 @@ function mesWorkshops(tab) {
             + '\'' + tab[i]['date'] + '\','
             + '\'' + tab[i]['nbrPlaces'] + '\','
             + '\'' + tab[i]['sujet'] + '\','
-            + '\'' + tab[i]['idAtelier'] + '\');">'
+            + '\'' + tab[i]['idAtelier'] + '\','
+            + '\'' + tab[i]['duree'] +'\');">'
             + tab[i]['nom'] + '</h5>';
         ret2 += ' </a>';
         ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
         ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
         ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+        ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
+        ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
         ret2 += '</div>';
         ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
         ret2 += '</div>';
@@ -1030,14 +1082,14 @@ function paginationMesAteliers(nAt) {
     })
 
 }
-function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
+function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier,duree) {
     $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
     tdate2 = date2;
     tnb = nb;
     tsujet = sujet;
-
+    tduree = duree;
 }
 
 
@@ -1049,14 +1101,16 @@ var tdescModif;
 var tdateModif;
 var tnbModif;
 var tsujetModif;
+var tdureeModif;
 
-function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier) {
+function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier,duree) {
     $('#content').load("assets/inc/modifWorkshop.php?i=" + idAtelier);
     tnomModif = nom;
     tdescModif = desc;
     tdateModif = date2;
     tnbModif = nb;
     tsujetModif = sujet;
+    tdureeModif= duree;
 }
 
 function afficheInput() {
@@ -1120,18 +1174,20 @@ function afficheInput() {
         sujetModif += '<option value="Droit" selected>Droit</option>';
     }
     sujetModif += '</select>';
+    dureeModif = '<input id="dureeModifWork" type="time" value="' + tdureeModif + '"/>';
     $('#nom').html(nomModif);
     $('#description').html(descModif);
     $('#date').html(dateModif);
     $('#sujet').html(sujetModif);
     $('#nbPlace').html(nbModif);
+    $('#duree').html(dureeModif);
 }
 
 function annulerModif(idAtelier) {
     $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
 }
 
-function validerModif(nom, desc, date, nb, sujet, idAtelier) {
+function validerModif(nom, desc, date, nb, sujet, idAtelier,duree) {
 
     let a = 1;
     let currentDate = new Date();
@@ -1197,8 +1253,6 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier) {
         minutes2 = (dateRecup).getMinutes();
     }
     var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
-    console.log(date2 + " Date Actu");
-    console.log(date + " Date rentrée");
 
     if ($('#dateModifWork').val() == '') {
 
@@ -1230,8 +1284,13 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier) {
         }
     }
 
-    if (a === 1) {
+    if ($('#dureeModifWork').val() == '') {
+        $('#WorkshopModifDureeError').show();
+        a = 0;
+    }
 
+    if (a === 1) {
+        console.log($('#dureeModifWork').val());
         $.ajax({
             url: "assets/php/modifAtelier.php",
             type: "POST",
@@ -1242,6 +1301,7 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier) {
                 "nomb": nb,
                 "sujet": sujet,
                 "idAtelier": idAtelier,
+                "duree" : duree
             },
             datatype: "json",
             success: function (response) {

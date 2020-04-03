@@ -103,10 +103,11 @@ class dbAccess
                 break;
         }
 
+
         switch ($nomProcedure) {
             case 'ajoutAtelier':
             case 'modifAtelier':
-                array_push($params, '?', '?', '?', '?', '?', '?');
+                array_push($params, '?', '?', '?', '?', '?', '?', '?');
 
                 try {
                     $this->connexionDB();

@@ -37,7 +37,12 @@ $_SESSION['pageActuel'] = 'workshopsCreation.php';
                                     <input type="number" min="1" name="workshop_nbrPlaces" id="workshop_nbrPlaces" placeholder="Nombre de place" />
                                     <p id="WorkshopPlaceError" style="color:red; display:none">Places de l'atelier requises</p>
                                     <p id="WorkshopPlaceNegatif" style="color:red; display:none">Le nombre doit être supérieur ou égale à 1</p>
-
+                                </div>
+                                <div class="form-group">
+                                    <label for="workshop_duree"><i class="zmdi zmdi-lock"></i></label>
+                                    <input type="time" name="workshop_duree" id="workshop_duree" />
+                                    <span id="error_date" style="display : none; color : red">Durée incorrecte</span>
+                                    <p id="workshopDureeError" style="color:red; display:none">Durée de l'atelier requise</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="workshop_animateur">Sélectionnez un sujet :</label></br></br>

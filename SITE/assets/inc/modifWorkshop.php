@@ -43,13 +43,15 @@ include '../php/checkSiDejaCandidat.php';
                 <div id="nbPlace"></div>
                 <p id="WorkshopModifPlaceNegatif" style="color:red; display:none">Le nombre doit être supérieur ou égale à 1</p>
                 <p id="WorkshopModifPlaceError" style="color:red; display:none">Places de l'atelier requises</p>
-
+                <h3 class="my-3">Durée de l'atelier</h3>
+                <div id="duree"></div>
+                <p id="WorkshopModifDureeError" style="color:red; display:none">Durée de l'atelier requises</p>
 
 
 
 
                 <div class="form-group form-button">
-                    <input onclick="validerModif($('#nomModifWork').val(),$('#descModifWork').val(),$('#dateModifWork').val(),$('#nbPlaceModifWork').val(),$('#sujetModifWork').val(),<?= $_SESSION['idAtelier'] ?>)" type="submit" name="signin" id="signin" class="form-submit" value="Valider modifications" />
+                    <input onclick="validerModif($('#nomModifWork').val(),$('#descModifWork').val(),$('#dateModifWork').val(),$('#nbPlaceModifWork').val(),$('#sujetModifWork').val(),<?= $_SESSION['idAtelier'] ?>,$('#dureeModifWork').val())" type="submit" name="signin" id="signin" class="form-submit" value="Valider modifications" />
                 </div>
                 <div class="form-group form-button">
                     <input onclick="annulerModif(<?= $_SESSION['idAtelier']?>)"type="submit" name="signin" id="signin" class="form-submit" value="Annuler modifications" />

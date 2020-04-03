@@ -13,6 +13,7 @@ $date ="'" . $recupUnAtelier[0]{'date'} . "'";
 $nb="'" . $recupUnAtelier[0]{'nbrPlaces'} . "'";
 $sujet="'" . $recupUnAtelier[0]{'sujet'} . "'";
 $id ="'" . $recupUnAtelier[0]{'idAtelier'} . "'";
+$duree ="'" . $recupUnAtelier[0]{'duree'} . "'";
 ?>
 
 <script>
@@ -61,7 +62,7 @@ detailsWorkshop();
             </form>
           <?php } ?>
               <div class="form-group form-button">
-                <button onclick="afficheModifAtelier(<?= $nom ?>,<?= $desc ?>,<?= $date ?>,<?= $nb ?>,<?= $sujet ?>,<?= $id ?>)" type="button" name="signin" id="signin" class="form-submit">Modifier workshop</button>
+                <button onclick="afficheModifAtelier(<?= $nom ?>,<?= $desc ?>,<?= $date ?>,<?= $nb ?>,<?= $sujet ?>,<?= $id ?>,<?= $duree ?>)" type="button" name="signin" id="signin" class="form-submit">Modifier workshop</button>
               </div>
       </div>
 

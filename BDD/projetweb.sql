@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 03, 2020 at 05:22 PM
+-- Generation Time: Apr 03, 2020 at 06:53 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -20,7 +20,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `affichageAteliersAnimateur` ()  BEGIN
 
-SELECT a.nom, a.description, a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, a.validation, a.annulation, u.nom nomAnimateur
+SELECT a.nom, a.description, a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, a.validation, a.annulation, a.duree, u.nom nomAnimateur
 FROM atelier a
 INNER JOIN user u 
 ON a.animateur = u.matricule
@@ -43,9 +43,9 @@ WHERE id = idAtelier;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16), IN `Sujet` VARCHAR(255))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16), IN `Sujet` VARCHAR(255), IN `Duree` TIME)  BEGIN 
 
-INSERT INTO atelier (nom, description, date, nbrPlaces, animateur, sujet) VALUES (Nom, Description, Date, Places, Animateur, Sujet);
+INSERT INTO atelier (nom, description, date, nbrPlaces, animateur, sujet,duree) VALUES (Nom, Description, Date, Places, Animateur, Sujet,Duree);
 
 END$$
 
@@ -175,13 +175,13 @@ INSERT INTO participant_atelier (idparticipant, idAtelier) VALUES (noma, identif
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `mesWorkshops` (IN `noma` VARCHAR(16))  BEGIN
-SELECT a.idAtelier,a.nom,a.description,a.date,a.nbrPlaces,a.animateur,a.sujet,a.validation,a.annulation FROM atelier as a
+SELECT a.idAtelier,a.nom,a.description,a.date,a.nbrPlaces,a.animateur,a.sujet,a.validation,a.annulation,a.duree FROM atelier as a
 WHERE a.animateur = noma;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `modifAtelier` (IN `id` INT, IN `nom` VARCHAR(16), IN `descr` VARCHAR(128), IN `datee` DATETIME, IN `nb` INT(11), IN `sujet` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifAtelier` (IN `id` INT, IN `nom` VARCHAR(16), IN `descr` VARCHAR(128), IN `datee` DATETIME, IN `nb` INT(11), IN `sujet` VARCHAR(255), IN `duree` TIME)  BEGIN
 UPDATE atelier 
-SET atelier.nom = nom, atelier.description = descr,  atelier.date = datee, atelier.nbrPlaces = nb, atelier.sujet =sujet 
+SET atelier.nom = nom, atelier.description = descr,  atelier.date = datee, atelier.nbrPlaces = nb, atelier.sujet =sujet, atelier.duree = duree 
 WHERE atelier.idAtelier = id;
 END$$
 
@@ -199,7 +199,7 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierInscrit` (IN `noma` VARCHAR(16))  BEGIN
 
-SELECT a.nom, a.description, a.date,a.sujet,a.nbrPlaces,a.idAtelier,a.validation, a.annulation, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
+SELECT a.nom, a.description, a.date,a.sujet,a.nbrPlaces,a.idAtelier,a.validation, a.annulation,a.duree, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
 WHERE p.idparticipant = noma; 
 
 END$$
@@ -265,23 +265,25 @@ CREATE TABLE `atelier` (
   `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
   `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `validation` int(1) NOT NULL DEFAULT '0',
-  `annulation` int(1) NOT NULL DEFAULT '0'
+  `annulation` int(1) NOT NULL DEFAULT '0',
+  `duree` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `atelier`
 --
 
-INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`) VALUES
-(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-04-05 17:26:00', 20, 'HE201587', 'Droit', 1, 0),
-(23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2021-02-08 17:50:00', 15, 'HE201587', 'Informatique', 0, 1),
-(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0),
-(29, 'test', 'test', '2020-04-22 17:20:00', 1, 'HE201587', 'Comptabilité', 0, 0),
-(32, 'testDate', 'testDate', '2020-03-13 18:00:00', 6, 'HE201587', 'Comptabilité', 1, 0),
-(33, 'TESTDATE', 'TESTDATE', '2020-04-03 17:21:00', 6, 'HE201587', 'Comptabilité', 0, 0),
-(34, 'test', 'test', '2020-04-05 18:00:00', 5, 'HE201587', 'Comptabilité', 0, 0),
-(35, 'DETER', 'DETER', '2020-04-11 14:50:00', 2, 'HE201587', 'Comptabilité', 1, 0);
+INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`, `duree`) VALUES
+(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1, '00:00:00'),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-04-05 17:26:00', 20, 'HE201587', 'Droit', 1, 0, '00:00:00'),
+(23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2021-02-08 17:50:00', 15, 'HE201587', 'Informatique', 0, 1, '00:00:00'),
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0, '00:00:00'),
+(29, 'test', 'test', '2020-04-22 17:20:00', 1, 'HE201587', 'Comptabilité', 0, 0, '00:00:00'),
+(32, 'testDate', 'testDate', '2020-03-13 18:00:00', 6, 'HE201587', 'Comptabilité', 1, 0, '00:00:00'),
+(33, 'TESTDATE', 'TESTDATE', '2020-04-03 17:21:00', 6, 'HE201587', 'Comptabilité', 0, 0, '00:00:00'),
+(34, 'test', 'test', '2020-04-05 18:00:00', 5, 'HE201587', 'Comptabilité', 0, 0, '00:00:00'),
+(35, 'DETER', 'DETER', '2020-04-11 14:50:00', 2, 'HE201587', 'Comptabilité', 1, 0, '00:00:00'),
+(36, 'ChangementDuree', 'ChangementDuree', '2020-04-05 18:00:00', 50, 'HE777777', 'Marketing', 0, 0, '02:22:00');
 
 -- --------------------------------------------------------
 
@@ -615,7 +617,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `atelier`
 --
 ALTER TABLE `atelier`
-  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `forum`

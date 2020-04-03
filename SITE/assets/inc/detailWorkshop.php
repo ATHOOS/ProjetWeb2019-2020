@@ -6,7 +6,6 @@ include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
 include '../php/checkSiAnnule.php';
 include '../php/checkSiDejaCandidat.php';
-var_dump($recupPlacesDispo);
 ?>
 
 <script>
@@ -38,6 +37,8 @@ var_dump($recupPlacesDispo);
           <li id="date"></li>
           <li id="heure"></li>
         </ul>
+        <h3 class="my-3">Duree de l'atelier</h3>
+        <p id="duree"></p>
         <div style="display:none">
           <h3 class="my-3">Places dispos</h3>
           <p id="places"></p>
