@@ -28,6 +28,7 @@ $_SESSION['pageActuel']='login/connexion.php';
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Connexion" onclick="checkConnexion()"/>
                             </div>
+                            <p id="connexionError" style="color:red; display:none">Pseudo/email ou mot de passe incorrect(s).</p>
                         </form>
                     </div>
                 </div>

@@ -44,6 +44,7 @@ class dbAccess
             case 'annulationAtelierAdmin':
             case 'mesWorkshops':
             case 'recupUnAtelier':
+            case 'recupPlacesDispo':
                 array_push($params, '?');
 
                 try {

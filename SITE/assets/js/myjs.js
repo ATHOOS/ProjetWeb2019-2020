@@ -261,11 +261,17 @@ function checkConnexion() {
             data: objectForm,
             datatype: "json",
             success: function (response) {
-                console.log(response);
+                if (response === '"erreurConnexion"') {
+                    $('#connexionError').show();
+                }
+                else {
+                    $('#connexionError').hide();
+                    location.reload();
+                    profil();
+                }
             }
         });
-        location.reload();
-        profil();
+
 
     }
 
@@ -361,6 +367,7 @@ function filtrerAtelier(sujet, tab) {
     tabEnvoi2 = new Array();
     var indexAtelier = 0;
 
+
     for (i = 0; i < tab.length; i++) {
         if (tab[i]['validation'] === '1') {
             var datefull = new Date(tab[i]['date']);
@@ -375,6 +382,21 @@ function filtrerAtelier(sujet, tab) {
             }
             var tnom = tab[i]['nom'];
             if (tab[i]['sujet'] === sujet) {
+                var test;
+                $.ajax({
+                    async: false,
+                    url: "assets/php/recupPlacesDispo.php",
+                    type: "POST",
+                    data: {
+                        "id": tab[i]['idAtelier']
+                    },
+                    datatype: "json",
+                    success: function (response) {
+                        nbPlace = JSON.parse(response);
+                        test = nbPlace[0][0];
+                    }
+                });
+                var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
                 ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
                 ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret += '<div class="media-body order-2 order-lg-1">';
@@ -392,47 +414,63 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-                ret += '</div>';
+                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';                ret += '</div>';
                 ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
                 ret += '</div>';
                 ret += '</li>';
                 nbAteliers++;
 
             } else {
-                ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
-                ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
-                ret2 += '<div class="media-body order-2 order-lg-1">';
-                ret2 += '<a>';
-                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
-                    + indexAtelier++ + ','
-                    + '\'' + tab[i]['nom'] + '\','
-                    + '\'' + tab[i]['description'] + '\','
-                    + '\'' + tab[i]['date'] + '\','
-                    + '\'' + tab[i]['nbrPlaces'] + '\','
-                    + '\'' + tab[i]['sujet'] + '\','
-                    + '\'' + tab[i]['idAtelier'] + '\');">'
-                    + tab[i]['nom'] + '</h5>';
-                ret2 += ' </a>';
-                ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
-                ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
-                ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-                ret2 += '</div>';
-                ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
-                ret2 += '</div>';
-                ret2 += '</li>';
-                nbAteliers2++;
-            }
+                var test;
+                $.ajax({
+                    async: false,
+                    url: "assets/php/recupPlacesDispo.php",
+                    type: "POST",
+                    data: {
+                        "id": tab[i]['idAtelier']
+                    },
+                    datatype: "json",
+                    success: function (response) {
+                        nbPlace = JSON.parse(response);
+                        test = nbPlace[0][0];
+                    }
+                });
+                var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
+            ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
+            ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
+            ret2 += '<div class="media-body order-2 order-lg-1">';
+            ret2 += '<a>';
+            ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
+                + indexAtelier++ + ','
+                + '\'' + tab[i]['nom'] + '\','
+                + '\'' + tab[i]['description'] + '\','
+                + '\'' + tab[i]['date'] + '\','
+                + '\'' + tab[i]['nbrPlaces'] + '\','
+                + '\'' + tab[i]['sujet'] + '\','
+                + '\'' + tab[i]['idAtelier'] + '\');">'
+                + tab[i]['nom'] + '</h5>';
+            ret2 += ' </a>';
+            ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
+            ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
+            ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
+            ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
+            ret2 += '</div>';
+            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret2 += '</div>';
+            ret2 += '</li>';
+            nbAteliers2++;
         }
     }
+}
 
-    if ($('#sujet').val() != "") {
-        $('#itemAtelier').append(ret);
-        paginationAtelier(nbAteliers);
-    }
-    else {
-        $('#itemAtelier').append(ret2);
-        paginationAtelier(nbAteliers2);
-    }
+if ($('#sujet').val() != "") {
+    $('#itemAtelier').append(ret);
+    paginationAtelier(nbAteliers);
+}
+else {
+    $('#itemAtelier').append(ret2);
+    paginationAtelier(nbAteliers2);
+}
 
 }
 
