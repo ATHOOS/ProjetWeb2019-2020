@@ -394,7 +394,6 @@ function ajoutAtelier() {
                 }
                 else {
                     console.log('inscr OK');
-                    console.log(response);
                 }
             }
         });
@@ -465,7 +464,11 @@ function filtrerAtelier(sujet, tab) {
                     datatype: "json",
                     success: function (response) {
                         nbPlace = JSON.parse(response);
-                        test = nbPlace[0][0] - 1;
+                        if(nbPlace[0] === undefined){
+                            test = 0;
+                        }else{
+                            test = nbPlace[0][0];
+                        }
                     }
                 });
                 var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
@@ -503,9 +506,14 @@ function filtrerAtelier(sujet, tab) {
                     },
                     datatype: "json",
                     success: function (response) {
-                        console.log(response);
+                        
                         nbPlace = JSON.parse(response);
-                        test = nbPlace[0][0] - 1;
+                        if(nbPlace[0] === undefined){
+                            test = 0;
+                        }else{
+                            test = nbPlace[0][0];
+                        }
+
                     }
                 });
                 var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
@@ -672,7 +680,6 @@ function modifRole(noma, admin) {
         },
         datatype: "json",
         success: function (response) {
-            console.log(response);
         }
     });
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 03, 2020 at 04:08 PM
+-- Generation Time: Apr 03, 2020 at 05:22 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -205,7 +205,7 @@ WHERE p.idparticipant = noma;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupPlacesDispo` (IN `id` INT)  BEGIN
-SELECT COUNT(DISTINCT participant_atelier.idparticipant) + 1 FROM participant_atelier
+SELECT COUNT(DISTINCT participant_atelier.idparticipant) FROM participant_atelier
 WHERE participant_atelier.idAtelier = id
 GROUP BY participant_atelier.idAtelier;
 END$$
@@ -278,10 +278,10 @@ INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `
 (23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2021-02-08 17:50:00', 15, 'HE201587', 'Informatique', 0, 1),
 (24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0),
 (29, 'test', 'test', '2020-04-22 17:20:00', 1, 'HE201587', 'Comptabilité', 0, 0),
-(31, 'testNeg', 'testNeg', '2020-03-03 16:51:00', 5, 'HE201587', 'Comptabilité', 0, 0),
-(32, 'testDate', 'testDate', '2020-03-13 18:00:00', 6, 'HE201587', 'Comptabilité', 0, 0),
+(32, 'testDate', 'testDate', '2020-03-13 18:00:00', 6, 'HE201587', 'Comptabilité', 1, 0),
 (33, 'TESTDATE', 'TESTDATE', '2020-04-03 17:21:00', 6, 'HE201587', 'Comptabilité', 0, 0),
-(34, 'test', 'test', '2020-04-05 18:00:00', 5, 'HE201587', 'Comptabilité', 0, 0);
+(34, 'test', 'test', '2020-04-05 18:00:00', 5, 'HE201587', 'Comptabilité', 0, 0),
+(35, 'DETER', 'DETER', '2020-04-11 14:50:00', 2, 'HE201587', 'Comptabilité', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -343,7 +343,10 @@ INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
 ('HE000000', 22),
 ('HE201620', 22),
 ('HE201587', 24),
-('HE201587', 29);
+('HE201587', 29),
+('HE000000', 32),
+('HE000000', 35),
+('HE201587', 35);
 
 -- --------------------------------------------------------
 
@@ -612,7 +615,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `atelier`
 --
 ALTER TABLE `atelier`
-  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `forum`

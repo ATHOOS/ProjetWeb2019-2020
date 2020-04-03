@@ -6,6 +6,7 @@ include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
 include '../php/checkSiAnnule.php';
 include '../php/checkSiDejaCandidat.php';
+var_dump($recupPlacesDispo);
 ?>
 
 <script>
@@ -41,18 +42,26 @@ include '../php/checkSiDejaCandidat.php';
           <h3 class="my-3">Places dispos</h3>
           <p id="places"></p>
         </div>
-        <?php if (empty($checkSiDejaDansAtelier)) { ?>
-          <?php if($recupPlacesDispo[0]{'0'} < $recupUnAtelier[0]{'nbrPlaces'}) : ?>
-          <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
-            <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop" />
-            </div>
-          </form>
-          <?php else : ?>
-            <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="Complet" />
-            </div>
-          <?php endif ?>
+        <?php if(empty($checkSiDejaDansAtelier)) { ?>
+          <?php if(empty($recupPlacesDispo)) { ?>
+            <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop" />
+              </div>
+            </form>
+          <?php }else { ?>
+            <?php if($recupPlacesDispo[0]{'0'} < $recupUnAtelier[0]{'nbrPlaces'}) { ?>
+              <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
+                <div class="form-group form-button">
+                  <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop" />
+                </div>
+              </form>
+            <?php }else { ?>
+              <div class="form-group form-button">
+                <input type="submit" name="signin" id="signin" class="form-submit" value="Complet" />
+              </div>
+            <?php } ?>
+            <?php } ?>
         <?php } else { ?>
           <form id="inscriptionWorkshop" method="post" action="assets/php/desinscriptionWorkshop.php">
             <div class="form-group form-button">
