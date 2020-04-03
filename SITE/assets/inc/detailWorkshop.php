@@ -9,9 +9,7 @@ include '../php/checkSiDejaCandidat.php';
 ?>
 
 <script>
-
-detailsWorkshop();
-
+  detailsWorkshop();
 </script>
 
 <main id="content" style="margin-top:6em">
@@ -25,7 +23,7 @@ detailsWorkshop();
       <span id="nom"></span>
     </h1>
 
-<div class="row">
+    <div class="row">
 
       <div class="col-md-8">
         <img class="img-fluid" src="http://placehold.it/750x500" alt="">
@@ -38,18 +36,27 @@ detailsWorkshop();
         <ul>
           <li id="date"></li>
           <li id="heure"></li>
-
         </ul>
+        <div style="display:none">
+          <h3 class="my-3">Places dispos</h3>
+          <p id="places"></p>
+        </div>
         <?php if (empty($checkSiDejaDansAtelier)) { ?>
+          <?php if($recupPlacesDispo[0]{'0'} < $recupUnAtelier[0]{'nbrPlaces'}) : ?>
           <form id="inscriptionWorkshop" method="post" action="assets/php/inscriptionWorkshop.php">
             <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop"/>
+              <input type="submit" name="signin" id="signin" class="form-submit" value="S'inscrire à ce workshop" />
             </div>
           </form>
+          <?php else : ?>
+            <div class="form-group form-button">
+              <input type="submit" name="signin" id="signin" class="form-submit" value="Complet" />
+            </div>
+          <?php endif ?>
         <?php } else { ?>
           <form id="inscriptionWorkshop" method="post" action="assets/php/desinscriptionWorkshop.php">
             <div class="form-group form-button">
-              <input type="submit" name="signin" id="signin" class="form-submit" value="Se désinscrire de ce workshop"/>
+              <input type="submit" name="signin" id="signin" class="form-submit" value="Se désinscrire de ce workshop" />
             </div>
           </form>
         <?php } ?>

@@ -393,7 +393,7 @@ function filtrerAtelier(sujet, tab) {
                     datatype: "json",
                     success: function (response) {
                         nbPlace = JSON.parse(response);
-                        test = nbPlace[0][0];
+                        test = nbPlace[0][0] -1;
                     }
                 });
                 var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
@@ -431,8 +431,9 @@ function filtrerAtelier(sujet, tab) {
                     },
                     datatype: "json",
                     success: function (response) {
+                        console.log(response);
                         nbPlace = JSON.parse(response);
-                        test = nbPlace[0][0];
+                        test = nbPlace[0][0] -1;
                     }
                 });
                 var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
@@ -521,6 +522,7 @@ function detailsWorkshop() {
     $('#description').html(tdesc);
     $('#date').html(date);
     $('#heure').html(heure);
+    $('#places').html(tnb);
 }
 
 
