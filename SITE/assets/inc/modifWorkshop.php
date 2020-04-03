@@ -42,7 +42,7 @@ include '../php/checkSiDejaCandidat.php';
 
 
                 <div class="form-group form-button">
-                    <input onclick="validerModif()" type="submit" name="signin" id="signin" class="form-submit" value="Valider modifications" />
+                    <input onclick="validerModif($('#nomModifWork').val(),$('#descModifWork').val(),$('#dateModifWork').val(),$('#nbPlaceModifWork').val(),$('#sujetModifWork').val(),<?= $_SESSION['idAtelier'] ?>)" type="submit" name="signin" id="signin" class="form-submit" value="Valider modifications" />
                 </div>
                 <div class="form-group form-button">
                     <input onclick="annulerModif(<?= $_SESSION['idAtelier']?>)"type="submit" name="signin" id="signin" class="form-submit" value="Annuler modifications" />

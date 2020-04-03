@@ -103,6 +103,7 @@ class dbAccess
 
         switch ($nomProcedure) {
             case 'ajoutAtelier':
+            case 'modifAtelier':
                 array_push($params, '?', '?', '?', '?', '?', '?');
 
                 try {

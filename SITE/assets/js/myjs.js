@@ -921,7 +921,7 @@ function afficheInput(){
         nomModif = '<input id="nomModifWork" type="text" value="'+tnomModif+'"/>';
         descModif = '<input id="descModifWork" type="text" value="'+tdescModif+'"/>';
         dateModif = '<input id="dateModifWork" type="text" value="'+String(tdateModif)+'"/>';
-        nbModif = '<input id="nbPlaceModifWork "type="text" value="'+tnbModif+'"/>';
+        nbModif = '<input id="nbPlaceModifWork" "type="text" value="'+tnbModif+'"/>';
         sujetModif = '<input id="sujetModifWork" type="text" value="'+tsujetModif+'"/>';
         $('#nom').html(nomModif);
         $('#description').html(descModif);
@@ -932,4 +932,24 @@ function afficheInput(){
 
 function annulerModif(idAtelier){
     $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
+}
+
+function validerModif(nom,desc,date,nb,sujet,idAtelier){
+    $.ajax({
+        url: "assets/php/modifAtelier.php",
+        type: "POST",
+        data: {
+            "nom": nom,
+            "desc": desc,
+            "date": date,
+            "nomb": nb,
+            "sujet": sujet,
+            "idAtelier": idAtelier,
+        },
+        datatype: "json",
+        success: function (response) {
+            //$('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
+            console.log(response);
+        }
+    });
 }

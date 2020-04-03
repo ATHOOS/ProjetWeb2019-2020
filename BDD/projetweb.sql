@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 02, 2020 at 08:12 PM
+-- Generation Time: Apr 03, 2020 at 09:58 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -174,6 +174,12 @@ SELECT a.idAtelier,a.nom,a.description,a.date,a.nbrPlaces,a.animateur,a.sujet,a.
 WHERE a.animateur = noma;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifAtelier` (IN `id` INT, IN `nom` VARCHAR(16), IN `descr` VARCHAR(128), IN `datee` DATETIME, IN `nb` INT(11), IN `sujet` VARCHAR(255))  BEGIN
+UPDATE atelier 
+SET atelier.nom = nom, atelier.description = descr,  atelier.date = datee, atelier.nbrPlaces = nb, atelier.sujet =sujet 
+WHERE atelier.idAtelier = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `modifRole` (IN `noma` VARCHAR(30), IN `admin` TINYINT(4))  BEGIN
 UPDATE user SET administration = admin 
 WHERE matricule = noma;
@@ -191,6 +197,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierInscrit` (IN `noma` VAR
 SELECT a.nom, a.description, a.date,a.sujet,a.nbrPlaces,a.idAtelier,a.validation, a.annulation, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
 WHERE p.idparticipant = noma; 
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupUnAtelier` (IN `id` INT)  BEGIN
+SELECT * FROM atelier
+WHERE idAtelier = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupUsers` ()  BEGIN
@@ -252,8 +263,8 @@ CREATE TABLE `atelier` (
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`) VALUES
 (20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 0, 1),
-(23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0, 1),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 0, 0),
+(23, 'TEST', 'Atelier sur l utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0, 1),
 (24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0);
 
 -- --------------------------------------------------------
@@ -490,7 +501,6 @@ INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administr
 ('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
 ('HE259374', 'Delvignes', 'Yves', 'Yves@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE267755', 'Dubruille', 'Xavier', 'xavier@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE546372', 'Vroman', 'Marie-Noel', 'MariNo@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE654331', 'Bouterfa', 'Youssef', 'Youssef@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE675432', 'Schalkwijk', 'Laurent', 'Laurent@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE777777', 'Van Dormael', 'Louis', 'Louis@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
