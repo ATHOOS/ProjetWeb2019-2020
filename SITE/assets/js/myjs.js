@@ -283,29 +283,58 @@ function checkConnexion() {
 
 function ajoutAtelier() {
     let a = 1;
+    let currentDate = new Date();
     event.preventDefault();
     if ($('#workshop_nom').val() == '') {
-        $('#workshop_nom').attr('placeholder', 'Nom requis');
+        $('#workshopNomError').show();
         a = 0;
+    }else{
+        $('#workshopNomError').hide();
     }
 
     if ($('#workshop_desc').val() == '') {
-        $('#workshop_desc').attr('placeholder', 'Description requise');
+        $('#workshopDescError').show();
         a = 0;
+    }else{
+        $('#workshopDescError').hide();
     }
 
+    var datefull = new Date();
+    var date = (datefull).getFullYear() + "-" + (datefull).getMonth() + "-" + (datefull).getDate() + "T" + (datefull).getHours() + ':' + (datefull).getMinutes();
+    var dateRecup = new Date($('#workshop_date').val());
+    var date2 = (dateRecup).getFullYear() + "-" + (dateRecup).getMonth() + "-" + (dateRecup).getDate() + "T" + (dateRecup).getHours() + ':' + (dateRecup).getMinutes();
+    console.log(date2);
+    console.log(date);
+
     if ($('#workshop_date').val() == '') {
-        $('#error_date').show();
+        
+        $('#workshopDateError').show();
         a = 0;
+    }else{
+        if(date > date2){
+            $('#workshopDateError').hide();
+            $('#workshopDatePassee').show();
+            a=0;
+        }else{
+            $('#workshopDateError').hide();
+            $('#workshopDatePassee').hide();
+        }
+        
     }
 
     if ($('#workshop_nbrPlaces').val() == '') {
-        $('#workshop_nbrPlaces').attr('placeholder', 'Nombre de places requis');
+        $('#WorkshopPlaceError').show();
         a = 0;
-    }
-    if ($('#workshop_animateur').val() == '') {
-        $('#workshop_animateur').attr('placeholder', 'Animateur requis');
-        a = 0;
+    }else{
+        if($('#workshop_nbrPlaces').val() <= 1){
+            $('#WorkshopPlaceError').hide();
+            $('#WorkshopPlaceNegatif').show();
+            a = 0;
+        }
+        else{
+            $('#WorkshopPlaceError').hide();
+            $('#WorkshopPlaceNegatif').hide();
+        }
     }
 
     if (a === 1) {
