@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include 'dbAccess.php';
 
 $db = new dbAccess();
@@ -11,8 +11,10 @@ $nb = htmlspecialchars($_POST["nomb"]);
 $sujet = htmlspecialchars($_POST["sujet"]);
 $idAtelier = htmlspecialchars($_POST["idAtelier"]);
 
-echo json_encode($nb);
+$checkAtelierUser = $db->callProcedure('checkAtelierUser',[$idAtelier,$_SESSION['matricule']]);
 
-$modifAtelier = $db->callProcedure('modifAtelier',[$idAtelier,$nom,$desc,$date,$nb,$sujet]);
-
-//echo json_encode($modifAtelier);
+if(!empty($checkAtelierUser)){
+    $modifAtelier = $db->callProcedure('modifAtelier',[$idAtelier,$nom,$desc,$date,$nb,$sujet]);
+}else {
+    echo json_encode('pasBon');
+}

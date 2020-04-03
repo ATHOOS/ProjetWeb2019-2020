@@ -71,6 +71,7 @@ class dbAccess
             case 'candidatureAtelier':
             case 'checkSiDejaCandidat':
             case 'modifRole':
+            case 'checkAtelierUser':
                 array_push($params, '?', '?');
 
                 try {

@@ -90,7 +90,6 @@ function profil() {
 }
 
 
-
 function detailWorkshop(p, tab) {
     $('#content').load("assets/inc/detailWorkshop.php");
     detailsWorkshop(tab);
@@ -948,8 +947,11 @@ function validerModif(nom,desc,date,nb,sujet,idAtelier){
         },
         datatype: "json",
         success: function (response) {
-            //$('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
-            console.log(response);
+            if(response === '"pasBon"'){
+                alert("Ce n'est pas votre atelier !!!!");
+            } else{
+                mesWorkshopsListe();
+            }
         }
     });
 }

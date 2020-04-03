@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 03, 2020 at 09:58 AM
+-- Generation Time: Apr 03, 2020 at 10:33 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -82,6 +82,11 @@ UPDATE user
 SET password = newMDP
 WHERE password = oldMDP AND matricule = noma;
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkAtelierUser` (IN `id` INT, IN `noma` VARCHAR(16))  BEGIN
+SELECT * FROM atelier
+WHERE atelier.idAtelier = id and atelier.animateur = noma;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkConnexion` (IN `identifiant` VARCHAR(3200), IN `mdp` VARCHAR(3000))  BEGIN
@@ -264,7 +269,7 @@ CREATE TABLE `atelier` (
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`) VALUES
 (20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1),
 (22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 0, 0),
-(23, 'TEST', 'Atelier sur l utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0, 1),
+(23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0, 1),
 (24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0);
 
 -- --------------------------------------------------------
