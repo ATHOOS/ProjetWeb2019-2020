@@ -6,6 +6,14 @@ include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
 include '../php/checkSiAnnule.php';
 include '../php/checkSiDejaCandidat.php';
+include '../php/unAtelier.php';
+$nom = "'" . $recupUnAtelier[0]{'nom'} . "'";
+$desc ="'" . $recupUnAtelier[0]{'description'} . "'";
+$date ="'" . $recupUnAtelier[0]{'date'} . "'";
+$nb="'" . $recupUnAtelier[0]{'nbrPlaces'} . "'";
+$sujet="'" . $recupUnAtelier[0]{'sujet'} . "'";
+$id ="'" . $recupUnAtelier[0]{'idAtelier'} . "'";
+echo $nom
 ?>
 
 <script>
@@ -53,6 +61,9 @@ detailsWorkshop();
               </div>
             </form>
           <?php } ?>
+              <div class="form-group form-button">
+                <button onclick="afficheModifAtelier(<?= $nom ?>,<?= $desc ?>,<?= $date ?>,<?= $nb ?>,<?= $sujet ?>,<?= $id ?>)" type="button" name="signin" id="signin" class="form-submit">Modifier workshop</button>
+              </div>
       </div>
 
     </div>

@@ -356,7 +356,7 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret += '<div class="media-body order-2 order-lg-1">';
                 ret += '<a>';
-                ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
+                ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
                     + indexAtelier + ','
                     + '\'' + tab[i]['nom'] + '\','
                     + '\'' + tab[i]['description'] + '\','
@@ -380,7 +380,7 @@ function filtrerAtelier(sujet, tab) {
                 ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret2 += '<div class="media-body order-2 order-lg-1">';
                 ret2 += '<a>';
-                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadMesWorkshop('
+                ret2 += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
                     + indexAtelier++ + ','
                     + '\'' + tab[i]['nom'] + '\','
                     + '\'' + tab[i]['description'] + '\','
@@ -807,15 +807,6 @@ function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
 
 }
 
-function detailsWorkshop() {
-    var datefull = new Date(tdate2);
-    var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-    var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
-    $('#nom').text(tnom);
-    $('#description').html(tdesc);
-    $('#date').html(date);
-    $('#heure').html(heure);
-}
 
 
 
@@ -907,12 +898,24 @@ function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier) {
 
 }
 
-function detailsWorkshop() {
-    var datefull = new Date(tdate2);
-    var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-    var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
-    $('#nom').text(tnom);
-    $('#description').html(tdesc);
-    $('#date').html(date);
-    $('#heure').html(heure);
+
+
+
+/////////////////////////////////////////MODIF MES WORKSHOPS/////////////////////////////////////////
+
+function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier){
+    $('#content').load("assets/inc/modifWorkshop.php?i=" + idAtelier);
+        tnom = '<input id="nomModifWork" type="text" value="'+nom+'"></input>';
+        tdesc = '<input id="descModifWork" type="text" value="'+desc+'"></input>';
+        tdate2 = '<input id="dateModifWork" type="text" value="'+date2+'"></input>';;
+        tnb = '<input id="nbPlaceModifWork "type="text" value="'+nb+'"></input>';;
+        tsujet = '<input id="sujetModifWork" type="text" value="'+sujet+'"></input>';;
+        var datefull = new Date(tdate2);
+        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+        $('#nom').text(tnom);
+        $('#description').html(tdesc);
+        $('#date').html(tdate2);
+        $('#sujet').html(tsujet);
+        $('#nbPlace').html(tnb);
 }
