@@ -1,9 +1,11 @@
 <?php
 
-$noma = $_SESSION['matricule'];
+
 include 'dbAccess.php';
+
+$noma = htmlspecialchars($_SESSION['matricule']);
 
 $db = new dbAccess();
 
-$mesAteliers = $db->callProcedure("recupAtelierInscrit", [$noma]);
+$mesAteliers = json_encode($db->callProcedure("recupAtelierInscrit", [$noma]));
 

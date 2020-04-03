@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 01, 2020 at 03:01 PM
+-- Generation Time: Apr 03, 2020 at 01:46 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.8
 
@@ -20,7 +20,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `affichageAteliersAnimateur` ()  BEGIN
 
-SELECT a.nom, a.description,a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, u.nom nomAnimateur
+SELECT a.nom, a.description, a.sujet, a.date, a.nbrPlaces, a.idAtelier, u.prenom, a.validation, a.annulation, u.nom nomAnimateur
 FROM atelier a
 INNER JOIN user u 
 ON a.animateur = u.matricule
@@ -35,18 +35,31 @@ ORDER BY date;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16))  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `afficherCandidats` (IN `id` INT)  BEGIN
 
-INSERT INTO atelier (nom, description, date, nbrPlaces, animateur) VALUES (Nom, Description, Date, Places, Animateur);
+SELECT c.idCandidat, u.prenom, u.nom, u.mail, a.nom nomAtelier from candidat_atelier AS c JOIN user u ON c.idCandidat = u.matricule 
+JOIN atelier a ON c.idAtelier = a.idAtelier
+WHERE id = idAtelier;
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajoutAtelier` (IN `Nom` VARCHAR(16), IN `Description` VARCHAR(128), IN `Date` DATETIME, IN `Places` INT(11), IN `Animateur` VARCHAR(16), IN `Sujet` VARCHAR(255))  BEGIN 
+
+INSERT INTO atelier (nom, description, date, nbrPlaces, animateur, sujet) VALUES (Nom, Description, Date, Places, Animateur, Sujet);
 
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `annulationAtelier` (IN `id` INT, IN `noma` VARCHAR(32))  BEGIN
 
 UPDATE atelier
-SET termine = 1
-WHERE idAtelier = id AND termine = 0 AND animateur = noma;
+SET annulation = 1
+WHERE idAtelier = id AND annulation = 0 AND animateur = noma;
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `annulationAtelierAdmin` (IN `id` INT)  BEGIN
+DELETE FROM atelier
+WHERE idAtelier = id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `candidatureAtelier` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
@@ -71,9 +84,14 @@ WHERE password = oldMDP AND matricule = noma;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkAtelierUser` (IN `id` INT, IN `noma` VARCHAR(16))  BEGIN
+SELECT * FROM atelier
+WHERE atelier.idAtelier = id and atelier.animateur = noma;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkConnexion` (IN `identifiant` VARCHAR(3200), IN `mdp` VARCHAR(3000))  BEGIN
 
-SELECT matricule, mail, nom, prenom FROM user 
+SELECT matricule, mail, nom, prenom,administration FROM user 
 WHERE password = mdp AND (matricule = identifiant OR mail = identifiant);
 
 END$$
@@ -92,6 +110,13 @@ WHERE noma = idParticipant AND identifiant = idAtelier;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAdmin` (IN `noma` VARCHAR(32))  BEGIN
+
+SELECT mail FROM user 
+WHERE matricule = noma AND administration = 1;
+
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAnimateur` (IN `noma` VARCHAR(32), IN `id` INT)  BEGIN
 
 SELECT * FROM atelier
@@ -102,7 +127,7 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkSiAnnule` (IN `id` INT)  BEGIN
 
 SELECT * FROM atelier
-WHERE termine = 0 AND idAtelier = id;
+WHERE annulation = 0 AND idAtelier = id;
 
 END$$
 
@@ -125,8 +150,8 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `desannulationAtelier` (IN `id` INT, IN `noma` VARCHAR(32))  BEGIN
 
 UPDATE atelier
-SET termine = 0
-WHERE idAtelier = id AND termine = 1 AND animateur = noma;
+SET annulation = 0
+WHERE idAtelier = id AND annulation = 1 AND animateur = noma;
 
 END$$
 
@@ -137,16 +162,62 @@ WHERE noma = idparticipant AND id = idAtelier;
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `devaliderAtelierAdmin` (IN `id` INT)  BEGIN
+UPDATE atelier
+SET atelier.validation = 0
+WHERE idAtelier = id;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inscriptionAtelier` (IN `noma` VARCHAR(16), IN `identifiant` INT)  BEGIN
 
 INSERT INTO participant_atelier (idparticipant, idAtelier) VALUES (noma, identifiant);
 
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `mesWorkshops` (IN `noma` VARCHAR(16))  BEGIN
+SELECT a.idAtelier,a.nom,a.description,a.date,a.nbrPlaces,a.animateur,a.sujet,a.validation,a.annulation FROM atelier as a
+WHERE a.animateur = noma;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifAtelier` (IN `id` INT, IN `nom` VARCHAR(16), IN `descr` VARCHAR(128), IN `datee` DATETIME, IN `nb` INT(11), IN `sujet` VARCHAR(255))  BEGIN
+UPDATE atelier 
+SET atelier.nom = nom, atelier.description = descr,  atelier.date = datee, atelier.nbrPlaces = nb, atelier.sujet =sujet 
+WHERE atelier.idAtelier = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifRole` (IN `noma` VARCHAR(30), IN `admin` TINYINT(4))  BEGIN
+UPDATE user SET administration = admin 
+WHERE matricule = noma;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierAnnule` ()  BEGIN
+
+SELECT * FROM atelier
+WHERE termine = 1;
+
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `recupAtelierInscrit` (IN `noma` VARCHAR(16))  BEGIN
 
-SELECT a.nom, a.description, a.date, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
+SELECT a.nom, a.description, a.date,a.sujet,a.nbrPlaces,a.idAtelier,a.validation, a.annulation, u.prenom, u.nom nomAnimateur FROM participant_atelier p join atelier a ON p.idAtelier = a.idAtelier join user u ON a.animateur = u.matricule
 WHERE p.idparticipant = noma; 
+
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupPlacesDispo` (IN `id` INT)  BEGIN
+SELECT COUNT(DISTINCT participant_atelier.idparticipant) + 1 FROM participant_atelier
+WHERE participant_atelier.idAtelier = id
+GROUP BY participant_atelier.idAtelier;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupUnAtelier` (IN `id` INT)  BEGIN
+SELECT * FROM atelier
+WHERE idAtelier = id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupUsers` ()  BEGIN
+
+SELECT matricule, prenom, nom, mail, administration FROM user;
 
 END$$
 
@@ -167,8 +238,14 @@ END$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerAtelier` (IN `Atelier` INT)  BEGIN 
 
 DELETE FROM atelier
-WHERE idAtelier = Atelier;
+WHERE idAtelier = Atelier AND termine = 1;
 
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validerAtelierAdmin` (IN `id` INT)  BEGIN
+UPDATE atelier
+SET atelier.validation = 1
+WHERE idAtelier = id;
 END$$
 
 DELIMITER ;
@@ -186,20 +263,21 @@ CREATE TABLE `atelier` (
   `date` datetime NOT NULL,
   `nbrPlaces` int(11) NOT NULL,
   `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
-  `termine` tinyint(1) NOT NULL DEFAULT '0',
-  `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL
+  `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `validation` int(1) NOT NULL DEFAULT '0',
+  `annulation` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `atelier`
 --
 
-INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `termine`, `sujet`) VALUES
-(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 0, 'Comptabilité'),
-(21, 'Boucles JS', 'Atelier dans lequel nous verrons les différentes boucles en Javascript', '2020-04-06 18:45:00', 12, 'HE201620', 0, 'Informatique'),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 0, 'Informatique'),
-(23, 'WAMP', 'Atelier sur l\'utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 0, 'Marketing'),
-(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 0, 'Comptabilité');
+INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`) VALUES
+(20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-03-27 10:20:00', 20, 'HE201587', 'Comptabilité', 1, 0),
+(23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2020-03-31 16:45:00', 15, 'HE201587', 'Informatique', 0, 1),
+(24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0),
+(29, 'test', 'test', '2020-06-13 15:30:00', 1, 'HE201587', 'Comptabilité', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -217,7 +295,9 @@ CREATE TABLE `candidat_atelier` (
 --
 
 INSERT INTO `candidat_atelier` (`idCandidat`, `idAtelier`) VALUES
-('HE201620', 22);
+('HE000000', 22),
+('HE201620', 22),
+('HE201587', 24);
 
 -- --------------------------------------------------------
 
@@ -256,11 +336,10 @@ CREATE TABLE `participant_atelier` (
 
 INSERT INTO `participant_atelier` (`idparticipant`, `idAtelier`) VALUES
 ('HE201587', 20),
-('HE201587', 21),
-('HE201587', 22),
+('HE000000', 22),
 ('HE201620', 22),
-('HE201620', 23),
-('HE201587', 24);
+('HE201587', 24),
+('HE201587', 29);
 
 -- --------------------------------------------------------
 
@@ -426,8 +505,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administration`) VALUES
-('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
+('HE000000', 'Admin', 'Admin', 'admin@ephec.be', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
+('HE111111', 'Masson', 'Claude', 'Claude@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
+('HE200101', 'Jean', 'DelaFOntaine', 'remy.vase3@hotmail.fr', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
+('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
+('HE259374', 'Delvignes', 'Yves', 'Yves@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE267755', 'Dubruille', 'Xavier', 'xavier@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE654331', 'Bouterfa', 'Youssef', 'Youssef@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE675432', 'Schalkwijk', 'Laurent', 'Laurent@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE777777', 'Van Dormael', 'Louis', 'Louis@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
 
 --
 -- Indexes for dumped tables
@@ -521,7 +608,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `atelier`
 --
 ALTER TABLE `atelier`
-  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `idAtelier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `forum`

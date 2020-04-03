@@ -56,7 +56,7 @@ session_start();
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
-
+      <?php if (!empty($_SESSION['admin'])) : ?>
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li id="navAccueil"><a href="#header" onclick="accueil()">Accueil</a></li>
@@ -64,7 +64,28 @@ session_start();
                 <ul>
                   <li><a href="#" id="navWorkshopsListe" onclick="workshopsListe()">Liste de workshops</a></li>
                   <li><a href="#" id="navWorkshopsCreation" onclick="workshopsCreation()">Création de workshops</a></li>
-                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshops()">Mes workshops</a></li>
+                  <li><a href="#" id="navWorkshopsParticipeListe" onclick="workshopParticipeListe()">Workshops auxquels je participe</a></li>
+                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshopsListe()">Mes Workshops</a></li>
+                </ul>
+              </li>
+          <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
+          <li id ="navProfil" onclick='profil()'><a href="">Profil</a></li>
+          <?php if($_SESSION['admin'] == 1) : ?>
+            <li id ="navAdmin" onclick='adminPage()'><a href="">Administration</a></li>
+          <?php endif ?>
+          <li id="navConnexion"class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+    <?php else : ?>
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li id="navAccueil"><a href="#header" onclick="accueil()">Accueil</a></li>
+          <li class="drop-down" id="navWorkshops"><a href="#">Workshops</a>
+                <ul>
+                  <li><a href="#" id="navWorkshopsListe" onclick="workshopsListe()">Liste de workshops</a></li>
+                  <li><a href="#" id="navWorkshopsCreation" onclick="workshopsCreation()">Création de workshops</a></li>
+                  <li><a href="#" id="navWorkshopsParticipeListe" onclick="workshopParticipeListe()">Workshops auxquels je participe</a></li>
+                  <li><a href="#" id="navMesWorkshops" onclick="mesWorkshopsListe()">Mes Workshops</a></li>
                 </ul>
               </li>
           <li id="navBoiteId" onclick='boiteId()'><a href="">Boite à idées</a></li>
@@ -72,7 +93,7 @@ session_start();
           <li id="navConnexion"class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
         </ul>
       </nav><!-- .nav-menu -->
-
+      <?php endif ?>
     </div>
   </header><!-- End Header -->
 

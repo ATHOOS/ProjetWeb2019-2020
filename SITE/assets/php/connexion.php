@@ -3,8 +3,8 @@ session_start();
 include "dbAccess.php";
 
 $db = new dbAccess();
-$mdp = hash('sha256',$_POST['password']);
-$login = $_POST['login'];
+$mdp = htmlspecialchars(hash('sha256',$_POST['password']));
+$login = htmlspecialchars($_POST['login']);
 
 $checkConnexion = $db->callProcedure('checkConnexion',[$login,$mdp]);
 
@@ -15,5 +15,6 @@ if(empty($checkConnexion)){
     $_SESSION['mail'] = $checkConnexion[0]{'mail'};
     $_SESSION['nom'] = $checkConnexion[0]{'nom'};
     $_SESSION['prenom'] = $checkConnexion[0]{'prenom'};
+    $_SESSION['admin'] = $checkConnexion[0]{'administration'};
     echo json_encode($_SESSION['prenom']);
 }

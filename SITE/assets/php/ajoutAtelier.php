@@ -1,14 +1,14 @@
 <?php
-
+session_start();
 include "dbAccess.php";
 
 $db = new dbAccess();
-$Nom = $_POST['Nom'];
-$Description = $_POST['Description'];
-$Date = $_POST['Date'];
-$Nombre_de_places = $_POST['Nombre_de_places'];
-$Animateur = $_POST['Animateur'];
-$Sujet = $_POST['Sujet'];
+$Nom = htmlspecialchars($_POST['Nom']);
+$Description = htmlspecialchars($_POST['Description']);
+$Date = htmlspecialchars($_POST['Date']);
+$Nombre_de_places = htmlspecialchars($_POST['Nombre_de_places']);
+$Animateur = htmlspecialchars($_SESSION['matricule']);
+$Sujet = htmlspecialchars($_POST['Sujet']);
 
 echo json_encode($Animateur);
 

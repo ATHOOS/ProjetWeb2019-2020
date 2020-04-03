@@ -3,11 +3,11 @@
 include "dbAccess.php";
 
 $db = new dbAccess();
-$noma = $_POST['matricule'];
-$Nom = $_POST['Nom'];
-$Prenom = $_POST['Prenom'];
-$email = $_POST['email'];
-$mdp = hash('sha256',$_POST['password']);
+$noma = htmlspecialchars(strtoupper($_POST['matricule']));
+$Nom = htmlspecialchars($_POST['Nom']);
+$Prenom = htmlspecialchars($_POST['Prenom']);
+$email = htmlspecialchars($_POST['email']);
+$mdp = htmlspecialchars(hash('sha256',$_POST['password']));
 
 $checkInscription = $db->callProcedure('checkInscription',[$email,$noma]);
 

@@ -20,7 +20,8 @@ class dbAccess
 
         switch ($nomProcedure) {
             case 'checkNbAteliers':
-            case 'affichageAteliersAnimateur':            
+            case 'affichageAteliersAnimateur':
+            case 'recupUsers':
                 array_push($params);
 
                 try {
@@ -34,9 +35,16 @@ class dbAccess
                 }
                 break;
         }
-        switch($nomProcedure) {
+        switch ($nomProcedure) {
             case 'recupAtelierInscrit':
             case 'checkSiAnnule':
+            case 'suppressionCompte':
+            case 'validerAtelierAdmin':
+            case 'devaliderAtelierAdmin':
+            case 'annulationAtelierAdmin':
+            case 'mesWorkshops':
+            case 'recupUnAtelier':
+            case 'recupPlacesDispo':
                 array_push($params, '?');
 
                 try {
@@ -63,6 +71,8 @@ class dbAccess
             case 'retirerCandidature':
             case 'candidatureAtelier':
             case 'checkSiDejaCandidat':
+            case 'modifRole':
+            case 'checkAtelierUser':
                 array_push($params, '?', '?');
 
                 try {
@@ -95,6 +105,7 @@ class dbAccess
 
         switch ($nomProcedure) {
             case 'ajoutAtelier':
+            case 'modifAtelier':
                 array_push($params, '?', '?', '?', '?', '?', '?');
 
                 try {
@@ -108,6 +119,5 @@ class dbAccess
                 }
                 break;
         }
-        
     }
 }

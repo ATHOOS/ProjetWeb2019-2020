@@ -18,23 +18,26 @@ $_SESSION['pageActuel'] = 'workshopsCreation.php';
                                 <div class="form-group">
                                     <label for="workshop_nom"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                     <input type="text" name="workshop_nom" id="workshop_nom" placeholder="Nom de l'atelier" />
+                                    <p id="workshopNomError" style="color:red; display:none">Nom de l'atelier requis</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="workshop_desc"><i class="zmdi zmdi-lock"></i></label>
                                     <input type="text" name="workshop_desc" id="workshop_desc" placeholder="Description de l'atelier" />
+                                    <p id="workshopDescError" style="color:red; display:none">Description de l'atelier requise</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="workshop_date"><i class="zmdi zmdi-lock"></i></label>
                                     <input type="datetime-local" name="workshop_date" id="workshop_date" />
                                     <span id="error_date" style="display : none; color : red">Date incorrecte</span>
+                                    <p id="workshopDateError" style="color:red; display:none">Date de l'atelier requise</p>
+                                    <p id="workshopDatePassee" style="color:red; display:none">Il est impossible de faire un bon dans le temps MARTY !!!</p>
                                 </div>
                                 <div class="form-group">
                                     <label for="workshop_nbrPlaces"><i class="zmdi zmdi-lock"></i></label>
-                                    <input type="text" name="workshop_nbrPlaces" id="workshop_nbrPlaces" placeholder="Nombre de place" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="workshop_animateur"><i class="zmdi zmdi-lock"></i></label>
-                                    <input type="text" name="workshop_animateur" id="workshop_animateur" placeholder="Matricule de l'animateur" />
+                                    <input type="number" min="1" name="workshop_nbrPlaces" id="workshop_nbrPlaces" placeholder="Nombre de place" />
+                                    <p id="WorkshopPlaceError" style="color:red; display:none">Places de l'atelier requises</p>
+                                    <p id="WorkshopPlaceNegatif" style="color:red; display:none">Le nombre doit être supérieur ou égale à 1</p>
+
                                 </div>
                                 <div class="form-group">
                                     <label for="workshop_animateur">Sélectionnez un sujet :</label></br></br>
