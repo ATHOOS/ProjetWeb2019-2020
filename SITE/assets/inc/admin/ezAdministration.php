@@ -94,6 +94,10 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
 
   <script src="assets/inc/admin/js/popper.js"></script>
   <script src="assets/inc/admin/js/main.js"></script>
+  <script>                
+    removeClassActive();
+    addClassActive('navAdmin');
+  </script>
 </body>
 
 </html>

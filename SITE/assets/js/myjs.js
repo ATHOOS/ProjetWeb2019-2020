@@ -14,7 +14,7 @@ function removeClassActiveAdmin() {
     $('#validation').removeClass('active');
     $('#droit').removeClass('active');
     $('#contrat').removeClass('active');
-    $('#sondage').removeClass('active');
+    $('#propIdee').removeClass('active');
 
 }
 
@@ -100,7 +100,7 @@ function detailWorkshop(p, tab) {
 function adminPage() {
     $('#content').load("assets/inc/admin/ezAdministration.php");
     removeClassActive();
-    addClassActive('adminPage');
+    addClassActive('navAdmin');
 
 }
 
@@ -1436,7 +1436,8 @@ function afficheAllIdee(tab) {
             retIdee += '<td>' + tab[i]['sujetIdee'] + '</td>';
             retIdee += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\''+ '0' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
             retIdee += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
-            retIdee += '<td>' +  + '</td>';
+            retIdee += '<td>' + statIdee(tab[i]['idIdee']) + '</td>';
+            retIdee += '<td>' + totalVote(tab[i]['idIdee']) + '</td>';
             retIdee += '</tr>';
             index++;
         }
@@ -1448,7 +1449,8 @@ function afficheAllIdee(tab) {
             retIdee2 += '<td>' + tab[i]['sujetIdee'] + '</td>';
             retIdee2 += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\''+ '0' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
             retIdee2 += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
-            retIdee2 += '<td>' +  + '</td>';
+            retIdee2 += '<td>' + statIdee(tab[i]['idIdee']) + '</td>';
+            retIdee2 += '<td>' + totalVote(tab[i]['idIdee']) + '</td>';
             retIdee2 += '</tr>';
             index2++;
         }
@@ -1475,6 +1477,7 @@ function pourIdee(idIdee, etat, idUser){
               console.log(response);
             }
         });
+        document.location.reload(true);
 }
 
 function contreIdee(idIdee, etat, idUser){
@@ -1491,4 +1494,41 @@ function contreIdee(idIdee, etat, idUser){
           console.log(response);
         }
     });
+    document.location.reload(true);
+}
+
+function statIdee(idIdee){
+    var tmp;
+    $.ajax({
+        async: false,
+        url: "assets/php/statIdee.php",
+        type: "POST",
+        data: {
+            "idIdee": idIdee
+        },
+        datatype: "json",
+        success: function (response) {
+          console.log(response);
+          tmp = response;
+        }   
+    });
+    return tmp;
+}
+
+function totalVote(idIdee){
+    var tmp;
+    $.ajax({
+        async: false,
+        url: "assets/php/totalVote.php",
+        type: "POST",
+        data: {
+            "idIdee": idIdee
+        },
+        datatype: "json",
+        success: function (response) {
+          console.log(response);
+          tmp = response;
+        }   
+    });
+    return tmp;
 }

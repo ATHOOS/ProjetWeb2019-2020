@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['pageActuel'] = 'propIdee.php';
+$_SESSION['pageActuel'] = 'admin/ezAdministration.php';
 include '../../php/recupAllIdee.php';
 ?>
 
@@ -56,6 +56,7 @@ include '../../php/recupAllIdee.php';
                         <th>Voter oui</th>
                         <th>Voter non</th>
                         <th>% avis</th>
+                        <th>Total avis</th>
                     </tr>
                 </thead>
                 <tbody id="listeIdeesProfs">
@@ -93,6 +94,7 @@ include '../../php/recupAllIdee.php';
                         <th>Voter oui</th>
                         <th>Voter non</th>
                         <th>% avis</th>
+                        <th>Total avis</th>
                     </tr>
                 </thead>
                 <tbody id="listeIdeesEtudiants">
@@ -135,6 +137,8 @@ include '../../php/recupAllIdee.php';
         var allIdee =  <?= $recupAllIdee ?>;
         var idUser = '<?= $_SESSION['matricule']; ?>';
         afficheAllIdee(allIdee);
+        removeClassActive();
+        addClassActive('navAdmin');
 </script>
 
 

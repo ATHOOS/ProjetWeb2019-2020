@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['pageActuel'] = 'admin/ezAdministration.php';
 include '../../php/listeAtelier.php';
 ?>
 <div class="container">
@@ -41,5 +42,7 @@ include '../../php/listeAtelier.php';
 
 <script>
         var allAteliers =  <?= $recupAtelier ?>;
-        afficheAllAteliers(allAteliers);
+        afficheAllAteliers(allAteliers);             
+        removeClassActive();
+        addClassActive('navAdmin');
 </script>

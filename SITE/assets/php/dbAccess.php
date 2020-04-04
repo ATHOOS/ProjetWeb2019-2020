@@ -46,6 +46,8 @@ class dbAccess
             case 'mesWorkshops':
             case 'recupUnAtelier':
             case 'recupPlacesDispo':
+            case 'recupVotePour':
+            case 'recupVoteContre':
                 array_push($params, '?');
 
                 try {

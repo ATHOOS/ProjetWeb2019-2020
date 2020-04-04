@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['pageActuel'] = 'admin/ezAdministration.php';
 include '../../php/listeUsers.php';
 ?>
 <div class="container">
@@ -40,4 +41,6 @@ include '../../php/listeUsers.php';
 <script>
         var allUsers =  <?= $recupAllUsers ?>;
         afficheAllUser(allUsers);
+        removeClassActive();
+        addClassActive('navAdmin');
 </script>

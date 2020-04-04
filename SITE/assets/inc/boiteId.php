@@ -56,6 +56,7 @@ include '../php/recupAllIdee.php';
                         <th>Voter oui</th>
                         <th>Voter non</th>
                         <th>% avis</th>
+                        <th>Total avis</th>
                     </tr>
                 </thead>
                 <tbody id="listeIdeesProfs">
@@ -93,6 +94,7 @@ include '../php/recupAllIdee.php';
                         <th>Voter oui</th>
                         <th>Voter non</th>
                         <th>% avis</th>
+                        <th>Total avis</th>
                     </tr>
                 </thead>
                 <tbody id="listeIdeesEtudiants">
