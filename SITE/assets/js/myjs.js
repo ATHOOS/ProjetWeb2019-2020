@@ -875,15 +875,14 @@ function annulerAtelierAdmin(id) {
 
 function downloadPDF(id){
     $.ajax({
-        url: "assets/php/pdfCreator.php",
+        url: "assets/php/pdfCreator.php?id=" +id,
         type: "POST",
         data: {
             "id": id
         },
         datatype: "json",
         success: function (response) {
-            $('.modal-backdrop').remove();
-            annulationAtelier()
+            window.location.replace("http://localhost:8878/ProjetWeb2019-2020/SITE/assets/php/pdfCreator.php?id=" +id);
         }
     });
 }
