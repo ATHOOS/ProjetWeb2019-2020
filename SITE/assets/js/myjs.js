@@ -763,6 +763,12 @@ function afficheAllAteliers(tab) {
         } else if (tab[i]['annulation'] === '1') {
             retAtelier += '<button onclick="popupAnnulationAtelier(' + '\'' + tab[i]['idAtelier'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete" style="color:#eb5d1e">Annulation demandée</button>'
         }
+        retAtelier += '</td><td>';
+        if (tab[i]['validation'] === '0') {
+            retAtelier += '<button class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">PDF indisponible</button>';
+        } else if (tab[i]['validation'] === '1') {
+            retAtelier += '<button onclick="downloadPDF(' + '\'' + tab[i]['idAtelier'] + '\'' + ')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Télécharger contrat</button>';
+        }
         retAtelier += '</td>';
         retAtelier += '</tr>';
         index++;
@@ -855,6 +861,21 @@ function devaliderAtelierAdmin(id) {
 function annulerAtelierAdmin(id) {
     $.ajax({
         url: "assets/php/annulerAtelierAdmin.php",
+        type: "POST",
+        data: {
+            "id": id
+        },
+        datatype: "json",
+        success: function (response) {
+            $('.modal-backdrop').remove();
+            annulationAtelier()
+        }
+    });
+}
+
+function downloadPDF(id){
+    $.ajax({
+        url: "assets/php/pdfCreator.php",
         type: "POST",
         data: {
             "id": id

@@ -21,6 +21,7 @@ include '../../php/listeAtelier.php';
                     <th>Date</th>
                     <th>Valider l'atelier</th>
                     <th>Annuler l'atelier</th>
+                    <th>Contrat</th>
                 </tr>
             </thead>
             <tbody id="listeAtelier">
