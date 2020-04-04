@@ -133,6 +133,7 @@ include '../../php/recupAllIdee.php';
     </div>
 <script>
         var allIdee =  <?= $recupAllIdee ?>;
+        var idUser = '<?= $_SESSION['matricule']; ?>';
         afficheAllIdee(allIdee);
 </script>
 

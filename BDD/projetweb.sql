@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 04 avr. 2020 à 15:35
+-- Généré le :  sam. 04 avr. 2020 à 17:07
 -- Version du serveur :  5.7.28
 -- Version de PHP :  7.3.12
 
@@ -174,6 +174,14 @@ SELECT * FROM participant_atelier
 WHERE idparticipant = noma and idAtelier = id;
 END$$
 
+DROP PROCEDURE IF EXISTS `checkUserIdee`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkUserIdee` (IN `idIde` INT, IN `idUser` VARCHAR(32))  BEGIN 
+
+SELECT idVote from vote 
+WHERE idIdee = idIde AND idUserVote	= idUser;
+
+END$$
+
 DROP PROCEDURE IF EXISTS `creationCompte`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `creationCompte` (IN `noma` VARCHAR(16), IN `Nom` VARCHAR(16), IN `Prenom` VARCHAR(16), IN `email` VARCHAR(32), IN `mdp` VARCHAR(3000))  BEGIN
 
@@ -223,6 +231,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `modifAtelier` (IN `id` INT, IN `nom
 UPDATE atelier 
 SET atelier.nom = nom, atelier.description = descr,  atelier.date = datee, atelier.nbrPlaces = nb, atelier.sujet =sujet, atelier.duree = duree 
 WHERE atelier.idAtelier = id;
+END$$
+
+DROP PROCEDURE IF EXISTS `modifEtatVote`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifEtatVote` (IN `idV` INT, IN `etat` TINYINT)  BEGIN 
+
+UPDATE vote SET valeurVote = etat
+WHERE idVote = idV;
+
 END$$
 
 DROP PROCEDURE IF EXISTS `modifRole`$$
@@ -303,6 +319,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `validerAtelierAdmin` (IN `id` INT) 
 UPDATE atelier
 SET atelier.validation = 1
 WHERE idAtelier = id;
+END$$
+
+DROP PROCEDURE IF EXISTS `voteIdee`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `voteIdee` (IN `idIdee` INT, IN `etat` TINYINT, IN `idUser` VARCHAR(32))  BEGIN 
+
+INSERT INTO vote (idUserVote, valeurVote, idIdee) VALUES ( idUser, etat, idIdee);
+
 END$$
 
 DELIMITER ;
@@ -654,9 +677,17 @@ CREATE TABLE IF NOT EXISTS `vote` (
   `valeurVote` tinyint(4) NOT NULL,
   `idIdee` int(11) NOT NULL,
   PRIMARY KEY (`idVote`),
-  UNIQUE KEY `idUserVote` (`idUserVote`),
-  UNIQUE KEY `idIdee` (`idIdee`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  KEY `idUserVote` (`idUserVote`) USING BTREE,
+  KEY `idIdee` (`idIdee`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Déchargement des données de la table `vote`
+--
+
+INSERT INTO `vote` (`idVote`, `idUserVote`, `valeurVote`, `idIdee`) VALUES
+(1, 'HE000000', 1, 6),
+(7, 'HE000000', 0, 1);
 
 --
 -- Contraintes pour les tables déchargées

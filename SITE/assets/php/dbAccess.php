@@ -74,6 +74,8 @@ class dbAccess
             case 'checkSiDejaCandidat':
             case 'modifRole':
             case 'checkAtelierUser':
+            case 'checkUserIdee':
+            case 'modifEtatVote':    
                 array_push($params, '?', '?');
 
                 try {
@@ -89,7 +91,25 @@ class dbAccess
         }
 
         switch ($nomProcedure) {
+            case 'voteIdee':
+
+                array_push($params, '?', '?', '?');
+
+                try {
+                    $this->connexionDB();
+                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
+                    $requete = $this->pdo->prepare($procedureCall);
+                    $requete->execute($procParams);
+                    return $requete->fetchAll();
+                } catch (Exception $e) {
+                    die("Erreur :" . $e->getMessage());
+                }
+                break;
+        }
+
+        switch ($nomProcedure) {
             case 'ajoutIdee':
+
                 array_push($params, '?', '?', '?', '?');
 
                 try {

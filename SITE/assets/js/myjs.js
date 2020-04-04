@@ -1434,6 +1434,9 @@ function afficheAllIdee(tab) {
             retIdee += '<td>' + tab[i]['userIdee'] + '</td>';
             retIdee += '<td>' + tab[i]['nomIdee'] + '</td>';
             retIdee += '<td>' + tab[i]['sujetIdee'] + '</td>';
+            retIdee += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\''+ '0' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
+            retIdee += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
+            retIdee += '<td>' +  + '</td>';
             retIdee += '</tr>';
             index++;
         }
@@ -1443,6 +1446,9 @@ function afficheAllIdee(tab) {
             retIdee2 += '<td>' + tab[i]['userIdee'] + '</td>';
             retIdee2 += '<td>' + tab[i]['nomIdee'] + '</td>';
             retIdee2 += '<td>' + tab[i]['sujetIdee'] + '</td>';
+            retIdee2 += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\''+ '0' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
+            retIdee2 += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
+            retIdee2 += '<td>' +  + '</td>';
             retIdee2 += '</tr>';
             index2++;
         }
@@ -1453,4 +1459,36 @@ function afficheAllIdee(tab) {
     paginationIdeeEtu(index);
     paginationIdeeProf(index2);
 
+}
+
+function pourIdee(idIdee, etat, idUser){
+        $.ajax({
+            url: "assets/php/voteIdee.php",
+            type: "POST",
+            data: {
+                "idIdee": idIdee,
+                "etat": etat,
+                "idUser": idUser
+            },
+            datatype: "json",
+            success: function (response) {
+              console.log(response);
+            }
+        });
+}
+
+function contreIdee(idIdee, etat, idUser){
+    $.ajax({
+        url: "assets/php/voteIdee.php",
+        type: "POST",
+        data: {
+            "idIdee": idIdee,
+            "etat": etat,
+            "idUser": idUser
+        },
+        datatype: "json",
+        success: function (response) {
+          console.log(response);
+        }
+    });
 }
