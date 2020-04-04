@@ -121,10 +121,10 @@ function gestionDroits() {
     $('#contentAdminPage').load('assets/inc/admin/droitUtilisateur.php');
 }
 
-function sondage() {
+function propIdee() {
     removeClassActiveAdmin();
-    addClassActive('sondage');
-    $('#contentAdminPage').load('assets/inc/admin/sondage.php');
+    addClassActive('propIdee');
+    $('#contentAdminPage').load('assets/inc/admin/propIdee.php');
 }
 
 
@@ -876,7 +876,7 @@ function downloadPDF(id){
         },
         datatype: "json",
         success: function (response) {
-            window.location.replace("http://localhost:8878/ProjetWeb2019-2020/SITE/assets/php/pdfCreator.php?id=" +id);
+            window.location.replace("http://localhost/ProjetWeb2019-2020/SITE/assets/php/pdfCreator.php?id=" +id);
         }
     });
 }
@@ -1327,4 +1327,22 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier,duree) {
             }
         });
     }
+}
+
+/////////////////////////////////////////BOITE IDEE/////////////////////////////////////////
+
+function addIdee(nom, sujet, idUser){
+    $.ajax({
+        url: "assets/php/ajoutIdeeEtudiant.php",
+        type: "POST",
+        data: {
+            "nom": nom,
+            "sujet": sujet,
+            "idUser": idUser
+        },
+        datatype: "json",
+        success: function (response) {
+          console.log(response);
+        }
+    });
 }

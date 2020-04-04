@@ -8,7 +8,7 @@ class dbAccess
     public function connexionDB()
     {
         try {
-            $this->pdo = new PDO("mysql:host=localhost;dbname=projetweb;charset=utf8", "root", "root");
+            $this->pdo = new PDO("mysql:host=localhost:3308;dbname=projetweb;charset=utf8", "root", "root");
         } catch (Exception $e) {
             die("Erreur :" . $e->getMessage());
         }
@@ -74,6 +74,22 @@ class dbAccess
             case 'modifRole':
             case 'checkAtelierUser':
                 array_push($params, '?', '?');
+
+                try {
+                    $this->connexionDB();
+                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
+                    $requete = $this->pdo->prepare($procedureCall);
+                    $requete->execute($procParams);
+                    return $requete->fetchAll();
+                } catch (Exception $e) {
+                    die("Erreur :" . $e->getMessage());
+                }
+                break;
+        }
+
+        switch ($nomProcedure) {
+            case 'ajoutIdeeEtudiant':
+                array_push($params, '?', '?', '?', '?');
 
                 try {
                     $this->connexionDB();

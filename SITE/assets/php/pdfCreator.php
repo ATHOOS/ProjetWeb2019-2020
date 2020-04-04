@@ -44,4 +44,4 @@ $pdf->Cell(0,10,$recupUnAtelier[0]{'date'},0,1);
 $pdf->Cell(0,10,$recupUnAtelier[0]{'animateur'},0,1);
 $pdf->Cell(0,10,$recupUnAtelier[0]{'sujet'},0,1);
 
-$pdf->Output();
+$pdf->Output('I','contrat'.$recupUnAtelier[0]{'animateur'}.'.pdf');
