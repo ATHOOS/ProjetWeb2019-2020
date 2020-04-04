@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 04 avr. 2020 à 17:07
+-- Généré le :  sam. 04 avr. 2020 à 19:27
 -- Version du serveur :  5.7.28
 -- Version de PHP :  7.3.12
 
@@ -288,6 +288,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `recupUsers` ()  BEGIN
 
 SELECT matricule, prenom, nom, mail, administration FROM user;
 
+END$$
+
+DROP PROCEDURE IF EXISTS `recupVoteContre`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupVoteContre` (IN `idIde` INT)  BEGIN
+SELECT COUNT(DISTINCT vote.idVote) FROM vote
+WHERE vote.idIdee = idIde AND valeurVote = 1
+GROUP BY vote.idVote;
+END$$
+
+DROP PROCEDURE IF EXISTS `recupVotePour`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `recupVotePour` (IN `idIde` INT)  BEGIN
+SELECT COUNT(DISTINCT vote.idVote) FROM vote
+WHERE vote.idIdee = idIde AND valeurVote = 0
+GROUP BY vote.idVote;
 END$$
 
 DROP PROCEDURE IF EXISTS `retirerCandidature`$$
@@ -679,15 +693,17 @@ CREATE TABLE IF NOT EXISTS `vote` (
   PRIMARY KEY (`idVote`),
   KEY `idUserVote` (`idUserVote`) USING BTREE,
   KEY `idIdee` (`idIdee`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `vote`
 --
 
 INSERT INTO `vote` (`idVote`, `idUserVote`, `valeurVote`, `idIdee`) VALUES
-(1, 'HE000000', 1, 6),
-(7, 'HE000000', 0, 1);
+(1, 'HE000000', 0, 6),
+(7, 'HE000000', 0, 1),
+(8, 'HE000000', 0, 4),
+(9, 'HE000000', 1, 5);
 
 --
 -- Contraintes pour les tables déchargées
