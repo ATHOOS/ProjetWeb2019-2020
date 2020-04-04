@@ -1331,9 +1331,25 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier,duree) {
 
 /////////////////////////////////////////BOITE IDEE/////////////////////////////////////////
 
-function addIdee(nom, sujet, idUser){
+function addIdeeEtudiant(nom, sujet, idUser){
     $.ajax({
         url: "assets/php/ajoutIdeeEtudiant.php",
+        type: "POST",
+        data: {
+            "nom": nom,
+            "sujet": sujet,
+            "idUser": idUser
+        },
+        datatype: "json",
+        success: function (response) {
+          console.log(response);
+        }
+    });
+}
+
+function addIdeeProfesseur(nom, sujet, idUser){
+    $.ajax({
+        url: "assets/php/ajoutIdeeProf.php",
         type: "POST",
         data: {
             "nom": nom,

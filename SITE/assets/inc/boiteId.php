@@ -117,7 +117,7 @@ $_SESSION['pageActuel'] = 'boiteId.php';
                 <option value="Electro-mécanique">Electro-mécanique</option>
                 <option value="Droit">Droit</option>
             </select>
-            <button onclick="addIdee($('#newIdeeStudent').val(), $('#sujetNewIdeeStudent').val(),'<?= $_SESSION['matricule'] ?>' )">Proposer mon idée</button>
+            <button onclick="addIdeeEtudiant($('#newIdeeStudent').val(), $('#sujetNewIdeeStudent').val(),'<?= $_SESSION['matricule'] ?>' )">Proposer mon idée</button>
         </div>
     </div>
 

@@ -6,8 +6,8 @@ $db = new dbAccess();
 $nom = htmlspecialchars($_POST['nom']);
 $sujet = htmlspecialchars($_POST['sujet']);
 $idUser = htmlspecialchars($_POST['idUser']);
-$admin = 0;
+$admin = 1;
 
 
 
-$ajoutIdeeEtudiant = $db->callProcedure('ajoutIdee',[$nom,$sujet,$idUser,$admin]);
+$ajoutIdeeProf = $db->callProcedure('ajoutIdee',[$nom,$sujet,$idUser,$admin]);

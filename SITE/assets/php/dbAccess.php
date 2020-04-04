@@ -88,7 +88,7 @@ class dbAccess
         }
 
         switch ($nomProcedure) {
-            case 'ajoutIdeeEtudiant':
+            case 'ajoutIdee':
                 array_push($params, '?', '?', '?', '?');
 
                 try {
