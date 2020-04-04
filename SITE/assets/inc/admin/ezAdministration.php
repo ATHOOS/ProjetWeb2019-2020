@@ -244,9 +244,6 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
                 <a href="#" id="droit" onclick="gestionDroits()">Gestion des droits</a>
               </li>
               <li>
-                <a href="#" id="contrat" onclick="generationContrats()">Génération de contrat</a>
-              </li>
-              <li>
                 <a href="#" id="sondage" onclick="sondage()">Sondage</a>
               </li>
             </ul>

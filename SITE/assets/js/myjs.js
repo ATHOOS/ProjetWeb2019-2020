@@ -121,12 +121,6 @@ function gestionDroits() {
     $('#contentAdminPage').load('assets/inc/admin/droitUtilisateur.php');
 }
 
-function generationContrats() {
-    removeClassActiveAdmin();
-    addClassActive('contrat');
-    $('#contentAdminPage').load('assets/inc/admin/generationContrat.php');
-}
-
 function sondage() {
     removeClassActiveAdmin();
     addClassActive('sondage');
