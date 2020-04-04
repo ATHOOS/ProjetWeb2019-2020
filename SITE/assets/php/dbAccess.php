@@ -22,6 +22,7 @@ class dbAccess
             case 'checkNbAteliers':
             case 'affichageAteliersAnimateur':
             case 'recupUsers':
+            case 'recupAllIdee':
                 array_push($params);
 
                 try {

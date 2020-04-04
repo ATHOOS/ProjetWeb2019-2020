@@ -5,6 +5,7 @@ function removeClassActive() {
     $('#navWorkshops').removeClass('active');
     $('#navBoiteId').removeClass('active');
     $('#navProfil').removeClass('active');
+    $('#navAdmin').removeClass('active');
 
 }
 
@@ -1361,4 +1362,95 @@ function addIdeeProfesseur(nom, sujet, idUser){
           console.log(response);
         }
     });
+}
+
+function paginationIdeeEtu(nAt) {
+    var limitePage = 5;
+    var nbPages = Math.ceil(nAt / limitePage);
+    removeClassActive();
+    addClassActive('navBoiteId');
+    $("#listeIdeesEtudiants .lignes:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationnIdeesEtudiants").append("<li class='page-item active current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationnIdeesEtudiants").append("<li class='page-item current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationnIdeesEtudiants li").removeClass("active");
+            $(this).addClass("active");
+            $(".lignes").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#listeIdeesEtudiants .lignes:eq(" + i + ")").show();
+            }
+        }
+
+
+    })
+
+}
+
+function paginationIdeeProf(nAt) {
+    var limitePage = 5;
+    var nbPages = Math.ceil(nAt / limitePage);
+    removeClassActive();
+    addClassActive('navBoiteId');
+    $("#paginationnIdeesProfs .lignes2:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationnIdeesProfs").append("<li class='page-item active current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationnIdeesProfs").append("<li class='page-item current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationnIdeesProfs li").removeClass("active");
+            $(this).addClass("active");
+            $(".lignes2").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#paginationnIdeesProfs .lignes2:eq(" + i + ")").show();
+            }
+        }
+
+
+    })
+
+}
+
+function afficheAllIdee(tab) {
+    retIdee = "";
+    retIdee2 = "";
+    var index = 1;
+    var index2 = 1;
+    for (i = 0; i < tab.length; i++) {
+        if(tab[i]['adminIdee'] === '0'){
+            retIdee += '<tr class="lignes">';
+            retIdee += '<td>' + index + '</td>';
+            retIdee += '<td>' + tab[i]['userIdee'] + '</td>';
+            retIdee += '<td>' + tab[i]['nomIdee'] + '</td>';
+            retIdee += '<td>' + tab[i]['sujetIdee'] + '</td>';
+            retIdee += '</tr>';
+            index++;
+        }
+        if(tab[i]['adminIdee'] === '1'){
+            retIdee2 += '<tr class="lignes2">';
+            retIdee2 += '<td>' + index2 + '</td>';
+            retIdee2 += '<td>' + tab[i]['userIdee'] + '</td>';
+            retIdee2 += '<td>' + tab[i]['nomIdee'] + '</td>';
+            retIdee2 += '<td>' + tab[i]['sujetIdee'] + '</td>';
+            retIdee2 += '</tr>';
+            index2++;
+        }
+        
+    }
+    $('#listeIdeesEtudiants').append(retIdee);
+    $('#listeIdeesProfs').append(retIdee2);
+    paginationIdeeEtu(index);
+    paginationIdeeProf(index2);
+
 }

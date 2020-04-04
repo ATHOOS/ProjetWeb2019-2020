@@ -1,6 +1,7 @@
 <?php
 session_start();
 $_SESSION['pageActuel'] = 'boiteId.php';
+include '../php/recupAllIdee.php';
 ?>
 
 <script>
@@ -49,6 +50,7 @@ $_SESSION['pageActuel'] = 'boiteId.php';
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Proposition de</th>
                         <th>Titre</th>
                         <th>Sujet</th>
                         <th>Voter oui</th>
@@ -60,9 +62,13 @@ $_SESSION['pageActuel'] = 'boiteId.php';
 
                 </tbody>
             </table>
-            <div class="clearfix">
-                <ul class="paginationnIdeesProfs">
-                </ul>
+            <div class="row text-center mb-7">
+                <div class="col-lg-1 mx-auto">
+                    <br>
+                    <div class="paginationnIdeesProfs">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -81,6 +87,7 @@ $_SESSION['pageActuel'] = 'boiteId.php';
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Proposition de</th>
                         <th>Titre</th>
                         <th>Sujet</th>
                         <th>Voter oui</th>
@@ -92,9 +99,13 @@ $_SESSION['pageActuel'] = 'boiteId.php';
 
                 </tbody>
             </table>
-            <div class="clearfix">
-                <ul class="paginationnIdeesEtudiants">
-                </ul>
+            <div class="row text-center mb-7">
+                <div class="col-lg-1 mx-auto">
+                    <br>
+                    <div class="paginationnIdeesEtudiants">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -124,7 +135,10 @@ $_SESSION['pageActuel'] = 'boiteId.php';
 
 
 </main>
-
+<script>
+        var allIdee =  <?= $recupAllIdee ?>;
+        afficheAllIdee(allIdee);
+</script>
 <?php
 if (!isset($_SESSION['matricule'])) {
     echo ("<script> connexion(); </script>");
