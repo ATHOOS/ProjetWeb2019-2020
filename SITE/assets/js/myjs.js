@@ -280,14 +280,14 @@ function ajoutAtelier() {
     let a = 1;
     let currentDate = new Date();
     event.preventDefault();
-    if ($('#workshop_nom').val() == '') {
+    if (($('#workshop_nom').val() == '') || ($('#workshop_nom').val().indexOf('"') != -1)) {
         $('#workshopNomError').show();
         a = 0;
     } else {
         $('#workshopNomError').hide();
     }
 
-    if ($('#workshop_desc').val() == '') {
+    if (($('#workshop_desc').val() == '') || ($('#workshop_desc').val.indexOf('"') != -1)) {
         $('#workshopDescError').show();
         a = 0;
     } else {
@@ -478,13 +478,13 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<a>';
                 ret += '<h5 class="mt-0 font-weight-bold mb-2" onclick="loadWorkshop('
                     + indexAtelier + ','
-                    + '\'' + tab[i]['nom'] + '\','
-                    + '\'' + tab[i]['description'] + '\','
-                    + '\'' + tab[i]['date'] + '\','
-                    + '\'' + tab[i]['nbrPlaces'] + '\','
-                    + '\'' + tab[i]['sujet'] + '\','
-                    + '\'' + tab[i]['idAtelier'] + '\','
-                    + '\'' + tab[i]['duree'] +'\');">'
+                    + '\"' + tab[i]['nom'] + '\",'
+                    + '\"' + tab[i]['description'] + '\",'
+                    + '\"' + tab[i]['date'] + '\",'
+                    + '\"' + tab[i]['nbrPlaces'] + '\",'
+                    + '\"' + tab[i]['sujet'] + '\",'
+                    + '\"' + tab[i]['idAtelier'] + '\",'
+                    + '\"' + tab[i]['duree'] +'\");">'
                     + tab[i]['nom'] + '</h5>';
                 ret += ' </a>';
                 ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
