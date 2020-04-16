@@ -9,12 +9,11 @@ $_SESSION['pageActuel']='accueil.php';
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1">
-                    <h1>Bettter digital experience with Ninestars</h1>
-                    <h2>We are team of talanted designers making websites with Bootstrap</h2>
-                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                    <h1>Ephec Workshops</h1>
+                    <h2>Partagez votre expérience, assistez à des ateliers, donnez votre avis !</h2>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img">
-                    <img src="assets/img/hero-img.svg" class="img-fluid animated" alt="">
+                    <img src="assets/img/ephec.png"  alt="logoEphec">
                 </div>
             </div>
         </div>
@@ -29,25 +28,24 @@ $_SESSION['pageActuel']='accueil.php';
 
                 <div class="row justify-content-between">
                     <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
-                        <img src="assets/img/about-img.svg" class="img-fluid" alt="" data-aos="zoom-in">
+                        <img src="assets/img/shutterstock_421087330.jpg" class="img-fluid" alt="" data-aos="zoom-in">
                     </div>
                     <div class="col-lg-6 pt-5 pt-lg-0">
                         <h3 data-aos="fade-up">Qu'est ce que c'est ?</h3>
                         <p data-aos="fade-up" data-aos-delay="100">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                            Ephec Workshop est une plateforme d'échange entre étudiants désireux de partager leurs expériences. 
                         </p>
                         <div class="row">
                             <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
                                 <i class="bx bx-receipt"></i>
-                                <h4>Corporis voluptates sit</h4>
-                                <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip
+                                <h4>Animation</h4>
+                                <p>Des étudiants peuvent proposer des ateliers qu'ils animeront eux-mêmes.
                                 </p>
                             </div>
                             <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
                                 <i class="bx bx-cube-alt"></i>
-                                <h4>Ullamco laboris nisi</h4>
-                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                <h4>Participation</h4>
+                                <p>Et d'autres étudiants peuvent s'inscrirent à ces ateliers et y participer.
                                 </p>
                             </div>
                         </div>

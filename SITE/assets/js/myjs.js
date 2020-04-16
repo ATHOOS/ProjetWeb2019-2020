@@ -492,7 +492,7 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
                 ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>'; ret += '</div>';
                 ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; ret += '</div>';
-                ret += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+                ret += '</div>';
                 ret += '</div>';
                 ret += '</li>';
                 nbAteliers++;
@@ -540,7 +540,7 @@ function filtrerAtelier(sujet, tab) {
                 ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
                 ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; ret += '</div>';
                 ret2 += '</div>';
-                ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+                ret2 += '</div>';
                 ret2 += '</div>';
                 ret2 += '</li>';
                 nbAteliers2++;
@@ -944,7 +944,7 @@ function workshopParticipe(tab) {
             ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
             ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
             ret2 += '</div>';
-            ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+            ret2 += '</div>';
             ret2 += '</div>';
             ret2 += '</li>';
             nbAtelierParticipe++;
@@ -1056,7 +1056,7 @@ function mesWorkshops(tab) {
         ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
         ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
         ret2 += '</div>';
-        ret2 += '</div><img src="https://res.cloudinary.com/mhmd/image/upload/v1556485076/shoes-1_gthops.jpg" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">';
+        ret2 += '</div>';
         ret2 += '</div>';
         ret2 += '</li>';
         nbMesAteliers++;

@@ -48,6 +48,7 @@ class dbAccess
             case 'recupPlacesDispo':
             case 'recupVotePour':
             case 'recupVoteContre':
+            case 'checkCategorie':
                 array_push($params, '?');
 
                 try {
