@@ -46,6 +46,7 @@ include '../../php/recupAllIdee.php';
                     </div>
                 </div>
             </div>
+            <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -63,6 +64,7 @@ include '../../php/recupAllIdee.php';
 
                 </tbody>
             </table>
+            </div>
             <div class="row text-center mb-7">
                 <div class="col-lg-1 mx-auto">
                     <br>
@@ -84,6 +86,7 @@ include '../../php/recupAllIdee.php';
                     </div>
                 </div>
             </div>
+            <div class="table-responsive-sm">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -101,6 +104,7 @@ include '../../php/recupAllIdee.php';
 
                 </tbody>
             </table>
+            </div>
             <div class="row text-center mb-7">
                 <div class="col-lg-1 mx-auto">
                     <br>

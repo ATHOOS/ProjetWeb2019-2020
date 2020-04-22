@@ -62,7 +62,6 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               </p>
             </div>
-
       </div>
     </nav>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -71,9 +70,6 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
         <button type="button" id="sidebarCollapse" class="btn btn-primary">
           <i class="fa fa-bars"></i>
           <span class="sr-only">Toggle Menu</span>
-        </button>
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fa fa-bars"></i>
         </button>
 
       </div>
@@ -94,7 +90,7 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
 
   <script src="assets/inc/admin/js/popper.js"></script>
   <script src="assets/inc/admin/js/main.js"></script>
-  <script>                
+  <script>
     removeClassActive();
     addClassActive('navAdmin');
   </script>
