@@ -22,6 +22,7 @@ class dbAccess
             case 'checkNbAteliers':
             case 'affichageAteliersAnimateur':
             case 'recupUsers':
+            case 'recupAllIdee':
                 array_push($params);
 
                 try {
@@ -45,6 +46,9 @@ class dbAccess
             case 'mesWorkshops':
             case 'recupUnAtelier':
             case 'recupPlacesDispo':
+            case 'recupVotePour':
+            case 'recupVoteContre':
+            case 'checkCategorie':
                 array_push($params, '?');
 
                 try {
@@ -73,7 +77,43 @@ class dbAccess
             case 'checkSiDejaCandidat':
             case 'modifRole':
             case 'checkAtelierUser':
+            case 'checkUserIdee':
+            case 'modifEtatVote':    
                 array_push($params, '?', '?');
+
+                try {
+                    $this->connexionDB();
+                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
+                    $requete = $this->pdo->prepare($procedureCall);
+                    $requete->execute($procParams);
+                    return $requete->fetchAll();
+                } catch (Exception $e) {
+                    die("Erreur :" . $e->getMessage());
+                }
+                break;
+        }
+
+        switch ($nomProcedure) {
+            case 'voteIdee':
+
+                array_push($params, '?', '?', '?');
+
+                try {
+                    $this->connexionDB();
+                    $procedureCall = 'call ' . $nomProcedure . '(' . join(',', $params) . ')';
+                    $requete = $this->pdo->prepare($procedureCall);
+                    $requete->execute($procParams);
+                    return $requete->fetchAll();
+                } catch (Exception $e) {
+                    die("Erreur :" . $e->getMessage());
+                }
+                break;
+        }
+
+        switch ($nomProcedure) {
+            case 'ajoutIdee':
+
+                array_push($params, '?', '?', '?', '?');
 
                 try {
                     $this->connexionDB();
@@ -103,10 +143,11 @@ class dbAccess
                 break;
         }
 
+
         switch ($nomProcedure) {
             case 'ajoutAtelier':
             case 'modifAtelier':
-                array_push($params, '?', '?', '?', '?', '?', '?');
+                array_push($params, '?', '?', '?', '?', '?', '?', '?');
 
                 try {
                     $this->connexionDB();

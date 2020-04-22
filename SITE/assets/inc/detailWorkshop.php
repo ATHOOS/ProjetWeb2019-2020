@@ -6,7 +6,7 @@ include "../php/checkSiDejaDansAtelier.php";
 include '../php/checkSiAnimateur.php';
 include '../php/checkSiAnnule.php';
 include '../php/checkSiDejaCandidat.php';
-var_dump($recupPlacesDispo);
+include '../php/checkCategorie.php'
 ?>
 
 <script>
@@ -27,7 +27,28 @@ var_dump($recupPlacesDispo);
     <div class="row">
 
       <div class="col-md-8">
-        <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+        <?php switch($checkCategorie[0]{'sujet'}) {
+          case 'Comptabilité':?>
+          <img class="img-fluid" src="assets/img/comptabilite.jpg">
+        <?php
+          break;
+          case "Droit":?>
+          <img class="img-fluid" src="assets/img/droit.jpg">
+        <?php
+          break;
+          case "Informatique":?>
+            <img class="img-fluid" src="assets/img/informatique.jpg">
+        <?php
+          break;
+          case "Marketing":?>
+            <img class="img-fluid" src="assets/img/marketing.jpg">
+        <?php
+          break;
+          case "Electro-Mecanique":?>
+            <img class="img-fluid" src="assets/img/mecanique.jpg">
+        <?php
+        break;
+        }?>
       </div>
 
       <div class="col-md-4">
@@ -38,6 +59,8 @@ var_dump($recupPlacesDispo);
           <li id="date"></li>
           <li id="heure"></li>
         </ul>
+        <h3 class="my-3">Duree de l'atelier</h3>
+        <p id="duree"></p>
         <div style="display:none">
           <h3 class="my-3">Places dispos</h3>
           <p id="places"></p>

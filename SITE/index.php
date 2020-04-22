@@ -106,10 +106,10 @@ session_start();
           <div class="col-lg-3 col-md-6 footer-contact" id="contact" data-aos="fade-up" data-aos-delay="100">
             <h3>EPHEC Workshops</h3>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
+              Avenue du Ciseau 15<br>
+              1348, Ottignies-Louvain-la-Neuve<br>
+              Belgique<br><br>
+              <strong>Téléphone:</strong> +32 10475390<br>
               <strong>Email:</strong> info@example.com<br>
             </p>
           </div>

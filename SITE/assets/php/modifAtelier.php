@@ -10,11 +10,12 @@ $date = htmlspecialchars($_POST["date"]);
 $nb = htmlspecialchars($_POST["nomb"]);
 $sujet = htmlspecialchars($_POST["sujet"]);
 $idAtelier = htmlspecialchars($_POST["idAtelier"]);
+$duree = htmlspecialchars($_POST["duree"]);
 
 $checkAtelierUser = $db->callProcedure('checkAtelierUser',[$idAtelier,$_SESSION['matricule']]);
 
 if(!empty($checkAtelierUser)){
-    $modifAtelier = $db->callProcedure('modifAtelier',[$idAtelier,$nom,$desc,$date,$nb,$sujet]);
+    $modifAtelier = $db->callProcedure('modifAtelier',[$idAtelier,$nom,$desc,$date,$nb,$sujet,$duree]);
 }else {
     echo json_encode('pasBon');
 }
