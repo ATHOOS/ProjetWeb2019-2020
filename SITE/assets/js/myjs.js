@@ -287,7 +287,7 @@ function ajoutAtelier() {
         $('#workshopNomError').hide();
     }
 
-    if (($('#workshop_desc').val() == '') || ($('#workshop_desc').val.indexOf('"') != -1)) {
+    if (($('#workshop_desc').val() == '') || ($('#workshop_desc').val().indexOf('"') != -1)) {
         $('#workshopDescError').show();
         a = 0;
     } else {
