@@ -12,23 +12,25 @@ include '../../php/listeAtelier.php';
                 </div>
             </div>
         </div>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Titre</th>
-                    <th>Sujet</th>
-                    <th>Animateur</th>
-                    <th>Date</th>
-                    <th>Valider l'atelier</th>
-                    <th>Annuler l'atelier</th>
-                    <th>Contrat</th>
-                </tr>
-            </thead>
-            <tbody id="listeAtelier">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Titre</th>
+                        <th>Sujet</th>
+                        <th>Animateur</th>
+                        <th>Date</th>
+                        <th>Valider l'atelier</th>
+                        <th>Annuler l'atelier</th>
+                        <th>Contrat</th>
+                    </tr>
+                </thead>
+                <tbody id="listeAtelier">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
         <div class="clearfix">
             <ul class="paginationn">
 
@@ -37,12 +39,12 @@ include '../../php/listeAtelier.php';
     </div>
 </div>
 <div id="popupAtelier">
-    
+
 </div>
 
 <script>
-        var allAteliers =  <?= $recupAtelier ?>;
-        afficheAllAteliers(allAteliers);             
-        removeClassActive();
-        addClassActive('navAdmin');
+    var allAteliers = <?= $recupAtelier ?>;
+    afficheAllAteliers(allAteliers);
+    removeClassActive();
+    addClassActive('navAdmin');
 </script>

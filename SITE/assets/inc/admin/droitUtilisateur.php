@@ -12,21 +12,23 @@ include '../../php/listeUsers.php';
                 </div>
             </div>
         </div>
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Prénom - Nom</th>
-                    <th>Matricule</th>
-                    <th>Rôle</th>
-                    <th>Valider changement</th>
-                    <th>Supprimer utilisateur</th>
-                </tr>
-            </thead>
-            <tbody id="listeUser">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Prénom - Nom</th>
+                        <th>Matricule</th>
+                        <th>Rôle</th>
+                        <th>Valider changement</th>
+                        <th>Supprimer utilisateur</th>
+                    </tr>
+                </thead>
+                <tbody id="listeUser">
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
         <div class="clearfix">
             <ul class="paginationn">
 
@@ -35,12 +37,12 @@ include '../../php/listeUsers.php';
     </div>
 </div>
 <div id="popup">
-    
+
 </div>
 
 <script>
-        var allUsers =  <?= $recupAllUsers ?>;
-        afficheAllUser(allUsers);
-        removeClassActive();
-        addClassActive('navAdmin');
+    var allUsers = <?= $recupAllUsers ?>;
+    afficheAllUser(allUsers);
+    removeClassActive();
+    addClassActive('navAdmin');
 </script>

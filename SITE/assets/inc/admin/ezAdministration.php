@@ -45,13 +45,13 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
             <ul class="collapse list-unstyled" id="homeSubmenu">
 
               <li>
-                <a href="#" id="annulation" onclick="annulationAtelier()">Gestion atelier</a>
+                <a href="#" id="annulation" class="sidebarCollapse" onclick="annulationAtelier()">Gestion atelier</a>
               </li>
               <li>
-                <a href="#" id="droit" onclick="gestionDroits()">Gestion des droits</a>
+                <a href="#" id="droit" class="sidebarCollapse" onclick="gestionDroits()">Gestion des droits</a>
               </li>
               <li>
-                <a href="#" id="propIdee" onclick="propIdee()">Proposer une idée d'atelier</a>
+                <a href="#" id="propIdee" class="sidebarCollapse" onclick="propIdee()">Proposer une idée d'atelier</a>
               </li>
             </ul>
 
@@ -64,19 +64,16 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
             </div>
       </div>
     </nav>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
 
-        <button type="button" id="sidebarCollapse" class="btn btn-primary">
-          <i class="fa fa-bars"></i>
-          <span class="sr-only">Toggle Menu</span>
-        </button>
 
-      </div>
-    </nav>
+
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
+      <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        <i class="fa fa-bars"></i>
+        <span class="sr-only">Toggle Menu</span>
+      </button>
       <div id='contentAdminPage'>
         <h2 class="mb-4">Bienvenue dans votre interface d'administration</h2>
         <p>

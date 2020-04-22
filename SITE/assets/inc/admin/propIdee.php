@@ -86,7 +86,7 @@ include '../../php/recupAllIdee.php';
                     </div>
                 </div>
             </div>
-            <div class="table-responsive-sm">
+            <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
