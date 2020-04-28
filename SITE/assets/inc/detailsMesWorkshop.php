@@ -7,6 +7,7 @@ include '../php/checkSiAnimateur.php';
 include '../php/checkSiAnnule.php';
 include '../php/checkSiDejaCandidat.php';
 include '../php/unAtelier.php';
+include '../php/checkCategorie.php';
 $nom = "'" . $recupUnAtelier[0]{'nom'} . "'";
 $desc ="'" . $recupUnAtelier[0]{'description'} . "'";
 $date ="'" . $recupUnAtelier[0]{'date'} . "'";
@@ -36,7 +37,28 @@ detailsWorkshop();
 <div class="row">
 
       <div class="col-md-8">
-        <img class="img-fluid" src="http://placehold.it/750x500" alt="">
+      <?php switch($checkCategorie[0]{'sujet'}) {
+          case 'Comptabilité':?>
+          <img class="img-fluid" src="assets/img/comptabilite.jpg">
+        <?php
+          break;
+          case "Droit":?>
+          <img class="img-fluid" src="assets/img/droit.jpg">
+        <?php
+          break;
+          case "Informatique":?>
+            <img class="img-fluid" src="assets/img/informatique.jpg">
+        <?php
+          break;
+          case "Marketing":?>
+            <img class="img-fluid" src="assets/img/marketing.jpg">
+        <?php
+          break;
+          case "Electro-Mecanique":?>
+            <img class="img-fluid" src="assets/img/mecanique.jpg">
+        <?php
+        break;
+        }?>
       </div>
 
       <div class="col-md-4">
