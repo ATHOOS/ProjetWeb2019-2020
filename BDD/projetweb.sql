@@ -2,9 +2,9 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3308
--- Généré le :  sam. 04 avr. 2020 à 19:27
--- Version du serveur :  5.7.28
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mar. 28 avr. 2020 à 16:00
+-- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -112,6 +112,14 @@ DROP PROCEDURE IF EXISTS `checkAtelierUser`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkAtelierUser` (IN `id` INT, IN `noma` VARCHAR(16))  BEGIN
 SELECT * FROM atelier
 WHERE atelier.idAtelier = id and atelier.animateur = noma;
+END$$
+
+DROP PROCEDURE IF EXISTS `checkCategorie`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkCategorie` (IN `id` INT)  BEGIN
+
+SELECT sujet FROM atelier 
+WHERE id = idAtelier;
+
 END$$
 
 DROP PROCEDURE IF EXISTS `checkConnexion`$$
@@ -353,18 +361,18 @@ DELIMITER ;
 DROP TABLE IF EXISTS `atelier`;
 CREATE TABLE IF NOT EXISTS `atelier` (
   `idAtelier` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `description` varchar(128) COLLATE utf8mb4_bin NOT NULL,
+  `nom` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `date` datetime NOT NULL,
   `nbrPlaces` int(11) NOT NULL,
-  `animateur` varchar(16) COLLATE utf8mb4_bin DEFAULT NULL,
-  `sujet` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `animateur` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `sujet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `validation` int(1) NOT NULL DEFAULT '0',
   `annulation` int(1) NOT NULL DEFAULT '0',
   `duree` time NOT NULL,
   PRIMARY KEY (`idAtelier`),
   KEY `animateur_fk` (`animateur`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Déchargement des données de la table `atelier`
@@ -372,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `atelier` (
 
 INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `animateur`, `sujet`, `validation`, `annulation`, `duree`) VALUES
 (20, 'Les variables PH', 'Atelier dans lequel nous verrons les variables dans le langage PHP', '2020-03-29 09:30:00', 21, 'HE201620', 'Informatique', 0, 1, '00:00:00'),
-(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-04-05 17:26:00', 20, 'HE201587', 'Droit', 1, 0, '00:00:00'),
+(22, 'Calcul de la TVA', 'Atelier sur le calcul de la taxe imposable ', '2020-04-05 17:26:00', 20, 'HE201587', 'Droit', 1, 1, '00:00:00'),
 (23, 'WAMP', 'Atelier sur l utilisation de WAMP ', '2021-02-08 17:50:00', 15, 'HE201587', 'Informatique', 0, 1, '00:00:00'),
 (24, 'Télétravail', 'Atelier sur les outils de télétravail, Teams, Discord, Google Meet, etc.', '2020-03-28 08:45:00', 50, 'HE201620', 'Marketing', 1, 0, '00:00:00'),
 (29, 'test', 'test', '2020-04-22 17:20:00', 1, 'HE201587', 'Comptabilité', 0, 0, '00:00:00'),
@@ -380,7 +388,8 @@ INSERT INTO `atelier` (`idAtelier`, `nom`, `description`, `date`, `nbrPlaces`, `
 (33, 'TESTDATE', 'TESTDATE', '2020-04-03 17:21:00', 6, 'HE201587', 'Comptabilité', 0, 0, '00:00:00'),
 (34, 'test', 'test', '2020-04-05 18:00:00', 5, 'HE201587', 'Comptabilité', 0, 0, '00:00:00'),
 (35, 'DETER', 'DETER', '2020-04-11 14:50:00', 2, 'HE201587', 'Comptabilité', 1, 0, '02:00:00'),
-(36, 'ChangementDuree', 'ChangementDuree', '2020-04-05 18:00:00', 50, 'HE777777', 'Marketing', 0, 0, '02:22:00');
+(36, 'ChangementDuree', 'ChangementDuree', '2020-04-05 18:00:00', 50, 'HE777777', 'Marketing', 0, 0, '02:22:00'),
+(43, 'test', 'testetetetetetetette', '2020-04-26 11:11:00', 11, 'HE201587', 'Comptabilité', 0, 0, '10:02:00');
 
 -- --------------------------------------------------------
 
@@ -414,8 +423,8 @@ INSERT INTO `candidat_atelier` (`idCandidat`, `idAtelier`) VALUES
 DROP TABLE IF EXISTS `forum`;
 CREATE TABLE IF NOT EXISTS `forum` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sujet` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `description` varchar(240) COLLATE utf8mb4_bin NOT NULL,
+  `sujet` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -436,8 +445,8 @@ INSERT INTO `forum` (`id`, `sujet`, `description`, `creation`) VALUES
 DROP TABLE IF EXISTS `idee`;
 CREATE TABLE IF NOT EXISTS `idee` (
   `idIdee` int(11) NOT NULL AUTO_INCREMENT,
-  `nomIdee` varchar(255) COLLATE utf8_bin NOT NULL,
-  `sujetIdee` varchar(255) COLLATE utf8_bin NOT NULL,
+  `nomIdee` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `sujetIdee` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `userIdee` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `adminIdee` tinyint(4) NOT NULL,
   PRIMARY KEY (`idIdee`),
@@ -462,7 +471,7 @@ INSERT INTO `idee` (`idIdee`, `nomIdee`, `sujetIdee`, `userIdee`, `adminIdee`) V
 
 DROP TABLE IF EXISTS `participant_atelier`;
 CREATE TABLE IF NOT EXISTS `participant_atelier` (
-  `idparticipant` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `idparticipant` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `idAtelier` int(11) NOT NULL,
   PRIMARY KEY (`idparticipant`,`idAtelier`),
   KEY `id_atelier_fk` (`idAtelier`)
@@ -492,9 +501,9 @@ DROP TABLE IF EXISTS `post_user`;
 CREATE TABLE IF NOT EXISTS `post_user` (
   `idPost` int(11) NOT NULL AUTO_INCREMENT,
   `forum` int(11) NOT NULL,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `creation` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `auteur` varchar(16) COLLATE utf8mb4_bin NOT NULL,
+  `auteur` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idPost`),
   KEY `post_user_forum_fk` (`forum`),
   KEY `post_user_user_fk` (`auteur`)
@@ -509,7 +518,7 @@ CREATE TABLE IF NOT EXISTS `post_user` (
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE IF NOT EXISTS `question` (
   `idQuestion` int(11) NOT NULL AUTO_INCREMENT,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idQuestion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -534,8 +543,8 @@ CREATE TABLE IF NOT EXISTS `reponse` (
   `idSondage` int(11) NOT NULL,
   `idQuestion` int(11) NOT NULL,
   `idReponseProposee` int(11) NOT NULL,
-  `idUser` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
+  `idUser` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idSondage`,`idQuestion`,`idReponseProposee`,`idUser`),
   KEY `reponse_user_fk` (`idUser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -549,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `reponse` (
 DROP TABLE IF EXISTS `reponseproposee`;
 CREATE TABLE IF NOT EXISTS `reponseproposee` (
   `idReponseProposee` int(11) NOT NULL AUTO_INCREMENT,
-  `texte` varchar(256) COLLATE utf8mb4_bin NOT NULL,
+  `texte` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`idReponseProposee`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
@@ -572,7 +581,7 @@ INSERT INTO `reponseproposee` (`idReponseProposee`, `texte`) VALUES
 DROP TABLE IF EXISTS `sondage`;
 CREATE TABLE IF NOT EXISTS `sondage` (
   `idSondage` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(256) COLLATE utf8mb4_bin NOT NULL,
+  `description` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `dateDebut` datetime NOT NULL,
   `dateFin` datetime NOT NULL,
   `ouvert` tinyint(1) NOT NULL,
@@ -653,11 +662,11 @@ INSERT INTO `sondage_question_reponse` (`idSondage`, `idQuestion`, `idReponsePro
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `matricule` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `nom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `prenom` varchar(16) COLLATE utf8mb4_bin NOT NULL,
-  `mail` varchar(32) COLLATE utf8mb4_bin NOT NULL,
-  `password` varchar(3000) COLLATE utf8mb4_bin NOT NULL,
+  `matricule` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `nom` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `prenom` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `mail` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `administration` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`matricule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -670,10 +679,9 @@ INSERT INTO `user` (`matricule`, `nom`, `prenom`, `mail`, `password`, `administr
 ('HE000000', 'Admin', 'Admin', 'admin@ephec.be', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 1),
 ('HE111111', 'Masson', 'Claude', 'Claude@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
 ('HE200101', 'Jean', 'DelaFOntaine', 'remy.vase3@hotmail.fr', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
+('HE201587', 'Vase', 'Remy', 'r.vase@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE201620', 'Chellé', 'Adrien', 'a.chelle@students.ephec.be', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
-('HE259374', 'Delvignes', 'Yves', 'Yves@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
-('HE267755', 'Dubruille', 'Xavier', 'xavier@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
+('HE267755', 'Dubruille', 'Xavier', 'xavier@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 1),
 ('HE654331', 'Bouterfa', 'Youssef', 'Youssef@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE675432', 'Schalkwijk', 'Laurent', 'Laurent@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0),
 ('HE777777', 'Van Dormael', 'Louis', 'Louis@hotmail.com', '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08', 0);
