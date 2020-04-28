@@ -490,9 +490,11 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>'; ret += '</div>';
-                ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; ret += '</div>';
+                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>'; 
+                ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; 
                 ret += '</div>';
+                ret += '</div>';
+                ret += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2">';
                 ret += '</div>';
                 ret += '</li>';
                 nbAteliers++;
@@ -538,9 +540,10 @@ function filtrerAtelier(sujet, tab) {
                 ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
                 ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
-                ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; ret += '</div>';
+                ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; 
+                ret2 += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
                 ret2 += '</div>';
-                ret2 += '</div>';
+                
                 ret2 += '</div>';
                 ret2 += '</li>';
                 nbAteliers2++;
