@@ -1346,7 +1346,7 @@ function addIdeeEtudiant(nom, sujet, idUser){
         },
         datatype: "json",
         success: function (response) {
-          console.log(response);
+            boiteId();
         }
     });
 }
@@ -1362,7 +1362,7 @@ function addIdeeProfesseur(nom, sujet, idUser){
         },
         datatype: "json",
         success: function (response) {
-          console.log(response);
+          propIdee();
         }
     });
 }
@@ -1530,10 +1530,13 @@ function pourIdee(idIdee, etat, idUser){
             },
             datatype: "json",
             success: function (response) {
-              console.log(response);
             }
         });
-        document.location.reload(true);
+        if(adminId === "0"){
+            boiteId();
+        }else{
+            propIdee();
+        }
 }
 
 function contreIdee(idIdee, etat, idUser){
@@ -1547,10 +1550,14 @@ function contreIdee(idIdee, etat, idUser){
         },
         datatype: "json",
         success: function (response) {
-          console.log(response);
         }
     });
-    document.location.reload(true);
+    
+    if(adminId === "0"){
+        boiteId();
+    }else{
+        propIdee();
+    }
 }
 
 function statIdee(idIdee){
@@ -1564,7 +1571,6 @@ function statIdee(idIdee){
         },
         datatype: "json",
         success: function (response) {
-          console.log(response);
           tmp = response;
         }   
     });
