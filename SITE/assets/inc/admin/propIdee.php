@@ -47,23 +47,23 @@ include '../../php/recupAllIdee.php';
                 </div>
             </div>
             <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Proposition de</th>
-                        <th>Titre</th>
-                        <th>Sujet</th>
-                        <th>Voter oui</th>
-                        <th>Voter non</th>
-                        <th>% avis</th>
-                        <th>Total avis</th>
-                    </tr>
-                </thead>
-                <tbody id="listeIdeesProfs">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Proposition de</th>
+                            <th>Titre</th>
+                            <th>Sujet</th>
+                            <th>Voter oui</th>
+                            <th>Voter non</th>
+                            <th>% avis</th>
+                            <th>Total avis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeIdeesProfs">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
             <div class="row text-center mb-7">
                 <div class="col-lg-1 mx-auto">
@@ -87,23 +87,23 @@ include '../../php/recupAllIdee.php';
                 </div>
             </div>
             <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Proposition de</th>
-                        <th>Titre</th>
-                        <th>Sujet</th>
-                        <th>Voter oui</th>
-                        <th>Voter non</th>
-                        <th>% avis</th>
-                        <th>Total avis</th>
-                    </tr>
-                </thead>
-                <tbody id="listeIdeesEtudiants">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Proposition de</th>
+                            <th>Titre</th>
+                            <th>Sujet</th>
+                            <th>Voter oui</th>
+                            <th>Voter non</th>
+                            <th>% avis</th>
+                            <th>Total avis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeIdeesEtudiants">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
             <div class="row text-center mb-7">
                 <div class="col-lg-1 mx-auto">
@@ -137,12 +137,17 @@ include '../../php/recupAllIdee.php';
             <button onclick="addIdeeProfesseur($('#newIdeeStudent').val(), $('#sujetNewIdeeStudent').val(),'<?= $_SESSION['matricule'] ?>' )">Proposer mon idée</button>
         </div>
     </div>
+    <div id="popup">
+
+    </div>
+</main>
 <script>
-        var allIdee =  <?= $recupAllIdee ?>;
-        var idUser = '<?= $_SESSION['matricule']; ?>';
-        afficheAllIdee(allIdee);
-        removeClassActive();
-        addClassActive('navAdmin');
+    var allIdee = <?= $recupAllIdee ?>;
+    var idUser = '<?= $_SESSION['matricule']; ?>';
+    adminId = '<?= $_SESSION['admin']; ?>';
+    afficheAllIdee(allIdee);
+    removeClassActive();
+    addClassActive('navAdmin');
 </script>
 
 

@@ -866,7 +866,7 @@ function annulerAtelierAdmin(id) {
         datatype: "json",
         success: function (response) {
             $('.modal-backdrop').remove();
-            annulationAtelier()
+            annulationAtelier();
         }
     });
 }
@@ -1425,6 +1425,51 @@ function paginationIdeeProf(nAt) {
 
 }
 
+function deleteIdee(id) {
+    $.ajax({
+        url: "assets/php/supprimerIdee.php",
+        type: "POST",
+        data: {
+            "id": id
+        },
+        datatype: "json",
+        success: function (response) {
+            $('.modal-backdrop').remove();
+            propIdee();
+        }
+    });
+}
+
+var retPopupIdee = "";
+
+function popupIdee(idIdee) {
+    retPopupIdee = "";
+    retPopupIdee += '<!--Modal: modalConfirmDelete-->'
+    retPopupIdee += '<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+    retPopupIdee += '<div class="modal-dialog modal-sm modal-notify modal-danger" role="document">'
+    retPopupIdee += '<!--Content-->'
+    retPopupIdee += '<div class="modal-content text-center">'
+    retPopupIdee += '<!--Header-->'
+    retPopupIdee += '<div class="modal-header d-flex justify-content-center">'
+    retPopupIdee += '<p class="heading">Etes vous sur de vouloir supprimer cette idée d\'atelier ?</p>'
+    retPopupIdee += '</div>'
+
+    retPopupIdee += '<!--Footer-->'
+    retPopupIdee += '<div class="modal-footer flex-center">'
+    retPopupIdee += '<button onclick="deleteIdee(' + '\'' + idIdee + '\'' + ')" class="btn" data-dismiss="modal" style="color:#eb5d1e">Oui</button>'
+    retPopupIdee += '<button class="btn" data-dismiss="modal" style="color:#eb5d1e">Non</button>'
+    retPopupIdee += '</div>'
+    retPopupIdee += '</div>'
+    retPopupIdee += '<!--/.Content-->'
+    retPopupIdee += '</div>'
+    retPopupIdee += '</div>'
+
+    $('#popup').append(retPopupIdee);
+}
+
+
+var adminId = '0';
+
 function afficheAllIdee(tab) {
     retIdee = "";
     retIdee2 = "";
@@ -1441,6 +1486,10 @@ function afficheAllIdee(tab) {
             retIdee += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
             retIdee += '<td>' + statIdee(tab[i]['idIdee']) + '</td>';
             retIdee += '<td>' + totalVote(tab[i]['idIdee']) + '</td>';
+            if(adminId === "0"){
+            }else{
+                retIdee += '<td><button onclick="popupIdee(' + '\'' + tab[i]['idIdee'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button></td>';
+            }
             retIdee += '</tr>';
             index++;
         }
@@ -1454,6 +1503,10 @@ function afficheAllIdee(tab) {
             retIdee2 += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
             retIdee2 += '<td>' + statIdee(tab[i]['idIdee']) + '</td>';
             retIdee2 += '<td>' + totalVote(tab[i]['idIdee']) + '</td>';
+            if(adminId === '0'){
+            }else{
+                retIdee2 += '<td><button onclick="popupIdee(' + '\'' + tab[i]['idIdee'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button></td>';
+            }
             retIdee2 += '</tr>';
             index2++;
         }
