@@ -8,7 +8,7 @@ class dbAccess
     public function connexionDB()
     {
         try {
-            $this->pdo = new PDO("mysql:host=localhost;dbname=projetweb;charset=utf8", "root", "root");
+            $this->pdo = new PDO("mysql:host=localhost:3308;dbname=projetweb;charset=utf8", "root", "");
         } catch (Exception $e) {
             die("Erreur :" . $e->getMessage());
         }
@@ -19,7 +19,6 @@ class dbAccess
         $params = array();
 
         switch ($nomProcedure) {
-            case 'checkNbAteliers':
             case 'affichageAteliersAnimateur':
             case 'recupUsers':
             case 'recupAllIdee':
