@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 include 'SITE/assets/php/dbAccess.php';
 
 class atelierUserTest extends TestCase {
-//Check si le pseudo et le mot de passe coincide bien avec une ligne de la BDD
+
     public function testSomething() {
         
         $idAtelierInvalide = "test";

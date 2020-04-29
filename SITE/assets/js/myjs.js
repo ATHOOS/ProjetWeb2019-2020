@@ -134,6 +134,7 @@ function propIdee() {
 //inscription
 
 function checkInscription() {
+    //si a = 1 pas d'erreur, si a = 0 erreur
     let a = 1;
     event.preventDefault();
     if ($('#matricule').val() == '') {
