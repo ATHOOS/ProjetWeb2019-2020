@@ -17,4 +17,7 @@ if(empty($checkConnexion)){
     $_SESSION['prenom'] = $checkConnexion[0]{'prenom'};
     $_SESSION['admin'] = $checkConnexion[0]{'administration'};
     echo json_encode($_SESSION['prenom']);
+    $_SESSION['pageActuel'] = 'profil.php';
 }
+
+header('Location: http://localhost/ProjetWeb2019-2020/SITE/');

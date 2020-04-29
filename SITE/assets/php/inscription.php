@@ -15,4 +15,6 @@ if(!empty($checkInscription)){
     echo json_encode("NomaOuMailDejaUse");
 } else{
     $envoi = $db->callProcedure('creationCompte',[$noma,$Nom,$Prenom,$email,$mdp]);
+    $_SESSION['pageActuel'] = "connexion.php";
+    header('Location: http://localhost/ProjetWeb2019-2020/SITE/');
 }

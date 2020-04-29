@@ -14,3 +14,7 @@ $Duree = htmlspecialchars($_POST['Duree']);
 echo json_encode($Animateur);
 
 $envoi = $db->callProcedure('ajoutAtelier',[$Nom,$Description,$Date,$Nombre_de_places,$Animateur,$Sujet,$Duree]);
+
+$_SESSION['pageActuel'] = "workshopsListe.php";
+
+header('Location: http://localhost/ProjetWeb2019-2020/SITE/');
