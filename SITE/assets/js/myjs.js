@@ -224,8 +224,12 @@ function checkInscription() {
 }
 
 function validateMatricule(matricule) {
-    var re = /HE\d\d\d\d\d\d/;
-    return re.test(matricule);
+    if (matricule.length === 8) {
+        var re = /HE\d\d\d\d\d\d/;
+        return re.test(matricule);
+    } else {
+        return false;
+    }
 }
 
 
