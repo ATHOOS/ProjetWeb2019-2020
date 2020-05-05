@@ -172,11 +172,19 @@ function checkInscription() {
 
     }
 
+
     if ($('#email').val() == '') {
         $('#nonEmail').show();
         a = 0;
     } else {
         $('#nonEmail').hide();
+    }
+
+    if (validateEmail($('#email').val()) === false) {
+        $('#emailInvalide').show();
+        a = 0;
+    } else {
+        $('#emailInvalide').hide();
     }
 
     if ($('#pass').val() == '') {
@@ -193,7 +201,7 @@ function checkInscription() {
         $('#nonRePassword').hide();
     }
 
-    if ($('#re_pass').val() !== $('#pass').val()) {
+    if (compareMdp($('#re_pass').val(),$('#pass').val()) === false) {
         $('#mdpNotSame').show();
         a = 0;
     } else {
@@ -223,10 +231,23 @@ function checkInscription() {
 
 }
 
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+
 function validateMatricule(matricule) {
     if (matricule.length === 8) {
         var re = /HE\d\d\d\d\d\d/;
         return re.test(matricule);
+    } else {
+        return false;
+    }
+}
+
+function compareMdp(premierMdp, deuxiemeMdp) {
+    if (premierMdp === deuxiemeMdp) {
+        return true;
     } else {
         return false;
     }
@@ -347,7 +368,7 @@ function ajoutAtelier() {
         minutes2 = (dateRecup).getMinutes();
     }
     var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
-    
+
 
     if ($('#workshop_date').val() == '') {
 
@@ -386,7 +407,7 @@ function ajoutAtelier() {
     }
 
     if (a === 1) {
-        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val(),'Duree': $('#workshop_duree').val()};
+        let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val(), 'Duree': $('#workshop_duree').val() };
         console.log(objectForm);
         $.ajax({
             url: "assets/php/ajoutAtelier.php",
@@ -469,9 +490,9 @@ function filtrerAtelier(sujet, tab) {
                     datatype: "json",
                     success: function (response) {
                         nbPlace = JSON.parse(response);
-                        if(nbPlace[0] === undefined){
+                        if (nbPlace[0] === undefined) {
                             test = 0;
-                        }else{
+                        } else {
                             test = nbPlace[0][0];
                         }
                     }
@@ -489,14 +510,14 @@ function filtrerAtelier(sujet, tab) {
                     + '\"' + tab[i]['nbrPlaces'] + '\",'
                     + '\"' + tab[i]['sujet'] + '\",'
                     + '\"' + tab[i]['idAtelier'] + '\",'
-                    + '\"' + tab[i]['duree'] +'\");">'
+                    + '\"' + tab[i]['duree'] + '\");">'
                     + tab[i]['nom'] + '</h5>';
                 ret += ' </a>';
                 ret += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
-                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>'; 
-                ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; 
+                ret += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
+                ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
                 ret += '</div>';
                 ret += '</div>';
                 ret += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2">';
@@ -515,11 +536,11 @@ function filtrerAtelier(sujet, tab) {
                     },
                     datatype: "json",
                     success: function (response) {
-                        
+
                         nbPlace = JSON.parse(response);
-                        if(nbPlace[0] === undefined){
+                        if (nbPlace[0] === undefined) {
                             test = 0;
-                        }else{
+                        } else {
                             test = nbPlace[0][0];
                         }
 
@@ -538,17 +559,17 @@ function filtrerAtelier(sujet, tab) {
                     + '\'' + tab[i]['nbrPlaces'] + '\','
                     + '\'' + tab[i]['sujet'] + '\','
                     + '\'' + tab[i]['idAtelier'] + '\','
-                    + '\'' + tab[i]['duree'] +'\');">'
+                    + '\'' + tab[i]['duree'] + '\');">'
                     + tab[i]['nom'] + '</h5>';
                 ret2 += ' </a>';
                 ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
                 ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
                 ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
-                ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>'; 
+                ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
                 ret2 += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
                 ret2 += '</div>';
-                
+
                 ret2 += '</div>';
                 ret2 += '</li>';
                 nbAteliers2++;
@@ -596,7 +617,7 @@ function paginationAtelier(nAt) {
     })
 
 }
-function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier,duree) {
+function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier, duree) {
     $('#content').load("assets/inc/detailWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
@@ -876,16 +897,16 @@ function annulerAtelierAdmin(id) {
     });
 }
 
-function downloadPDF(id){
+function downloadPDF(id) {
     $.ajax({
-        url: "assets/php/pdfCreator.php?id=" +id,
+        url: "assets/php/pdfCreator.php?id=" + id,
         type: "POST",
         data: {
             "id": id
         },
         datatype: "json",
         success: function (response) {
-            window.location.replace("http://localhost/ProjetWeb2019-2020/SITE/assets/php/pdfCreator.php?id=" +id);
+            window.location.replace("http://localhost/ProjetWeb2019-2020/SITE/assets/php/pdfCreator.php?id=" + id);
         }
     });
 }
@@ -923,9 +944,9 @@ function workshopParticipe(tab) {
                 datatype: "json",
                 success: function (response) {
                     nbPlace = JSON.parse(response);
-                    if(nbPlace[0] === undefined){
+                    if (nbPlace[0] === undefined) {
                         test = 0;
-                    }else{
+                    } else {
                         test = nbPlace[0][0];
                     }
                 }
@@ -943,7 +964,7 @@ function workshopParticipe(tab) {
                 + '\'' + tab[i]['nbrPlaces'] + '\','
                 + '\'' + tab[i]['sujet'] + '\','
                 + '\'' + tab[i]['idAtelier'] + '\','
-                + '\'' + tab[i]['duree'] +'\');">'
+                + '\'' + tab[i]['duree'] + '\');">'
                 + tab[i]['nom'] + '</h5>';
             ret2 += ' </a>';
             ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
@@ -994,7 +1015,7 @@ function paginationAtelierParticipe(nAt) {
     })
 
 }
-function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier,duree) {
+function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier, duree) {
     $('#content').load("assets/inc/detailWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
@@ -1034,9 +1055,9 @@ function mesWorkshops(tab) {
             datatype: "json",
             success: function (response) {
                 nbPlace = JSON.parse(response);
-                if(nbPlace[0] === undefined){
+                if (nbPlace[0] === undefined) {
                     test = 0;
-                }else{
+                } else {
                     test = nbPlace[0][0];
                 }
             }
@@ -1055,7 +1076,7 @@ function mesWorkshops(tab) {
             + '\'' + tab[i]['nbrPlaces'] + '\','
             + '\'' + tab[i]['sujet'] + '\','
             + '\'' + tab[i]['idAtelier'] + '\','
-            + '\'' + tab[i]['duree'] +'\');">'
+            + '\'' + tab[i]['duree'] + '\');">'
             + tab[i]['nom'] + '</h5>';
         ret2 += ' </a>';
         ret2 += '<p class="font-italic text-muted mb-0 small">' + tab[i]['description'] + '</p>';
@@ -1105,7 +1126,7 @@ function paginationMesAteliers(nAt) {
     })
 
 }
-function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier,duree) {
+function loadMesWorkshop(i, nom, desc, date2, nb, sujet, idAtelier, duree) {
     $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
     tnom = nom;
     tdesc = desc;
@@ -1126,14 +1147,14 @@ var tnbModif;
 var tsujetModif;
 var tdureeModif;
 
-function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier,duree) {
+function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier, duree) {
     $('#content').load("assets/inc/modifWorkshop.php?i=" + idAtelier);
     tnomModif = nom;
     tdescModif = desc;
     tdateModif = date2;
     tnbModif = nb;
     tsujetModif = sujet;
-    tdureeModif= duree;
+    tdureeModif = duree;
 }
 
 function afficheInput() {
@@ -1165,31 +1186,31 @@ function afficheInput() {
     dateModif = '<input id="dateModifWork" type="datetime-local" value="' + date + '"/>';
     nbModif = '<input id="nbPlaceModifWork" "type="text" value="' + tnbModif + '"/>';
     sujetModif = '<select name="workshop_animateur" id="sujetModifWork">';
-    if(tsujetModif === "Comptabilité"){
+    if (tsujetModif === "Comptabilité") {
         sujetModif += '<option value="Comptabilité" selected>Comptabilité</option>';
         sujetModif += '<option value="Marketing">Marketing</option>';
         sujetModif += '<option value="Informatique">Informatique</option>';
         sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
         sujetModif += '<option value="Droit">Droit</option>';
-    }else if(tsujetModif === "Marketing"){
+    } else if (tsujetModif === "Marketing") {
         sujetModif += '<option value="Comptabilité">Comptabilité</option>';
         sujetModif += '<option value="Marketing" selected>Marketing</option>';
         sujetModif += '<option value="Informatique">Informatique</option>';
         sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
         sujetModif += '<option value="Droit">Droit</option>';
-    }else if(tsujetModif === "Informatique"){
+    } else if (tsujetModif === "Informatique") {
         sujetModif += '<option value="Comptabilité">Comptabilité</option>';
         sujetModif += '<option value="Marketing">Marketing</option>';
         sujetModif += '<option value="Informatique" selected>Informatique</option>';
         sujetModif += '<option value="Electro-mécanique">Electro-mécanique</option>';
         sujetModif += '<option value="Droit">Droit</option>';
-    }else if(tsujetModif === "Electro-mécanique"){
+    } else if (tsujetModif === "Electro-mécanique") {
         sujetModif += '<option value="Comptabilité">Comptabilité</option>';
         sujetModif += '<option value="Marketing">Marketing</option>';
         sujetModif += '<option value="Informatique">Informatique</option>';
         sujetModif += '<option value="Electro-mécanique" selected>Electro-mécanique</option>';
         sujetModif += '<option value="Droit">Droit</option>';
-    }else{
+    } else {
         sujetModif += '<option value="Comptabilité">Comptabilité</option>';
         sujetModif += '<option value="Marketing">Marketing</option>';
         sujetModif += '<option value="Informatique">Informatique</option>';
@@ -1210,7 +1231,7 @@ function annulerModif(idAtelier) {
     $('#content').load("assets/inc/detailsMesWorkshop.php?i=" + idAtelier);
 }
 
-function validerModif(nom, desc, date, nb, sujet, idAtelier,duree) {
+function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
 
     let a = 1;
     let currentDate = new Date();
@@ -1324,7 +1345,7 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier,duree) {
                 "nomb": nb,
                 "sujet": sujet,
                 "idAtelier": idAtelier,
-                "duree" : duree
+                "duree": duree
             },
             datatype: "json",
             success: function (response) {
@@ -1340,7 +1361,7 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier,duree) {
 
 /////////////////////////////////////////BOITE IDEE/////////////////////////////////////////
 
-function addIdeeEtudiant(nom, sujet, idUser){
+function addIdeeEtudiant(nom, sujet, idUser) {
     $.ajax({
         url: "assets/php/ajoutIdeeEtudiant.php",
         type: "POST",
@@ -1356,7 +1377,7 @@ function addIdeeEtudiant(nom, sujet, idUser){
     });
 }
 
-function addIdeeProfesseur(nom, sujet, idUser){
+function addIdeeProfesseur(nom, sujet, idUser) {
     $.ajax({
         url: "assets/php/ajoutIdeeProf.php",
         type: "POST",
@@ -1367,7 +1388,7 @@ function addIdeeProfesseur(nom, sujet, idUser){
         },
         datatype: "json",
         success: function (response) {
-          propIdee();
+            propIdee();
         }
     });
 }
@@ -1481,41 +1502,41 @@ function afficheAllIdee(tab) {
     var index = 1;
     var index2 = 1;
     for (i = 0; i < tab.length; i++) {
-        if(tab[i]['adminIdee'] === '0'){
+        if (tab[i]['adminIdee'] === '0') {
             retIdee += '<tr class="lignes">';
             retIdee += '<td>' + index + '</td>';
             retIdee += '<td>' + tab[i]['userIdee'] + '</td>';
             retIdee += '<td>' + tab[i]['nomIdee'] + '</td>';
             retIdee += '<td>' + tab[i]['sujetIdee'] + '</td>';
-            retIdee += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\''+ '0' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
-            retIdee += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
+            retIdee += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '0' + '\',\'' + idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
+            retIdee += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\'' + idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
             retIdee += '<td>' + statIdee(tab[i]['idIdee']) + '</td>';
             retIdee += '<td>' + totalVote(tab[i]['idIdee']) + '</td>';
-            if(adminId === "0"){
-            }else{
+            if (adminId === "0") {
+            } else {
                 retIdee += '<td><button onclick="popupIdee(' + '\'' + tab[i]['idIdee'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button></td>';
             }
             retIdee += '</tr>';
             index++;
         }
-        if(tab[i]['adminIdee'] === '1'){
+        if (tab[i]['adminIdee'] === '1') {
             retIdee2 += '<tr class="lignes2">';
             retIdee2 += '<td>' + index2 + '</td>';
             retIdee2 += '<td>' + tab[i]['userIdee'] + '</td>';
             retIdee2 += '<td>' + tab[i]['nomIdee'] + '</td>';
             retIdee2 += '<td>' + tab[i]['sujetIdee'] + '</td>';
-            retIdee2 += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\''+ '0' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
-            retIdee2 += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\''+ idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
+            retIdee2 += '<td>' + '<button onclick="pourIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '0' + '\',\'' + idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Pour</button>' + '</td>';
+            retIdee2 += '<td>' + '<button onclick="contreIdee(' + '\'' + tab[i]['idIdee'] + '\',\'' + '1' + '\',\'' + idUser + '\')" class="btn btn-link" title="Check" data-toggle="tooltip" style="color:#eb5d1e">Contre</button>' + '</td>';
             retIdee2 += '<td>' + statIdee(tab[i]['idIdee']) + '</td>';
             retIdee2 += '<td>' + totalVote(tab[i]['idIdee']) + '</td>';
-            if(adminId === '0'){
-            }else{
+            if (adminId === '0') {
+            } else {
                 retIdee2 += '<td><button onclick="popupIdee(' + '\'' + tab[i]['idIdee'] + '\')" class="btn btn-link" data-toggle="modal" data-target="#modalConfirmDelete"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button></td>';
             }
             retIdee2 += '</tr>';
             index2++;
         }
-        
+
     }
     $('#listeIdeesEtudiants').append(retIdee);
     $('#listeIdeesProfs').append(retIdee2);
@@ -1524,27 +1545,7 @@ function afficheAllIdee(tab) {
 
 }
 
-function pourIdee(idIdee, etat, idUser){
-        $.ajax({
-            url: "assets/php/voteIdee.php",
-            type: "POST",
-            data: {
-                "idIdee": idIdee,
-                "etat": etat,
-                "idUser": idUser
-            },
-            datatype: "json",
-            success: function (response) {
-            }
-        });
-        if(adminId === "0"){
-            boiteId();
-        }else{
-            propIdee();
-        }
-}
-
-function contreIdee(idIdee, etat, idUser){
+function pourIdee(idIdee, etat, idUser) {
     $.ajax({
         url: "assets/php/voteIdee.php",
         type: "POST",
@@ -1557,15 +1558,35 @@ function contreIdee(idIdee, etat, idUser){
         success: function (response) {
         }
     });
-    
-    if(adminId === "0"){
+    if (adminId === "0") {
         boiteId();
-    }else{
+    } else {
         propIdee();
     }
 }
 
-function statIdee(idIdee){
+function contreIdee(idIdee, etat, idUser) {
+    $.ajax({
+        url: "assets/php/voteIdee.php",
+        type: "POST",
+        data: {
+            "idIdee": idIdee,
+            "etat": etat,
+            "idUser": idUser
+        },
+        datatype: "json",
+        success: function (response) {
+        }
+    });
+
+    if (adminId === "0") {
+        boiteId();
+    } else {
+        propIdee();
+    }
+}
+
+function statIdee(idIdee) {
     var tmp;
     $.ajax({
         async: false,
@@ -1576,13 +1597,13 @@ function statIdee(idIdee){
         },
         datatype: "json",
         success: function (response) {
-          tmp = response;
-        }   
+            tmp = response;
+        }
     });
     return tmp;
 }
 
-function totalVote(idIdee){
+function totalVote(idIdee) {
     var tmp;
     $.ajax({
         async: false,
@@ -1593,9 +1614,9 @@ function totalVote(idIdee){
         },
         datatype: "json",
         success: function (response) {
-          console.log(response);
-          tmp = response;
-        }   
+            console.log(response);
+            tmp = response;
+        }
     });
     return tmp;
 }
