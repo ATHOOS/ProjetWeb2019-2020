@@ -8,7 +8,7 @@ class dbAccess
     public function connexionDB()
     {
         try {
-            $this->pdo = new PDO("mysql:host=localhost;dbname=projetweb;charset=utf8", "root", "root");
+            $this->pdo = new PDO("mysql:host=localhost:3308;dbname=projetweb;charset=utf8", "root", "");
         } catch (Exception $e) {
             die("Erreur :" . $e->getMessage());
         }
@@ -22,6 +22,7 @@ class dbAccess
             case 'affichageAteliersAnimateur':
             case 'recupUsers':
             case 'recupAllIdee':
+            case 'recupNewUsers':
                 array_push($params);
 
                 try {
@@ -49,6 +50,8 @@ class dbAccess
             case 'recupVoteContre':
             case 'checkCategorie':
             case 'supprimerIdee':
+            case 'validerInscription':
+            case 'supprimerInscription':
                 array_push($params, '?');
 
                 try {

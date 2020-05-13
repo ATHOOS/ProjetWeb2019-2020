@@ -53,6 +53,9 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
               <li>
                 <a href="#" id="propIdee" class="sidebarCollapse" onclick="propIdee()">Proposer une idée d'atelier</a>
               </li>
+              <li>
+                <a href="#" id="newUser" class="sidebarCollapse" onclick="newUser()">Nouveaux utilisateurs</a>
+              </li>
             </ul>
 
             <div class="footer">

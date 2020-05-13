@@ -15,6 +15,7 @@ function removeClassActiveAdmin() {
     $('#droit').removeClass('active');
     $('#contrat').removeClass('active');
     $('#propIdee').removeClass('active');
+    $('#newUser').removeClass('active');
 
 }
 
@@ -126,6 +127,12 @@ function propIdee() {
     removeClassActiveAdmin();
     addClassActive('propIdee');
     $('#contentAdminPage').load('assets/inc/admin/propIdee.php');
+}
+
+function newUser(){
+    removeClassActiveAdmin();
+    addClassActive('newUser');
+    $('#contentAdminPage').load('assets/inc/admin/newUser.php');
 }
 
 
@@ -639,7 +646,79 @@ function detailsWorkshop() {
     $('#places').html(tnb);
     $('#duree').html(tduree);
 }
+/////////////////////////////////////////////////////////////GESTION NEW USERS DANS L'ADMIN ///////////////////////////////////////////////////////////////////
+retNewUsers = "";
+function afficheNewUser(tab) {
+    retNewUsers = "";
+    var index = 1;
+    for (i = 0; i < tab.length; i++) {
 
+        retNewUsers += '<tr class="lignes">';
+        retNewUsers += '<td>' + index + '</td>';
+        retNewUsers += '<td>' + tab[i]['prenom'] + ' ' + tab[i]['nom'] + '</td>';
+        retNewUsers += '<td>' + tab[i]['matricule'] + '</td>';
+        retNewUsers += '<td>' + tab[i]['mail'] + '</td>';
+        retNewUsers += '<td><button onclick="validerInscription(' + '\'' + tab[i]['matricule'] + '\')" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">check_circle</i></button></td>';
+        retNewUsers += '<td><button onclick="supprimerInscription(' + '\'' + tab[i]['matricule'] + '\')" class="btn btn-link" title="Check" data-toggle="tooltip"><i class="material-icons" style="color:#eb5d1e">remove_circle</i></button></td>';
+        retNewUsers += '</tr>';
+        index++;
+    }
+    $('#listeNewUser').append(retNewUsers);
+    paginationNewUsers(index);
+}
+
+function paginationNewUsers(nAt) {
+    var limitePage = 10;
+    var nbPages = Math.ceil(nAt / limitePage);
+    $("#listeNewUser .lignes:gt(" + (limitePage - 1) + ")").hide();
+    $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
+    for (var i = 2; i <= nbPages; i++) {
+        $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
+    }
+    $(".current-page").on("click", function () {
+        if ($(this).hasClass("active")) {
+            return false;
+        } else {
+            var currentPage = ($(this).index()) + 1;
+            $(".paginationn li").removeClass("active");
+            $(this).addClass("active");
+            $(".lignes").hide();
+            var total = limitePage * currentPage;
+            for (var i = total - limitePage; i < total; i++) {
+                $("#listeNewUser .lignes:eq(" + i + ")").show();
+            }
+        }
+    })
+}
+
+function validerInscription(noma) {
+    $.ajax({
+        url: "assets/php/validerInscription.php",
+        type: "POST",
+        data: {
+            "noma": noma
+        },
+        datatype: "json",
+        success: function (response) {
+            $('.modal-backdrop').remove();
+            newUser();
+        }
+    });
+}
+    function supprimerInscription(noma) {
+        $.ajax({
+            url: "assets/php/supprimerInscription.php",
+            type: "POST",
+            data: {
+                "noma": noma
+            },
+            datatype: "json",
+            success: function (response) {
+                $('.modal-backdrop').remove();
+                newUser();
+            }
+        });
+    }
 
 /////////////////////////////////////////////////////////////GESTION DES USERS DANS L'ADMIN ///////////////////////////////////////////////////////////////////
 retUsers = "";
