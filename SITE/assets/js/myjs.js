@@ -276,12 +276,11 @@ function checkConnexion() {
                 }
                 else {
                     $('#connexionError').hide();
-                    location.reload();
                     profil();
+                    $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
                 }
             }
         });
-
 
     }
 

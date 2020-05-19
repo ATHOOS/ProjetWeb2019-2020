@@ -56,6 +56,7 @@
       $('body').toggleClass('mobile-nav-active');
       $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
       $('.mobile-nav-overly').toggle();
+      $('#navConnexion').html('<a href="assets/php/deconnexion.php" class="lienConnexion">Déconnexion</a>');
     });
 
     $(document).on('click', '.mobile-nav .drop-down > a', function(e) {

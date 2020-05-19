@@ -77,7 +77,8 @@ session_start();
             <?php endif ?>
             <li id="navConnexion" class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
           </ul>
-        </nav><!-- .nav-menu -->
+        </nav><!-- .nav-menu connexion-->
+        
       <?php else : ?>
         <nav class="nav-menu d-none d-lg-block">
           <ul>
