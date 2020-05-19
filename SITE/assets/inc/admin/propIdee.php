@@ -148,6 +148,9 @@ include '../../php/recupAllIdee.php';
     afficheAllIdee(allIdee);
     removeClassActive();
     addClassActive('navAdmin');
+    <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
 </script>
 
 

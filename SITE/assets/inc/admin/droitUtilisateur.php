@@ -45,4 +45,7 @@ include '../../php/listeUsers.php';
     afficheAllUser(allUsers);
     removeClassActive();
     addClassActive('navAdmin');
+    <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
 </script>

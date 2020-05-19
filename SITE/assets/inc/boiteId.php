@@ -145,6 +145,9 @@ include '../php/recupAllIdee.php';
     var allIdee = <?= $recupAllIdee ?>;
     var idUser = '<?= $_SESSION['matricule']; ?>';
     afficheAllIdee(allIdee);
+    <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
 </script>
 <?php
 if (!isset($_SESSION['matricule'])) {

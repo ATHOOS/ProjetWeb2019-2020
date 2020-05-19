@@ -99,6 +99,9 @@ include '../php/checkCategorie.php'
     <script>
       removeClassActive();
       addClassActive('navWorkshops');
+      <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
     </script>
 </main>
 <?php
