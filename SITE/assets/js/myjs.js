@@ -286,6 +286,7 @@ function checkConnexion() {
                     $('#connexionError').show();
                 }
                 else {
+                    location.reload();
                     $('#connexionError').hide();
                     profil();
                     $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
