@@ -140,18 +140,20 @@ function newUser(){
 
 //inscription
 
+//Cette fonction vérifie les différents champs input de l'inscription pour vérifier si tout est remplis et conforme
+//erreurForm doit valoir 1 à la fin, cela sinifie qu'il n'y a pas eu d'erreur dans le formulaire
+
 function checkInscription() {
-    //si a = 1 pas d'erreur, si a = 0 erreur
-    let a = 1;
+    let erreurForm = 1;
     event.preventDefault();
     if ($('#matricule').val() == '') {
         $('#nonMatricule').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         let matricule = ($('#matricule').val()).toUpperCase();
         if (validateMatricule(matricule) === false) {
             $('#badMatricule').show();
-            a = 0;
+            erreurForm = 0;
         } else {
             $('#badMatricule').hide();
         }
@@ -163,7 +165,7 @@ function checkInscription() {
     if ($('#nom').val() == '') {
         $('#nonNom').show();
 
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#nonNom').hide();
 
@@ -173,50 +175,42 @@ function checkInscription() {
     if ($('#prenom').val() == '') {
         $('#nonPrenom').show();
 
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#nonPrenom').hide();
 
     }
 
-
     if ($('#email').val() == '') {
         $('#nonEmail').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#nonEmail').hide();
     }
 
-    if (validateEmail($('#email').val()) === false) {
-        $('#emailInvalide').show();
-        a = 0;
-    } else {
-        $('#emailInvalide').hide();
-    }
-
     if ($('#pass').val() == '') {
         $('#nonPassword').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#nonPassword').hide();
     }
 
     if ($('#re_pass').val() == '') {
         $('#nonRePassword').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#nonRePassword').hide();
     }
 
-    if (compareMdp($('#re_pass').val(),$('#pass').val()) === false) {
+    if ($('#re_pass').val() !== $('#pass').val()) {
         $('#mdpNotSame').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#mdpNotSame').hide();
     }
 
 
-    if (a === 1) {
+    if (erreurForm === 1) {
         let objectForm = { 'matricule': $('#matricule').val(), 'Nom': $('#nom').val(), 'Prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
         console.log(objectForm);
         $.ajax({
@@ -238,49 +232,37 @@ function checkInscription() {
 
 }
 
-function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
 
+//Vérifie si le matricule commence par HE et est suivis par 6 chiffres
 function validateMatricule(matricule) {
-    if (matricule.length === 8) {
-        var re = /HE\d\d\d\d\d\d/;
-        return re.test(matricule);
-    } else {
-        return false;
-    }
-}
-
-function compareMdp(premierMdp, deuxiemeMdp) {
-    if (premierMdp === deuxiemeMdp) {
-        return true;
-    } else {
-        return false;
-    }
+    let re = /HE\d\d\d\d\d\d/;
+    return re.test(matricule);
 }
 
 
 //connexion
 
+
+//Cette fonction vérifie les différents champs input de la connexion pour vérifier si tout est remplis et conforme
+//erreurForm doit valoir 1 à la fin, cela sinifie qu'il n'y a pas eu d'erreur dans le formulaire
 function checkConnexion() {
-    let a = 1;
+    let erreurForm = 1;
     event.preventDefault();
     if ($('#your_login').val() == '') {
         $('#pseudoError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#pseudoError').hide();
     }
 
     if ($('#your_pass').val() == '') {
         $('#mdpError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#mdpError').hide();
     }
 
-    if (a === 1) {
+    if (erreurForm === 1) {
         let objectForm = { 'login': $('#your_login').val(), 'password': $('#your_pass').val() };
         //console.log(objectForm);
         $.ajax({
@@ -309,26 +291,29 @@ function checkConnexion() {
 
 //verification formulaire atelier
 
+//Cette fonction vérifie les différents champs input de l'ajout d'atelier pour vérifier si tout est remplis et conforme
+//erreurForm doit valoir 1 à la fin, cela sinifie qu'il n'y a pas eu d'erreur dans le formulaire
+
 function ajoutAtelier() {
-    let a = 1;
+    let erreurForm = 1;
     let currentDate = new Date();
     event.preventDefault();
     if (($('#workshop_nom').val() == '') || ($('#workshop_nom').val().indexOf('"') != -1)) {
         $('#workshopNomError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#workshopNomError').hide();
     }
 
     if (($('#workshop_desc').val() == '') || ($('#workshop_desc').val().indexOf('"') != -1)) {
         $('#workshopDescError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#workshopDescError').hide();
     }
 
 
-    var datefull = new Date();
+    let datefull = new Date();
 
     if ((datefull).getDate() < 10) {
         jours = '0' + (datefull).getDate();
@@ -351,8 +336,8 @@ function ajoutAtelier() {
         minutes = (datefull).getMinutes();
     }
 
-    var date2 = (datefull).getFullYear() + "-" + mois + "-" + jours + "T" + heure + ':' + minutes;
-    var dateRecup = new Date($('#workshop_date').val());
+    let date2 = (datefull).getFullYear() + "-" + mois + "-" + jours + "T" + heure + ':' + minutes;
+    let dateRecup = new Date($('#workshop_date').val());
 
     if ((dateRecup).getDate() < 10) {
         jours2 = '0' + (dateRecup).getDate();
@@ -374,18 +359,18 @@ function ajoutAtelier() {
     } else {
         minutes2 = (dateRecup).getMinutes();
     }
-    var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
+    let date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
 
 
     if ($('#workshop_date').val() == '') {
 
         $('#workshopDateError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         if (date2 > date) {
             $('#workshopDateError').hide();
             $('#workshopDatePassee').show();
-            a = 0;
+            erreurForm = 0;
         } else {
             $('#workshopDateError').hide();
             $('#workshopDatePassee').hide();
@@ -395,12 +380,12 @@ function ajoutAtelier() {
 
     if ($('#workshop_nbrPlaces').val() == '') {
         $('#WorkshopPlaceError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         if ($('#workshop_nbrPlaces').val() <= 1) {
             $('#WorkshopPlaceError').hide();
             $('#WorkshopPlaceNegatif').show();
-            a = 0;
+            erreurForm = 0;
         }
         else {
             $('#WorkshopPlaceError').hide();
@@ -410,10 +395,10 @@ function ajoutAtelier() {
 
     if ($('#workshop_duree').val() == '') {
         $('#workshopDureeError').show();
-        a = 0;
+        erreurForm = 0;
     }
 
-    if (a === 1) {
+    if (erreurForm === 1) {
         let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val(), 'Duree': $('#workshop_duree').val() };
         console.log(objectForm);
         $.ajax({
@@ -465,18 +450,18 @@ function filtrerAtelier(sujet, tab) {
     $('.paginationn').empty();
     nbAteliers = 1;
     nbAteliers2 = 1;
-    var ret = "";
-    var ret2 = "";
+    let ret = "";
+    let ret2 = "";
     tabEnvoi = new Array();
     tabEnvoi2 = new Array();
-    var indexAtelier = 0;
+    let indexAtelier = 0;
 
 
     for (i = 0; i < tab.length; i++) {
         if (tab[i]['validation'] === '1') {
-            var datefull = new Date(tab[i]['date']);
-            var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-            var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+            let datefull = new Date(tab[i]['date']);
+            let date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+            let heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
 
             if (tab[i]['sujet'] === sujet) {
                 tabEnvoi[i] = tab[i];
@@ -484,9 +469,9 @@ function filtrerAtelier(sujet, tab) {
             } else {
                 tabEnvoi2[i] = tab[i];
             }
-            var tnom = tab[i]['nom'];
+            let tnom = tab[i]['nom'];
             if (tab[i]['sujet'] === sujet) {
-                var test;
+                let test;
                 $.ajax({
                     async: false,
                     url: "assets/php/recupPlacesDispo.php",
@@ -504,7 +489,7 @@ function filtrerAtelier(sujet, tab) {
                         }
                     }
                 });
-                var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
+                let nbPlacesDispos = tab[i]['nbrPlaces'] - test;
                 ret += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
                 ret += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret += '<div class="media-body order-2 order-lg-1">';
@@ -533,7 +518,7 @@ function filtrerAtelier(sujet, tab) {
                 nbAteliers++;
 
             } else {
-                var test;
+                let test;
                 $.ajax({
                     async: false,
                     url: "assets/php/recupPlacesDispo.php",
@@ -553,7 +538,7 @@ function filtrerAtelier(sujet, tab) {
 
                     }
                 });
-                var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
+                let nbPlacesDispos = tab[i]['nbrPlaces'] - test;
                 ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
                 ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
                 ret2 += '<div class="media-body order-2 order-lg-1">';
@@ -597,25 +582,25 @@ function filtrerAtelier(sujet, tab) {
 
 
 function paginationAtelier(nAt) {
-    var limitePage = 4;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 4;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
     $("#itemAtelier .list-group-item:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
             $(".list-group-item").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#itemAtelier .list-group-item:eq(" + i + ")").show();
             }
         }
@@ -636,9 +621,9 @@ function loadWorkshop(i, nom, desc, date2, nb, sujet, idAtelier, duree) {
 }
 
 function detailsWorkshop() {
-    var datefull = new Date(tdate2);
-    var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-    var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+    let datefull = new Date(tdate2);
+    let date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+    let heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
     $('#nom').text(tnom);
     $('#description').html(tdesc);
     $('#date').html(date);
@@ -650,7 +635,7 @@ function detailsWorkshop() {
 retNewUsers = "";
 function afficheNewUser(tab) {
     retNewUsers = "";
-    var index = 1;
+    let index = 1;
     for (i = 0; i < tab.length; i++) {
 
         retNewUsers += '<tr class="lignes">';
@@ -668,23 +653,23 @@ function afficheNewUser(tab) {
 }
 
 function paginationNewUsers(nAt) {
-    var limitePage = 10;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 10;
+    let nbPages = Math.ceil(nAt / limitePage);
     $("#listeNewUser .lignes:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
             $(".lignes").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#listeNewUser .lignes:eq(" + i + ")").show();
             }
         }
@@ -724,7 +709,7 @@ function validerInscription(noma) {
 retUsers = "";
 function afficheAllUser(tab) {
     retUsers = "";
-    var index = 1;
+    let index = 1;
     for (i = 0; i < tab.length; i++) {
 
         retUsers += '<tr class="lignes">';
@@ -759,25 +744,25 @@ function afficheAllUser(tab) {
 }
 
 function paginationUsers(nAt) {
-    var limitePage = 10;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 10;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
     $("#listeUser .lignes:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
             $(".lignes").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#listeUser .lignes:eq(" + i + ")").show();
             }
         }
@@ -846,7 +831,7 @@ function popup(matricule) {
 retAtelier = "";
 function afficheAllAteliers(tab) {
     retAtelier = "";
-    var index = 1;
+    let index = 1;
     for (i = 0; i < tab.length; i++) {
         retAtelier += '<tr class="lignes">';
         retAtelier += '<td>' + index + '</td>';
@@ -881,25 +866,25 @@ function afficheAllAteliers(tab) {
 }
 
 function paginationAteliersAdmin(nAt) {
-    var limitePage = 10;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 10;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
     $("#listeAtelier .lignes:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
             $(".lignes").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#listeAtelier .lignes:eq(" + i + ")").show();
             }
         }
@@ -1000,19 +985,19 @@ function workshopParticipe(tab) {
     $('#itemAtelierParticipe').empty();
     $('.paginationn').empty();
     nbAtelierParticipe = 1;
-    var ret2 = "";
+    let ret2 = "";
     tabEnvoiAtelierParticipe = new Array();
-    var indexAtelier = 0;
+    let indexAtelier = 0;
 
     for (i = 0; i < tab.length; i++) {
         if (tab[i]['validation'] === '1') {
-            var datefull = new Date(tab[i]['date']);
-            var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-            var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+            let datefull = new Date(tab[i]['date']);
+            let date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+            let heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
 
             tabEnvoiAtelierParticipe[i] = tab[i];
 
-            var tnom = tab[i]['nom'];
+            let tnom = tab[i]['nom'];
             $.ajax({
                 async: false,
                 url: "assets/php/recupPlacesDispo.php",
@@ -1030,7 +1015,7 @@ function workshopParticipe(tab) {
                     }
                 }
             });
-            var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
+            let nbPlacesDispos = tab[i]['nbrPlaces'] - test;
             ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
             ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
             ret2 += '<div class="media-body order-2 order-lg-1">';
@@ -1067,25 +1052,25 @@ function workshopParticipe(tab) {
 
 
 function paginationAtelierParticipe(nAt) {
-    var limitePage = 4;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 4;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
     $("#itemAtelierParticipe .list-group-item:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
             $(".list-group-item").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#itemAtelierParticipe .list-group-item:eq(" + i + ")").show();
             }
         }
@@ -1114,14 +1099,14 @@ function mesWorkshops(tab) {
     $('#itemMesAteliers').empty();
     $('.paginationn').empty();
     nbMesAteliers = 1;
-    var ret2 = "";
+    let ret2 = "";
     tabEnvoiMesAteliers = new Array();
-    var indexAtelier = 0;
+    let indexAtelier = 0;
 
     for (i = 0; i < tab.length; i++) {
-        var datefull = new Date(tab[i]['date']);
-        var date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
-        var heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
+        let datefull = new Date(tab[i]['date']);
+        let date = (datefull).getDate() + " " + (month[(datefull).getMonth()]) + " " + (datefull).getFullYear();
+        let heure = (datefull).getHours() + 'h' + (datefull).getMinutes();
 
         tabEnvoiMesAteliers[i] = tab[i];
         $.ajax({
@@ -1141,8 +1126,8 @@ function mesWorkshops(tab) {
                 }
             }
         });
-        var nbPlacesDispos = tab[i]['nbrPlaces'] - test;
-        var tnom = tab[i]['nom'];
+        let nbPlacesDispos = tab[i]['nbrPlaces'] - test;
+        let tnom = tab[i]['nom'];
         ret2 += '<li class="list-group-item" id="' + tab[i]['sujet'] + '">';
         ret2 += '<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
         ret2 += '<div class="media-body order-2 order-lg-1">';
@@ -1178,25 +1163,25 @@ function mesWorkshops(tab) {
 
 
 function paginationMesAteliers(nAt) {
-    var limitePage = 4;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 4;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navWorkshops');
     $("#itemMesAteliers .list-group-item:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationn").append("<li class='page-item active current-page'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationn").append("<li class='page-item current-page'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationn li").removeClass("active");
             $(this).addClass("active");
             $(".list-group-item").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#itemMesAteliers .list-group-item:eq(" + i + ")").show();
             }
         }
@@ -1237,7 +1222,7 @@ function afficheModifAtelier(nom, desc, date2, nb, sujet, idAtelier, duree) {
 }
 
 function afficheInput() {
-    var dateRecup = new Date(tdateModif);
+    let dateRecup = new Date(tdateModif);
 
     if ((dateRecup).getDate() < 10) {
         jours2 = '0' + (dateRecup).getDate();
@@ -1259,7 +1244,7 @@ function afficheInput() {
     } else {
         minutes2 = (dateRecup).getMinutes();
     }
-    var date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
+    let date = (dateRecup).getFullYear() + "-" + mois2 + "-" + jours2 + "T" + heure2 + ':' + minutes2;
     nomModif = '<input id="nomModifWork" type="text" value="' + tnomModif + '"/>';
     descModif = '<input id="descModifWork" type="text" value="' + tdescModif + '"/>';
     dateModif = '<input id="dateModifWork" type="datetime-local" value="' + date + '"/>';
@@ -1312,24 +1297,24 @@ function annulerModif(idAtelier) {
 
 function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
 
-    let a = 1;
+    let erreurForm = 1;
     let currentDate = new Date();
     event.preventDefault();
     if ($('#nomModifWork').val() == '') {
         $('#workshopModifNomError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#workshopModifNomError').hide();
     }
 
     if ($('#descModifWork').val() == '') {
         $('#workshopModifDescError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         $('#workshopModifDescError').hide();
     }
 
-    var datefull = new Date();
+    let datefull = new Date();
 
     if ((datefull).getDate() < 10) {
         jours = '0' + (datefull).getDate();
@@ -1352,8 +1337,8 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
         minutes = (datefull).getMinutes();
     }
 
-    var date2 = (datefull).getFullYear() + "-" + mois + "-" + jours + "T" + heure + ':' + minutes;
-    var dateRecup = new Date($('#dateModifWork').val());
+    let date2 = (datefull).getFullYear() + "-" + mois + "-" + jours + "T" + heure + ':' + minutes;
+    let dateRecup = new Date($('#dateModifWork').val());
 
     if ((dateRecup).getDate() < 10) {
         jours2 = '0' + (dateRecup).getDate();
@@ -1380,12 +1365,12 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
     if ($('#dateModifWork').val() == '') {
 
         $('#workshopModifDateError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         if (date2 > date) {
             $('#workshopModifDateError').hide();
             $('#workshopModifDatePassee').show();
-            a = 0;
+            erreurForm = 0;
         } else {
             $('#workshopModifDateError').hide();
             $('#workshopModifDatePassee').hide();
@@ -1394,12 +1379,12 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
 
     if ($('#nbPlaceModifWork').val() == '') {
         $('#WorkshopModifPlaceError').show();
-        a = 0;
+        erreurForm = 0;
     } else {
         if ($('#nbPlaceModifWork').val() <= 1) {
             $('#WorkshopModifPlaceError').hide();
             $('#WorkshopModifPlaceNegatif').show();
-            a = 0;
+            erreurForm = 0;
         }
         else {
             $('#WorkshopModifPlaceError').hide();
@@ -1409,10 +1394,10 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
 
     if ($('#dureeModifWork').val() == '') {
         $('#WorkshopModifDureeError').show();
-        a = 0;
+        erreurForm = 0;
     }
 
-    if (a === 1) {
+    if (erreurForm === 1) {
         console.log($('#dureeModifWork').val());
         $.ajax({
             url: "assets/php/modifAtelier.php",
@@ -1473,25 +1458,25 @@ function addIdeeProfesseur(nom, sujet, idUser) {
 }
 
 function paginationIdeeEtu(nAt) {
-    var limitePage = 5;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 5;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navBoiteId');
     $("#listeIdeesEtudiants .lignes:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationnIdeesEtudiants").append("<li class='page-item active current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationnIdeesEtudiants").append("<li class='page-item current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationnIdeesEtudiants li").removeClass("active");
             $(this).addClass("active");
             $(".lignes").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#listeIdeesEtudiants .lignes:eq(" + i + ")").show();
             }
         }
@@ -1502,25 +1487,25 @@ function paginationIdeeEtu(nAt) {
 }
 
 function paginationIdeeProf(nAt) {
-    var limitePage = 5;
-    var nbPages = Math.ceil(nAt / limitePage);
+    let limitePage = 5;
+    let nbPages = Math.ceil(nAt / limitePage);
     removeClassActive();
     addClassActive('navBoiteId');
     $("#paginationnIdeesProfs .lignes2:gt(" + (limitePage - 1) + ")").hide();
     $(".paginationnIdeesProfs").append("<li class='page-item active current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + 1 + "</a></li>");
-    for (var i = 2; i <= nbPages; i++) {
+    for (let i = 2; i <= nbPages; i++) {
         $(".paginationnIdeesProfs").append("<li class='page-item current-page' style='list-style-type:none'><a href='javascript:void(0)' class='page-link'>" + i + "</a></li>");
     }
     $(".current-page").on("click", function () {
         if ($(this).hasClass("active")) {
             return false;
         } else {
-            var currentPage = ($(this).index()) + 1;
+            let currentPage = ($(this).index()) + 1;
             $(".paginationnIdeesProfs li").removeClass("active");
             $(this).addClass("active");
             $(".lignes2").hide();
-            var total = limitePage * currentPage;
-            for (var i = total - limitePage; i < total; i++) {
+            let total = limitePage * currentPage;
+            for (let i = total - limitePage; i < total; i++) {
                 $("#paginationnIdeesProfs .lignes2:eq(" + i + ")").show();
             }
         }
@@ -1578,8 +1563,8 @@ var adminId = '0';
 function afficheAllIdee(tab) {
     retIdee = "";
     retIdee2 = "";
-    var index = 1;
-    var index2 = 1;
+    let index = 1;
+    let index2 = 1;
     for (i = 0; i < tab.length; i++) {
         if (tab[i]['adminIdee'] === '0') {
             retIdee += '<tr class="lignes">';
@@ -1666,7 +1651,7 @@ function contreIdee(idIdee, etat, idUser) {
 }
 
 function statIdee(idIdee) {
-    var tmp;
+    let tmp;
     $.ajax({
         async: false,
         url: "assets/php/statIdee.php",
@@ -1683,7 +1668,7 @@ function statIdee(idIdee) {
 }
 
 function totalVote(idIdee) {
-    var tmp;
+    let tmp;
     $.ajax({
         async: false,
         url: "assets/php/totalVote.php",
