@@ -2,10 +2,15 @@
 
 function removeClassActive() {
     $('#navAccueil').removeClass('active');
+    $('.mobile-nav #navAccueil').removeClass('active');
     $('#navWorkshops').removeClass('active');
+    $('.mobile-nav #navWorkshops').removeClass('active');
     $('#navBoiteId').removeClass('active');
+    $('.mobile-nav #navBoiteId').removeClass('active');
     $('#navProfil').removeClass('active');
+    $('.mobile-nav #navProfil').removeClass('active');
     $('#navAdmin').removeClass('active');
+    $('.mobile-nav #navAdmin').removeClass('active');
 
 }
 
@@ -26,7 +31,6 @@ function addClassActive(p) {
 
 function connexion() {
     $('#content').load("assets/inc/login/connexion.php");
-
     removeClassActive();
 
 
@@ -47,6 +51,7 @@ function accueil() {
 
     removeClassActive();
     addClassActive('navAccueil');
+    $('.mobile-nav #navAccueil').addClass('active');
 }
 
 function workshopsListe() {
@@ -54,6 +59,7 @@ function workshopsListe() {
 
     removeClassActive("navWorkshopsListe");
     addClassActive('navWorkshops');
+    $('.mobile-nav #navWorkshops').addClass('active');
 }
 
 function workshopsCreation() {
@@ -61,6 +67,7 @@ function workshopsCreation() {
 
     removeClassActive();
     addClassActive('navWorkshops');
+    $('.mobile-nav #navWorkshops').addClass('active');
 }
 
 function workshopParticipeListe() {
@@ -68,6 +75,7 @@ function workshopParticipeListe() {
 
     removeClassActive();
     addClassActive('navWorkshops');
+    $('.mobile-nav #navWorkshops').addClass('active');
 }
 
 function mesWorkshopsListe() {
@@ -75,6 +83,7 @@ function mesWorkshopsListe() {
 
     removeClassActive();
     addClassActive('navWorkshops');
+    $('.mobile-nav #navWorkshops').addClass('active');
 }
 
 function boiteId() {
@@ -82,6 +91,7 @@ function boiteId() {
 
     removeClassActive();
     addClassActive('navBoiteId');
+    $('.mobile-nav #navBoiteId').addClass('active');
 }
 
 function profil() {
@@ -89,6 +99,7 @@ function profil() {
 
     removeClassActive();
     addClassActive('navProfil');
+    $('.mobile-nav #navProfil').addClass('active');
 }
 
 
