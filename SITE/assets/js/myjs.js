@@ -523,7 +523,24 @@ function filtrerAtelier(sujet, tab) {
                 ret += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
                 ret += '</div>';
                 ret += '</div>';
-                ret += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2">';
+                switch (tab[i]['sujet']) {
+                    case 'Comptabilité':
+                        ret += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2">';
+                        console.log('remy tu pues');
+                        break;
+                    case 'Droit':
+                        ret += '<img src="assets/img/droit.jpg" class="ml-lg-5 order-lg-2">';
+                        break;
+                    case 'Informatique':
+                        ret += '<img src="assets/img/informatique.jpg" class="ml-lg-5 order-lg-2">';
+                        break;
+                    case 'Marketing':
+                        ret += '<img src="assets/img/marketing.jpg" class="ml-lg-5 order-lg-2">';
+                        break;
+                    case 'Electro-Mecanique':
+                        ret += '<img src="assets/img/mecanique.jpg" class="ml-lg-5 order-lg-2">';
+                        break;
+                };
                 ret += '</div>';
                 ret += '</li>';
                 nbAteliers++;
@@ -569,8 +586,24 @@ function filtrerAtelier(sujet, tab) {
                 ret2 += '<div class="d-flex align-items-center justify-content-between mt-1">';
                 ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
                 ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
-                ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
-                ret2 += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                ret2 += '<h7 class="font-weight-bold my-2">Durée ' + tab[i]['duree'] + '</h7>';
+                switch (tab[i]['sujet']) {
+                    case 'Comptabilité':
+                        ret2 += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                        break;
+                    case 'Droit':
+                        ret2 += '<img src="assets/img/droit.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                        break;
+                    case 'Informatique':
+                        ret2 += '<img src="assets/img/informatique.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                        break;
+                    case 'Marketing':
+                        ret2 += '<img src="assets/img/marketing.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                        break;
+                    case 'Electro-Mecanique':
+                        ret2 += '<img src="assets/img/mecanique.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                        break;
+                };
                 ret2 += '</div>';
 
                 ret2 += '</div>';
@@ -1047,6 +1080,23 @@ function workshopParticipe(tab) {
             ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
             ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
             ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
+            switch (tab[i]['sujet']) {
+                case 'Comptabilité':
+                    ret2 += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                    break;
+                case 'Droit':
+                    ret2 += '<img src="assets/img/droit.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                    break;
+                case 'Informatique':
+                    ret2 += '<img src="assets/img/informatique.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                    break;
+                case 'Marketing':
+                    ret2 += '<img src="assets/img/marketing.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                    break;
+                case 'Electro-Mecanique':
+                    ret2 += '<img src="assets/img/mecanique.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                    break;
+            };
             ret2 += '</div>';
             ret2 += '</div>';
             ret2 += '</div>';
@@ -1159,6 +1209,23 @@ function mesWorkshops(tab) {
         ret2 += '<h6 class="font-weight-bold my-2">' + date + ' ' + heure + '</h6>';
         ret2 += '<h7 class="font-weight-bold my-2">' + nbPlacesDispos + '/' + tab[i]['nbrPlaces'] + ' Places disponibles</h7>';
         ret2 += '<h7 class="font-weight-bold my-2">Duree :' + tab[i]['duree'] + '</h7>';
+        switch (tab[i]['sujet']) {
+            case 'Comptabilité':
+                ret2 += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                break;
+            case 'Droit':
+                ret2 += '<img src="assets/img/droit.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                break;
+            case 'Informatique':
+                ret2 += '<img src="assets/img/informatique.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                break;
+            case 'Marketing':
+                ret2 += '<img src="assets/img/marketing.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                break;
+            case 'Electro-Mecanique':
+                ret2 += '<img src="assets/img/mecanique.jpg" class="ml-lg-5 order-lg-2" style="max-width: 10em">';
+                break;
+        };
         ret2 += '</div>';
         ret2 += '</div>';
         ret2 += '</div>';
