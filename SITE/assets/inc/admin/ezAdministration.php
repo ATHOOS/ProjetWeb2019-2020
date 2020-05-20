@@ -53,6 +53,9 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
               <li>
                 <a href="#" id="propIdee" class="sidebarCollapse" onclick="propIdee()">Proposer une idée d'atelier</a>
               </li>
+              <li>
+                <a href="#" id="newUser" class="sidebarCollapse" onclick="newUser()">Nouveaux utilisateurs</a>
+              </li>
             </ul>
 
             <div class="footer">
@@ -90,6 +93,9 @@ $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
   <script>
     removeClassActive();
     addClassActive('navAdmin');
+    <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
   </script>
 </body>
 

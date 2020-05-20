@@ -40,7 +40,9 @@ include '../php/mesWorkshops.php';
   <script>
         var maListe =  <?= $liste ?>;
         $(document).ready(mesWorkshops(maListe));
-
+        <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
   </script>
 
 </main>

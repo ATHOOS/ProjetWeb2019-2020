@@ -15,7 +15,7 @@ include '../php/listeAtelier.php';
         <div class="row text-center mb-5">
             <div class="col-lg-7 mx-auto">
                 <form id="filtreAtelier">
-                    <label>Filtrer les ateliers</label>
+                    <!--label>Filtrer les ateliers</label-->
                     <select id="sujet">
                     <option value="">Aucun</option>
                         <option value="Comptabilité">Comptabilité</option>
@@ -24,7 +24,7 @@ include '../php/listeAtelier.php';
                         <option value="Electro-mécanique">Electro-mécanique</option>
                         <option value="Droit">Droit</option>
                     </select>
-                    <button type="button" onclick="filtrerAtelier($('#sujet').val(), tabAteliers);">Filtrer</button>
+                    <button type="button" onclick="filtrerAtelier($('#sujet').val(), tabAteliers);">Filtrer les ateliers</button>
                 </form>
             </div>
         </div>
@@ -52,6 +52,8 @@ include '../php/listeAtelier.php';
     <script>
         var tabAteliers =  <?= $recupAtelier ?>;
         $(document).ready(filtrerAtelier($('#sujet').val(), tabAteliers));
-
+        <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
     </script>
 </main>

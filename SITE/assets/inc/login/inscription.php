@@ -30,6 +30,7 @@ $_SESSION['pageActuel']='login/inscription.php';
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                                 <input type="email" name="email" id="email" placeholder="Votre adresse mail"/>
                                 <p id="nonEmail" style="color:red; display:none">Email requis</p>
+                                <p id="emailInvalide" style="color:red; display:none">L'email n'est pas valide</p>
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>

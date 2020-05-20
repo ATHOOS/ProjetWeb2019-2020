@@ -50,6 +50,9 @@ $_SESSION['pageActuel']='profil.php';
     <script>
         removeClassActive();
         addClassActive('navProfil');
+        <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
     </script>
 </main>
 

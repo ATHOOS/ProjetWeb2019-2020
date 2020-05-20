@@ -26,8 +26,8 @@ include '../../php/recupAllIdee.php';
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <link href="assets/css/boiteId.css" rel="stylesheet">
     <script type="text/javascript">
         $(document).ready(function() {
@@ -47,23 +47,23 @@ include '../../php/recupAllIdee.php';
                 </div>
             </div>
             <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Proposition de</th>
-                        <th>Titre</th>
-                        <th>Sujet</th>
-                        <th>Voter oui</th>
-                        <th>Voter non</th>
-                        <th>% avis</th>
-                        <th>Total avis</th>
-                    </tr>
-                </thead>
-                <tbody id="listeIdeesProfs">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Proposition de</th>
+                            <th>Titre</th>
+                            <th>Sujet</th>
+                            <th>Voter oui</th>
+                            <th>Voter non</th>
+                            <th>% avis</th>
+                            <th>Total avis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeIdeesProfs">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
             <div class="row text-center mb-7">
                 <div class="col-lg-1 mx-auto">
@@ -87,23 +87,23 @@ include '../../php/recupAllIdee.php';
                 </div>
             </div>
             <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Proposition de</th>
-                        <th>Titre</th>
-                        <th>Sujet</th>
-                        <th>Voter oui</th>
-                        <th>Voter non</th>
-                        <th>% avis</th>
-                        <th>Total avis</th>
-                    </tr>
-                </thead>
-                <tbody id="listeIdeesEtudiants">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Proposition de</th>
+                            <th>Titre</th>
+                            <th>Sujet</th>
+                            <th>Voter oui</th>
+                            <th>Voter non</th>
+                            <th>% avis</th>
+                            <th>Total avis</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listeIdeesEtudiants">
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
             <div class="row text-center mb-7">
                 <div class="col-lg-1 mx-auto">
@@ -137,12 +137,20 @@ include '../../php/recupAllIdee.php';
             <button onclick="addIdeeProfesseur($('#newIdeeStudent').val(), $('#sujetNewIdeeStudent').val(),'<?= $_SESSION['matricule'] ?>' )">Proposer mon idée</button>
         </div>
     </div>
+    <div id="popup">
+
+    </div>
+</main>
 <script>
-        var allIdee =  <?= $recupAllIdee ?>;
-        var idUser = '<?= $_SESSION['matricule']; ?>';
-        afficheAllIdee(allIdee);
-        removeClassActive();
-        addClassActive('navAdmin');
+    var allIdee = <?= $recupAllIdee ?>;
+    var idUser = '<?= $_SESSION['matricule']; ?>';
+    adminId = '<?= $_SESSION['admin']; ?>';
+    afficheAllIdee(allIdee);
+    removeClassActive();
+    addClassActive('navAdmin');
+    <?php if(isset($_SESSION['matricule'])){?>
+                        $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    <?php } ?>
 </script>
 
 

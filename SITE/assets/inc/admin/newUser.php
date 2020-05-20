@@ -1,14 +1,14 @@
 <?php
 session_start();
 $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
-include '../../php/listeUsers.php';
+include '../../php/newUsers.php';
 ?>
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-5">
-                    <h2>Gestion <b>Utilisateurs</b></h2>
+                    <h2>Gestion <b> Nouveaux Utilisateurs</b></h2>
                 </div>
             </div>
         </div>
@@ -19,12 +19,12 @@ include '../../php/listeUsers.php';
                         <th>#</th>
                         <th>Prénom - Nom</th>
                         <th>Matricule</th>
-                        <th>Rôle</th>
-                        <th>Valider changement</th>
-                        <th>Supprimer utilisateur</th>
+                        <th>Email</th>
+                        <th>Valider inscription</th>
+                        <th>Supprimer inscription</th>
                     </tr>
                 </thead>
-                <tbody id="listeUser">
+                <tbody id="listeNewUser">
 
                 </tbody>
             </table>
@@ -41,8 +41,8 @@ include '../../php/listeUsers.php';
 </div>
 
 <script>
-    var allUsers = <?= $recupAllUsers ?>;
-    afficheAllUser(allUsers);
+    var newUsers = <?= $recupNewUsers ?>;
+    afficheNewUser(newUsers);
     removeClassActive();
     addClassActive('navAdmin');
     <?php if(isset($_SESSION['matricule'])){?>

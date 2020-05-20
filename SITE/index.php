@@ -77,7 +77,8 @@ session_start();
             <?php endif ?>
             <li id="navConnexion" class="get-started" onclick="connexion()"><a href="" id="lienConnexion">Connexion</a></li>
           </ul>
-        </nav><!-- .nav-menu -->
+        </nav><!-- .nav-menu connexion-->
+        
       <?php else : ?>
         <nav class="nav-menu d-none d-lg-block">
           <ul>
@@ -109,8 +110,10 @@ session_start();
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <!-- HEUUUU DE BASE C'EST BOOTSTRAP.BUNDLE.MIN.JS -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+  
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/venobox/venobox.min.js"></script>
