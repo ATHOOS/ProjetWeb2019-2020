@@ -1349,3 +1349,13 @@ a{
   background-color: #fff;
   border-color: #dee2e6
 }
+
+.espaceEntreInformations {
+  padding-left:10px;
+}
+
+@media (max-width: 400px) {
+   .imgWorkshop {
+     max-width: 75px !important; 
+   }
+}
