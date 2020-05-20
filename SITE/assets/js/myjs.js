@@ -246,10 +246,25 @@ function checkInscription() {
 
 //Vérifie si le matricule commence par HE et est suivis par 6 chiffres
 function validateMatricule(matricule) {
-    let re = /HE\d\d\d\d\d\d/;
-    return re.test(matricule);
+    if (matricule.length === 8) {
+        let re = /HE\d\d\d\d\d\d/;
+        return re.test(matricule);
+    } else {
+        return false;
+    }
 }
 
+function validateEmail(email) {
+     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; return re.test(email); 
+    }
+
+    function compareMdp(premierMdp, deuxiemeMdp) { 
+        if (premierMdp === deuxiemeMdp) { 
+            return true; 
+        } 
+        else { return false; 
+        } 
+    }
 
 //connexion
 
