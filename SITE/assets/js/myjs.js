@@ -535,19 +535,19 @@ function filtrerAtelier(sujet, tab) {
                 ret += '</div>';
                 switch (tab[i]['sujet']) {
                     case 'Comptabilité':
-                        ret += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2 imgWorkshop">';
+                        ret += '<img src="assets/img/comptabilite.jpg" class="ml-lg-5 order-lg-2 imgWorkshop" style="max-width: 10em">';
                         break;
                     case 'Droit':
-                        ret += '<img src="assets/img/droit.jpg" class="ml-lg-5 order-lg-2 imgWorkshop">';
+                        ret += '<img src="assets/img/droit.jpg" class="ml-lg-5 order-lg-2 imgWorkshop" style="max-width: 10em">';
                         break;
                     case 'Informatique':
-                        ret += '<img src="assets/img/informatique.jpg" class="ml-lg-5 order-lg-2 imgWorkshop">';
+                        ret += '<img src="assets/img/informatique.jpg" class="ml-lg-5 order-lg-2 imgWorkshop" style="max-width: 10em">';
                         break;
                     case 'Marketing':
-                        ret += '<img src="assets/img/marketing.jpg" class="ml-lg-5 order-lg-2 imgWorkshop">';
+                        ret += '<img src="assets/img/marketing.jpg" class="ml-lg-5 order-lg-2 imgWorkshop" style="max-width: 10em">';
                         break;
                     case 'Electro-Mecanique':
-                        ret += '<img src="assets/img/mecanique.jpg" class="ml-lg-5 order-lg-2 imgWorkshop">';
+                        ret += '<img src="assets/img/mecanique.jpg" class="ml-lg-5 order-lg-2 imgWorkshop" style="max-width: 10em">';
                         break;
                 };
                 ret += '</div>';
