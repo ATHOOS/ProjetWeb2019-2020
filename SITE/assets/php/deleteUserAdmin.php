@@ -7,4 +7,11 @@ $db = new dbAccess();
 $noma = htmlspecialchars($_POST['noma']);
 
 
-$suppressionCompte = $db->callProcedure('suppressionCompte',[$noma]);
+
+if($_SESSION['admin']==1){
+    $suppressionCompte = $db->callProcedure('suppressionCompte',[$noma]);
+}
+
+else{
+    echo("Good Try <3");
+}
