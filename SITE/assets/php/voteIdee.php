@@ -14,7 +14,7 @@ if(empty($checkUserIdee)){
 }
 
 else{
-    $modifEtatVote = $db->callProcedure('modifEtatVote',[$checkUserIdee[0]{'idVote'}, $etat]);
+    $modifEtatVote = $db->callProcedure('modifEtatVote',[$checkUserIdee[0]['idVote'], $etat]);
 }
 
 

@@ -7,13 +7,13 @@ $db = new dbAccess();
 $recupUnAtelier = $db->callProcedure("recupUnAtelier",[$_GET['id']]);
 
 
-$titre = 'Contrat de travail de : ' . $recupUnAtelier[0]{'animateur'};
+$titre = 'Contrat de travail de : ' . $recupUnAtelier[0]['animateur'];
 
-$date = 'Le présent contrat prend cours le ' . $recupUnAtelier[0]{'date'} . '.';
+$date = 'Le présent contrat prend cours le ' . $recupUnAtelier[0]['date'] . '.';
 
-$activite =  "Animation de l'atelier : " . $recupUnAtelier[0]{'nom'} . ".";
+$activite =  "Animation de l'atelier : " . $recupUnAtelier[0]['nom'] . ".";
 
-$duree = "L'étudiant s'engage à prester " . $recupUnAtelier[0]{'duree'} . " pour l'atelier précédemment cité.";
+$duree = "L'étudiant s'engage à prester " . $recupUnAtelier[0]['duree'] . " pour l'atelier précédemment cité.";
 
 $dateGeneration = "Fait en double exemplaires le " . date('d/m/Y') . '.';
 
@@ -27,7 +27,7 @@ class PDF extends FPDF
     {
         $db = new dbAccess();
         $recupUnAtelier = $db->callProcedure("recupUnAtelier",[$_GET['id']]);
-        $titre1 = utf8_decode('Contrat de travail de : ' . $recupUnAtelier[0]{'nomAnimateur'} . " " . $recupUnAtelier[0]{'prenom'});
+        $titre1 = utf8_decode('Contrat de travail de : ' . $recupUnAtelier[0]['nomAnimateur'] . " " . $recupUnAtelier[0]['prenom']);
         // Logo
         $this->Image('../img/ephec.png', 10, 15, 30);
         // Police Arial gras 15
@@ -60,12 +60,12 @@ $pdf->SetFont('Times','B',12);
 $pdf->MultiCell(95,10,'Prestataire :',0,'R',false);
 $pdf->SetFont('Times','',12);
 $pdf->SetXY(105,53); // abscissa of Horizontal position 
-$nomPrenom = utf8_decode($recupUnAtelier[0]{'nomAnimateur'} . " " . $recupUnAtelier[0]{'prenom'});
+$nomPrenom = utf8_decode($recupUnAtelier[0]['nomAnimateur'] . " " . $recupUnAtelier[0]['prenom']);
 $pdf->MultiCell(95,10,$nomPrenom,0,'R',false);
 $pdf->SetXY(105,58);
-$pdf->MultiCell(95,10,utf8_decode($recupUnAtelier[0]{'animateur'}),0,'R',false);
+$pdf->MultiCell(95,10,utf8_decode($recupUnAtelier[0]['animateur']),0,'R',false);
 $pdf->SetXY(105,63);
-$pdf->MultiCell(95,10,utf8_decode($recupUnAtelier[0]{'mail'}),0,'R',false);
+$pdf->MultiCell(95,10,utf8_decode($recupUnAtelier[0]['mail']),0,'R',false);
 
 $pdf->SetXY(10,80);
 $pdf->SetFont('Times','B',15);
@@ -128,4 +128,4 @@ $pdf->SetXY(135, 265);
 $pdf->MultiCell(55, 6, 'Etudiant', 0, '', FALSE);
 
 
-$pdf->Output('I','contrat'.$recupUnAtelier[0]{'animateur'}.'.pdf');
+$pdf->Output('I','contrat'.$recupUnAtelier[0]['animateur'].'.pdf');

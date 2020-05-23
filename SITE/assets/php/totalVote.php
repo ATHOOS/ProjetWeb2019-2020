@@ -15,13 +15,13 @@ if(empty($recupNbIdeePour)){
     $pour= 0;
 }
 else{
-    $pour = $recupNbIdeePour[0]{'0'};
+    $pour = $recupNbIdeePour[0]['0'];
 }
 if(empty($recupNbIdeeContre)){
     $contre= 0;
 }
 else{
-    $contre = $recupNbIdeeContre[0]{'0'};
+    $contre = $recupNbIdeeContre[0]['0'];
 }
 
 
