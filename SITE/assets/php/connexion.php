@@ -19,5 +19,3 @@ if(empty($checkConnexion)){
     echo json_encode($_SESSION['prenom']);
     $_SESSION['pageActuel'] = 'profil.php';
 }
-
-header('Location: http://localhost/ProjetWeb2019-2020/SITE/');

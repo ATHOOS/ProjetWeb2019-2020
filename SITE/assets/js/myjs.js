@@ -223,7 +223,6 @@ function checkInscription() {
 
     if (erreurForm === 1) {
         let objectForm = { 'matricule': $('#matricule').val(), 'Nom': $('#nom').val(), 'Prenom': $('#prenom').val(), 'email': $('#email').val(), 'password': $('#pass').val() };
-        console.log(objectForm);
         $.ajax({
             url: "assets/php/inscription.php",
             type: "POST",
@@ -231,11 +230,9 @@ function checkInscription() {
             datatype: "json",
             success: function (response) {
                 if (response === '"NomaOuMailDejaUse"') {
-                    console.log("marche pas");
                 }
                 else {
-                    console.log('inscr OK');
-                    console.log(response);
+                    alert("Votre compte doit encore être validé par un administrateur");
                 }
             }
         });
@@ -290,7 +287,6 @@ function checkConnexion() {
 
     if (erreurForm === 1) {
         let objectForm = { 'login': $('#your_login').val(), 'password': $('#your_pass').val() };
-        //console.log(objectForm);
         $.ajax({
             url: "assets/php/connexion.php",
             type: "POST",
@@ -299,12 +295,13 @@ function checkConnexion() {
             success: function (response) {
                 if (response === '"erreurConnexion"') {
                     $('#connexionError').show();
+                    alert("Il est possible que votre compte doit encore être validé par un administrateur");
                 }
                 else {
-                    location.reload();
                     $('#connexionError').hide();
                     profil();
                     $('.mobile-nav #lienConnexion').replaceWith('<a href="assets/php/deconnexion.php" id="lienConnexion">Déconnexion</a>');
+                    window.location.reload();
                 }
             }
         });
@@ -426,7 +423,6 @@ function ajoutAtelier() {
 
     if (erreurForm === 1) {
         let objectForm = { 'Nom': $('#workshop_nom').val(), 'Description': $('#workshop_desc').val(), 'Date': $('#workshop_date').val(), 'Nombre_de_places': $('#workshop_nbrPlaces').val(), 'Sujet': $('#workshop_sujet').val(), 'Duree': $('#workshop_duree').val() };
-        console.log(objectForm);
         $.ajax({
             url: "assets/php/ajoutAtelier.php",
             type: "POST",
@@ -434,10 +430,9 @@ function ajoutAtelier() {
             datatype: "json",
             success: function (response) {
                 if (response === '"NomaOuMailDejaUse"') {
-                    console.log("marche pas");
                 }
                 else {
-                    console.log('inscr OK');
+                    alert("Votre demande de création d'atelier a été créé mais doit encore être acceptée");
                 }
             }
         });
@@ -1490,7 +1485,6 @@ function validerModif(nom, desc, date, nb, sujet, idAtelier, duree) {
     }
 
     if (erreurForm === 1) {
-        console.log($('#dureeModifWork').val());
         $.ajax({
             url: "assets/php/modifAtelier.php",
             type: "POST",
@@ -1770,7 +1764,6 @@ function totalVote(idIdee) {
         },
         datatype: "json",
         success: function (response) {
-            console.log(response);
             tmp = response;
         }
     });
