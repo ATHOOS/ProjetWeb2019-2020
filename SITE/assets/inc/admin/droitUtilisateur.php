@@ -2,6 +2,9 @@
 session_start();
 $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
 include '../../php/listeUsers.php';
+if(!isset($_SESSION['admin']) or $_SESSION['admin'] == "0"){
+    header('Location: http://localhost/ProjetWeb2019-2020/SITE/assets/inc/failed.php');
+}
 ?>
 <div class="container">
     <div class="table-wrapper">

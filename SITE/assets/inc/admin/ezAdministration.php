@@ -1,6 +1,9 @@
 <?php
 session_start();
 $_SESSION['pageActuel'] = 'admin/ezAdministration.php';
+if(!isset($_SESSION['admin']) or $_SESSION['admin'] == "0"){
+    header('Location: http://localhost/ProjetWeb2019-2020/SITE/assets/inc/failed.php');
+}
 ?>
 
 <!doctype html>
