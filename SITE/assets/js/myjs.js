@@ -832,6 +832,7 @@ function modifRole(noma, admin) {
         },
         datatype: "json",
         success: function (response) {
+            alert("Vous avez bien changé le rôle de l'utilisateur "+noma);
         }
     });
 }
